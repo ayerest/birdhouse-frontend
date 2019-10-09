@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
+import {useSelector} from 'react-redux'
+//will allow to select a slice of the global state from redux
+//instead of useSelector you can also use connect and then mapstatetoprops
 
 const UserMap = props => {
     return (
