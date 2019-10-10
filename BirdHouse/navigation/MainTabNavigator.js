@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer, createBottomTabNavigator,
+createSwitchNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -66,7 +67,7 @@ const Birds = createStackNavigator({
   BirdDetails: BirdDetailsScreen
 })
 
-const tabNavigator = createBottomTabNavigator({
+const MainNavigator = createBottomTabNavigator({
   HomeStack,
   SettingsStack,
   FieldEntries,
@@ -79,6 +80,7 @@ const tabNavigator = createBottomTabNavigator({
   }
 });
 
-tabNavigator.path = '';
+MainNavigator.path = '';
 
-export default createAppContainer(tabNavigator);
+
+export default createAppContainer(MainNavigator);

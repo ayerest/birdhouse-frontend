@@ -9,14 +9,16 @@ import AppNavigator from './navigation/AppNavigator';
 import { useScreens } from 'react-native-screens';
 import ReduxThunk from 'redux-thunk';
 import entriesReducer from './store/reducers/entries';
-import birdsReducer from './store/reducers/birds'
+import birdsReducer from './store/reducers/birds';
+import authReducer from './store/reducers/auth';
 import {Provider} from 'react-redux';
 
 useScreens();
 
 const rootReducer = combineReducers({
   entries: entriesReducer,
-  birds: birdsReducer
+  birds: birdsReducer,
+  user: authReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
