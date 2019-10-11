@@ -4,6 +4,7 @@ import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {useDispatch} from 'react-redux';
 import * as authActions from '../store/actions/auth'
+import AddFieldEntryForm from '../components/AddFieldEntryForm'
 
 // import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -85,7 +86,8 @@ const Birds = createStackNavigator({
 })
 
 const Main = createStackNavigator({
-  Main: MainViewScreen
+  Main: MainViewScreen,
+  // AddEntry: AddFieldEntryForm
 })
 
 const MenuNavigator = createDrawerNavigator({

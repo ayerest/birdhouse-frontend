@@ -3,9 +3,10 @@ import { Text, StyleSheet } from 'react-native';
 import Card from './Card'
 
 const BirdCard = props => {
+    console.log(props)
     return (
         <Card>
-            <Text>Basic bird info goes here</Text>
+            <Text>{props.common_name}</Text>
         </Card>
     );
 };

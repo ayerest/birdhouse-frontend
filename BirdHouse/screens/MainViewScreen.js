@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import MenuButton from '../components/MenuButton'
-import Colors from '../constants/Colors'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import MenuButton from '../components/MenuButton';
+import GeoMap from '../components/GeoMap'
+import Colors from '../constants/Colors';
 
 const MainViewScreen = props => {
     return (
@@ -11,7 +12,7 @@ const MainViewScreen = props => {
             <Text>Map should load with markers</Text>
             <Text>Tap map to add a new marker</Text>
             <Text>Adding a new marker opens an info window with a form to post a new entry</Text>
-            
+            <GeoMap />
         </View>
     )
 }

@@ -5,10 +5,12 @@ import {useDispatch} from 'react-redux'
 import * as authActions from '../store/actions/auth'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import MenuButton from '../components/MenuButton'
+// import MenuButton from '../components/MenuButton'
 import Colors from '../constants/Colors'
 
-import MainViewScreen from './MainViewScreen';
+// import MainViewScreen from './MainViewScreen';
+
+import ImageSelector from '../components/ImageSelector';
 
 
 const AuthScreen = (props) => {
@@ -26,6 +28,10 @@ const AuthScreen = (props) => {
             Alert.alert('An error occured!', error, [{text: "Okay"}])
         }
     }, [error]);
+
+    const imageSelectedHandler = (image) => {
+        setAvatar(image)
+    }
     
     const signupHandler = async () => {
         setError(null)
@@ -65,9 +71,10 @@ const AuthScreen = (props) => {
                         <View style={styles.screen}>
                             <Text style={styles.label}>Avatar</Text>
                             {/* need to change to select an image and make sure a default image can be chosen */}
-                            <TextInput style={styles.input} id="avatar" label="avatar" keyboardType="default" autoCapitalize="none"
+                            <ImageSelector onImageSelected={imageSelectedHandler}/>
+                            {/* <TextInput style={styles.input} id="avatar" label="avatar" keyboardType="default" autoCapitalize="none"
                                 onChangeText={text => setAvatar(text)}
-                                initialValue="" />
+                                initialValue="" /> */}
                         </View>
                         {isLoading ? <ActivityIndicator /> : 
                         <View>

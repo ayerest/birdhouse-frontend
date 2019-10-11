@@ -14,8 +14,10 @@ const BirdDetailsScreen = props => {
 BirdDetailsScreen.navigationOptions = (navigationData) => {
     // console.log(navigationData)
     const bird_id = navigationData.navigation.getParam('birdId')
+    const bird_name = navigationData.navigation.getParam('birdName')
+
     return {
-        headerTitle: bird_id,
+        headerTitle: bird_name,
     }
 }
 

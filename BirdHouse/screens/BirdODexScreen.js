@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, 
 import Colors from '../constants/Colors';
 import {useSelector, useDispatch} from 'react-redux';
 import * as birdsActions from '../store/actions/birds';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import {MenuButton} from '../components/MenuButton'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {MenuButton} from '../components/MenuButton';
+import BirdCard from '../components/BirdCard';
 
 
 
@@ -59,12 +60,21 @@ const BirdODexScreen = props => {
         return <View style={styles.screen}><Text>An Error occurred!</Text>
         </View> 
     }
-    // if (isLoading) {
-    //     return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
-    // }
+    if (isLoading) {
+        return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
+    }
     return (
         <View style={styles.screen}>
-            <FlatList keyExtractor={bird => bird.id} data={birdList} renderItem={renderBirdGridItem} numColumns={2}/>
+            <FlatList keyExtractor={bird => bird.id} data={birdList} renderItem={itemData => {
+                <BirdCard common_name={itemData.item.common_name} onPress={() => {
+                    props.navigation.navigate({
+                        routeName: 'BirdDetails', params: {
+                            birdName: itemData.item.common_name,
+                            birdId: itemData.item.id.toString()
+                        }
+                    })
+                }}/>
+            }} numColumns={2}/>
             <Text>The BirdODex Screen!</Text>
             {isLoading ? <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor} /></View> : <Text>Sup</Text>}
             {/* <Button title="Go to Bird Details!" onPress={() => {props.navigation.navigate({routeName: 'BirdDetails'})}}/> */}
