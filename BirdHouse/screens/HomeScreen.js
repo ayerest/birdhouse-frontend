@@ -11,10 +11,15 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import MenuButton from '../components/MenuButton'
+import Colors from '../constants/Colors'
+
 
 import { MonoText } from '../components/StyledText';
 import AuthScreen from './AuthScreen';
-import Logout from '../components/Logout'
+import Logout from '../components/Logout';
+import MainViewScreen from './MainViewScreen';
 
 export default function HomeScreen(props) {
   const currentUser = useSelector(state => {
@@ -35,7 +40,8 @@ export default function HomeScreen(props) {
             style={styles.welcomeImage}
           />
         </View>
-        {!!currentUser ? <View><Logout /></View> : <AuthScreen />}
+        {/* {!!currentUser ? <View><Logout /><MainViewScreen /></View> : <AuthScreen />} */}
+        <AuthScreen />
 
 
       
@@ -44,8 +50,18 @@ export default function HomeScreen(props) {
   );
 }
 
-HomeScreen.navigationOptions = {
-  header: null,
+HomeScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "BirdHouse",
+    headerStyle: {
+      backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
+      color: "black"
+    },
+    // headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
+    //   <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+    //     onPress={() => { navData.navigation.toggleDrawer() }} />
+    // </HeaderButtons>
+  }
 };
 
 

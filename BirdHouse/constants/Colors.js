@@ -1,7 +1,9 @@
 const tintColor = '#2f95dc';
+const myColor = "ghostwhite"
 
 export default {
   tintColor,
+  myColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',

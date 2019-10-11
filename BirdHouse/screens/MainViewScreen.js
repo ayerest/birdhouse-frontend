@@ -1,28 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Platform } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import MenuButton from '../components/MenuButton'
 import Colors from '../constants/Colors'
 
-const BadgesScreen = props => {
+const MainViewScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>The Badges Screen!</Text>
+            <Text>The Main View Screen!</Text>
+            <Text>Map should load with markers</Text>
+            <Text>Tap map to add a new marker</Text>
+            <Text>Adding a new marker opens an info window with a form to post a new entry</Text>
+            
         </View>
     )
 }
 
-BadgesScreen.navigationOptions = navData => {
+MainViewScreen.navigationOptions = navData => {
     return {
-        headerTitle: "My Badges",
+        headerTitle: "Let's go birdwatching!",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"
         },
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
-            <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-                onPress={() => { navData.navigation.toggleDrawer() }} />
+            <Item title="Menu" iconName= {Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+            onPress={() => {navData.navigation.toggleDrawer()}} />
         </HeaderButtons>
     }
 }
@@ -35,4 +38,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default BadgesScreen;
+export default MainViewScreen;

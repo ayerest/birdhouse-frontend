@@ -1,5 +1,5 @@
 // fetch post request for sign up goes here
-
+import {AsyncStorage} from 'react-native';
 export const signup = (username, password, avatar) => {
     if (!!avatar) {
         return async dispatch => {
@@ -17,11 +17,15 @@ export const signup = (username, password, avatar) => {
                 })
             })
             if (!response.ok) {
-                throw new Error("Sign up did not complete successfully.")
+                const errorData = await response.json();
+                const errorType = errorData.error
+                throw new Error(errorType)
             }
 
             const signupData = await response.json();
             dispatch({ type: "SIGNUP", payload: signupData})
+            const expirationDate = new Date().getTime() + 60000
+            persistDataToStorage(signupData.jwt, signupData.user, expirationDate)
         }
     } else {
         return async dispatch => {
@@ -38,15 +42,28 @@ export const signup = (username, password, avatar) => {
                 })
             })
             if (!response.ok) {
-                throw new Error("Login unsuccessful. Please try again.")
+                const errorData = await response.json();
+                console.log("error from login", errorData)
+                const errorType = errorData.message
+                throw new Error(errorType)
             }
 
             const loginData = await response.json();
+            console.log("data back from auth", loginData)
             dispatch({ type: "LOGIN", payload: loginData })
+            const expirationDate = new Date().getTime() + 60000
+            persistDataToStorage(loginData.jwt, loginData.user, expirationDate)
         }
     }
 }
 
-export const logout = (currentuser) => {
-   return {type: "LOGOUT", payload: currentuser}
+export const logout = () => {
+   return {type: "LOGOUT"}
+}
+
+const persistDataToStorage = (token, userId, expirationDate) => {
+    AsyncStorage.setItem("userData", JSON.stringify({
+        token: token,
+        userId: userId,
+    }))
 }
