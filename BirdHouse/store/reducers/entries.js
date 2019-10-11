@@ -1,12 +1,17 @@
 //need to import data with entries
 const initialState = {
-    entries: [1, 2, 3],
-    filteredEntries: [1, 2, 3],
+    entries: [],
+    filteredEntries: [],
     favoriteEntries: []
 }
 
 const entriesReducer = (state = initialState, action) => {
-    return state;
+    switch(action.type) {
+        case "TEST":
+            return "test";
+        default:
+            return state;
+    }
 }
 
 export default entriesReducer;
