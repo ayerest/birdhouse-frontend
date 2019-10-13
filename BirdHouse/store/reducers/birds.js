@@ -1,18 +1,25 @@
-import SET_BIRDS from '../actions/birds'
+// import SET_BIRDS from '../actions/birds'
 
 const initialState = {
-    birds: [],
-    filteredBirds: [1, 2, 3],
-    favoriteBirds: []
+    birdCategories: [],
+    categoryBirds: [],
+    filteredBirds: []
 }
 
 const birdsReducer = (state = initialState, action) => {
-    // console.log(action.birds)
     switch(action.type) {
-        case 'SET_BIRDS':
+        case 'SET_CATEGORIES':
             return {
-                birds: action.birds
+                birdCategories: action.birdCategories
             };
+        case "SET_BIRDS":
+            return {
+                categoryBirds: action.categoryBirds
+            }
+        case "SEARCH_BIRDS":
+            return {
+                filteredBirds: action.filteredBirds
+            }
         default:
             return state;
     }

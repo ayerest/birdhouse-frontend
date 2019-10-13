@@ -43,13 +43,11 @@ export const signup = (username, password, avatar) => {
             })
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log("error from login", errorData)
                 const errorType = errorData.message
                 throw new Error(errorType)
             }
 
             const loginData = await response.json();
-            console.log("data back from auth", loginData)
             dispatch({ type: "LOGIN", payload: loginData })
             const expirationDate = new Date().getTime() + 60000
             persistDataToStorage(loginData.jwt, loginData.user, expirationDate)

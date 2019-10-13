@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 
 export const postNewEntry = () => {
     return async (dispatch, getState) => {
