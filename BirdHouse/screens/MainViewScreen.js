@@ -8,10 +8,6 @@ import Colors from '../constants/Colors';
 const MainViewScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>The Main View Screen!</Text>
-            <Text>Map should load with markers</Text>
-            <Text>Tap map to add a new marker</Text>
-            <Text>Adding a new marker opens an info window with a form to post a new entry</Text>
             <GeoMap />
         </View>
     )

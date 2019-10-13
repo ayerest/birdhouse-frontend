@@ -10,7 +10,7 @@ const ImageSelector = props => {
         //note to self - if I want the user to take a picture in app later on I need askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
         const result = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         if (result.status !== 'granted') {
-            Alert.alert("Please grant permissions to provide an avatar image.", [{text: "Okay"}]);
+            Alert.alert("Please grant permissions to provide an image.", [{text: "Okay"}]);
             return false;
         }
         return true;
@@ -22,7 +22,7 @@ const ImageSelector = props => {
             return;
         }
         const image = await ImagePicker.launchImageLibraryAsync();
-        console.log(image)
+        // console.log(image)
         setSelectedImage(image.uri)
         props.onImageSelected(image.uri)
     }
