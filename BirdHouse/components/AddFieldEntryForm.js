@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import {ScrollView, View, Text, TextInput, Button, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import ImageSelector from './ImageSelector'
+import {useDispatch, useSelector} from 'react-redux';
+import ImageSelector from './ImageSelector';
 import CalendarPicker from 'react-native-calendar-picker';
-import * as entriesActions from '../store/actions/entries'
+import * as entriesActions from '../store/actions/entries';
+import SearchBar from './SearchBar'
 
 
 const AddFieldEntryForm = props => {
     // useState to get form data
-    const [newImage, setNewImage] = useState(false)
-
+    const [image, setImage] = useState(false)
+    const [notes, setNotes] = useState()
+    const [showSearchResults, setShowSearchResults] = useState(false)
+    const [bird, setBird] = useState()
     const dispatch = useDispatch();
 
     const formChangeHandler = text => {
@@ -29,22 +32,46 @@ const AddFieldEntryForm = props => {
     }
 
     const imageSelectedHandler = (image) => {
-        setNewImage(image)
+        setImage(image)
     }
+
+    const filteredBirds = useSelector(state => {
+        return state.birds.filteredBirds
+    })
+
+    const displayBirdList = () => {
+        setShowSearchResults(true)
+    }
+
+    const renderBirdListItem = (bird) => {
+        return (
+            <TouchableOpacity onPress={() => setBird(bird.item)}>
+                <Text>
+                  {bird.item.common_name}  
+                </Text>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <ScrollView>
             <View style={styles.form}>
-                <Text style={styles.label}>Add New Field Entry</Text>
+                <View stlye={styles.formtop}>
+                    <Text style={styles.label}>Add New Field Entry</Text>
+                    <Button title="Submit" onPress={() => {submitHandler}}/>
+                </View>
                 <Text style={styles.label}>Date: {new Date().toISOString().slice(0, 10)}</Text>
-                <ImageSelector onImageSelected={imageSelectedHandler} />
+                <SearchBar onShowBirds={displayBirdList}/>
+                {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
+                    maxToRenderPerBatch={20} numColumns={1} /> : null}
                 <TextInput style={styles.textInput} onChangeText={() => {}}
                 value={"Enter notes here"}/>
+                <ImageSelector onImageSelected={imageSelectedHandler} />
                 
                 {/* <View style={styles.cal}>
                     <CalendarPicker />
                 </View> */}
-                <TextInput /> 
-                <Button title="Submit" onPress={() => {submitHandler}}/>
+                <TextInput />
             </View>
         </ScrollView>
     )
@@ -67,6 +94,9 @@ const styles = StyleSheet.create({
     },
     cal: {
         width: 200
+    },
+    formtop: {
+        flexDirection: "row"
     }
 })
 

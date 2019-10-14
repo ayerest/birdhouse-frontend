@@ -7,8 +7,11 @@ const initialState = {
 
 const entriesReducer = (state = initialState, action) => {
     switch(action.type) {
-        case "TEST":
-            return "test";
+        case "CREATE_FIELD_ENTRY":
+            return {
+                ...state, 
+                entries: state.entries.concat(action.entry)
+            };
         default:
             return state;
     }

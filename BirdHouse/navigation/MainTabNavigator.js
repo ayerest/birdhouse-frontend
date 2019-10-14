@@ -6,21 +6,17 @@ import {useDispatch} from 'react-redux';
 import * as authActions from '../store/actions/auth'
 import AddFieldEntryForm from '../components/AddFieldEntryForm'
 
-// import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-// import SettingsScreen from '../screens/SettingsScreen';
 import FieldEntriesScreen from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen from '../screens/FieldEntryDetailsScreen';
 import BirdODexScreen from '../screens/BirdODexScreen';
 import BirdDetailsScreen from '../screens/BirdDetailsScreen';
 import MainViewScreen from '../screens/MainViewScreen'
 import BadgesScreen from '../screens/BadgesScreen'
-// import Logout from '../components/Logout'
 import PicturesScreen from '../screens/PicturesScreen'
 
 import Colors from '../constants/Colors'
 import AuthScreen from '../screens/AuthScreen';
-// import { DrawerNavigatorItems } from 'react-navigation-drawer';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -34,38 +30,6 @@ const HomeStack = createStackNavigator(
   },
   config
 );
-
-// HomeStack.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-  //     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
-
-// HomeStack.path = '';
-
-// const SettingsStack = createStackNavigator(
-//   {
-  //     Settings: SettingsScreen,
-  //   },
-  //   config
-  // );
-  
-  // SettingsStack.navigationOptions = {
-    //   tabBarLabel: 'Settings',
-    //   tabBarIcon: ({ focused }) => (
-      //     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-//   ),
-// };
-
-// SettingsStack.path = '';
 
 const Badges = createStackNavigator({
   MyBadges: BadgesScreen
@@ -119,22 +83,6 @@ const SwitchMenu = createSwitchNavigator({
   Auth: AuthNavigator,
   Menu: MenuNavigator
 })
-
-// const MainNavigator = createBottomTabNavigator({
-//   HomeStack,
-//   MainView,
-//   SettingsStack,
-//   FieldEntries,
-//   Birds
-// }, {
-//   defaultNavigationOptions: {
-//     headerStyle: {
-//       backgroundColor: Platform.OS === 'android' ? Colors.tintColor : 'ghostwhite'
-//     }
-//   }
-// });
-
-// MainNavigator.path = '';
 
 
 export default createAppContainer(SwitchMenu);
