@@ -11,8 +11,7 @@ const SearchBar = props => {
     const handleSearchInput = (text) => {
         searchInput = text
         setSearchTerm(searchInput)
-        if (searchInput.length >= 3) {
-
+        if (searchTerm.length >= 2) {
             sendUpSearch()
         }
     }
@@ -20,6 +19,7 @@ const SearchBar = props => {
     const sendUpSearch = async () => {
         try {
             await dispatch(birdActions.searchBirds(searchTerm))
+            props.onShowBirds("search")
         } catch (err) {
             setError(err.message)
         }
@@ -27,7 +27,7 @@ const SearchBar = props => {
 
     return (
         <View>
-            <Text>Search</Text>
+            <Text>Search Birds</Text>
             <TextInput autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />

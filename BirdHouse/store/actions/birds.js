@@ -24,6 +24,7 @@ export const fetchBirdCategories = () => {
 }
 
 export const fetchBirds = (category) => {
+    console.log(category, "category in fetch?")
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -45,7 +46,6 @@ export const fetchBirds = (category) => {
             }
 
             const birdData = await response.json();
-
 
             dispatch({ type: 'SET_BIRDS', categoryBirds: birdData })
         } catch (err) {
@@ -81,6 +81,36 @@ export const searchBirds = (searchTerm) => {
             const birdData = await response.json();
 
             dispatch({ type: 'SEARCH_BIRDS', filteredBirds: birdData })
+        } catch (err) {
+            throw err;
+        }
+    }
+}
+
+
+export const getMyBirds = () => {
+    return async (dispatch, getState) => {
+        const token = getState().user.token
+        const user = getState().user.user
+        try {
+            const response = await fetch('http://localhost:3000/bird_images', {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "user": user
+                })
+            })
+
+            if (!response.ok) {
+                throw new Error("error")
+            }
+
+            const birdData = await response.json();
+
+            dispatch({ type: 'MY_BIRDS', myBirds: birdData })
         } catch (err) {
             throw err;
         }
