@@ -13,11 +13,16 @@ const GeoMap = (props) => {
     const [newMarker, setNewMarker] = useState(null);
     const [isGettingLocation, setIsGettingLocation] = useState(false);
     const [currentLocation, setCurrentLocation] = useState(null);
+    const [visible, setVisible] = useState(true)
 
 
     useEffect(() => {
         displayMapHandler()
     }, [displayMapHandler]);
+
+    useEffect(() => {
+        setVisible(true)
+    }, [newMarker])
 
     const verifyPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -72,6 +77,10 @@ const GeoMap = (props) => {
     //     let lng = markerTouchEvent.nativeEvent.coordinate.longitude
     // }
 
+    handleModalClose = () => {
+        setVisible(false)
+    }
+
     return (
         <View style={styles.mapContainer}>
             <View style={styles.mapExtras}>
@@ -84,7 +93,7 @@ const GeoMap = (props) => {
                     {!!newMarker ? 
                     <Marker image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker}>
                         <Callout >
-                            <AddFieldEntryForm visible={true} coords={newMarker}/>
+                            <AddFieldEntryForm onHandleModalClose={handleModalClose} visible={visible} coords={newMarker}/>
                         </Callout>
                     </Marker> : null
                     }

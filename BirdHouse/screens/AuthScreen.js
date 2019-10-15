@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Platform, View, Text, KeyboardAvoidingView, ActivityIndicator, StyleSheet, Button, TextInput, Alert} from 'react-native';
+import {ScrollView, Platform, View, Text, KeyboardAvoidingView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
 import Card from '../components/Card'
 import {useDispatch} from 'react-redux'
 import * as authActions from '../store/actions/auth'
@@ -51,6 +51,7 @@ const AuthScreen = (props) => {
         <KeyboardAvoidingView behavior="padding" 
         keyboardVerticalOffset={50}
         style={styles.screen}>
+            <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
             <Card style={styles.authContainer}>
                 {!login ? 
                     <ScrollView>
@@ -140,6 +141,11 @@ const styles = StyleSheet.create({
     label: {
         paddingTop: 10,
         textAlign: 'center'
+    },
+    logo: {
+        alignSelf: "center",
+        height: 200,
+        width: 180
     }
 });
 

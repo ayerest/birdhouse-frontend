@@ -6,7 +6,8 @@ import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds'
 
 const CategoriesList = (props) => {
-    const [currentCategory, setCurrentCategory] = useState()
+    const [currentCategory, setCurrentCategory] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -14,7 +15,7 @@ const CategoriesList = (props) => {
             await dispatch(birdsActions.fetchBirdCategories());
         }
         loadCategories();
-    }, [dispatch]);
+    }, []);
 
 
     const categoryList = useSelector(state => {
@@ -24,18 +25,27 @@ const CategoriesList = (props) => {
     const setCategory = (category) => {
         // console.log(category, "setting the category")
         setCurrentCategory(category)
+        // !!currentCategory ? getBirds() : getBirds(category)
         // console.log("current category", currentCategory)
-        getBirds()
     }
     
-    const getBirds = async () => {
-        try {
-            await dispatch(birdsActions.fetchBirds(currentCategory));
-            props.onShowBirds("category")
-        } catch (err) {
-            console.log(err)
+    const getBirds = () => {
+        if (!!currentCategory) {
+            setIsLoading(true)
+            try {
+                dispatch(birdsActions.fetchBirds(currentCategory));
+                props.onShowBirds("category")
+                setIsLoading(false)
+                setCurrentCategory(null)
+            } catch (err) {
+                console.log(err)
+                setIsLoading(false)
+                setCurrentCategory(null)
+            }
+        } else {
+
+            return
         }
-        
     }
     useEffect(() => {
 
@@ -44,16 +54,16 @@ const CategoriesList = (props) => {
 
     const renderCategoryItem = (categoryItem) => {
         return (
-            <View style={styles.category}>
-                <Text style={styles.text}>{categoryItem.item}</Text>
-                <Button title="+" onPress={() => setCategory(categoryItem.item)} />
-            </View>
+            <TouchableOpacity style={styles.category} onPress={() => setCategory(categoryItem.item)}>
+                <Text style={styles.text}>{categoryItem.item} - Show</Text>
+            </TouchableOpacity>
         )
     }
 
     return (
         <View>
             <Text>Categories</Text>
+            {isLoading ? <ActivityIndicator /> : null}
             <FlatList keyExtractor={(item, index) => uuid()} data={categoryList} renderItem={renderCategoryItem}
                 numColumns={1} />
         </View>
@@ -78,7 +88,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         borderColor: "black",
         borderBottomWidth: 2,
-        backgroundColor: Colors.myColor
+        backgroundColor: Colors.myColor,
+        padding: 10
     }
 })
 
