@@ -8,20 +8,25 @@ import BirdCard from './BirdCard'
 const BirdsList = (props) => {
 
     const birdList = props.birdList
-
+    
     const renderBirdGridItem = (bird) => {
-        console.log("bird ", bird)
+        // console.log(props.navigation, "what is available?")
         return (
 
-            <BirdCard bird={bird} common_name={bird.item.common_name} scientific_name={bird.item.species_name} onPress={() => {
-                props.navigation.navigate({
-                    routeName: 'BirdDetails', params: {
-                        birdName: bird.item.common_name,
-                        birdId: bird.item.id.toString(),
-                        bird: bird
-                    }
-                })
-            }} />
+            <TouchableOpacity
+                style={styles.gridItem}
+                onPress={() => {
+                    props.navigation.navigate({
+                        routeName: 'BirdDetails', params: {
+                            birdId: bird.item.id,
+                            birdName: bird.item.common_name,
+                        }
+                    })
+                }}
+            >
+
+                <BirdCard bird={bird} common_name={bird.item.common_name} scientific_name={bird.item.species_name} />
+            </TouchableOpacity>
 
         )
     }
@@ -31,7 +36,7 @@ const BirdsList = (props) => {
             {/* <Button title="Go Back" onPress={() => { props.navigation.goBack() }} /> */}
 
             <FlatList keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
-                maxToRenderPerBatch={20} numColumns={2} />
+                 numColumns={2} />
         </View>
     )
 } 
@@ -46,5 +51,19 @@ BirdsList.navigationOptions = (navigationData) => {
         headerTitle: "View Birds",
     }
 }
+
+const styles = StyleSheet.create({
+    bird: {
+        flex: 1
+    },
+    stockimage: {
+        width: 50,
+        height: 50
+    },
+    image: {
+        width: 150,
+        height: 150
+    }
+});
 
 export default BirdsList;

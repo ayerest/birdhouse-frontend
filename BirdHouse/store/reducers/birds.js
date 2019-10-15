@@ -4,7 +4,8 @@ const initialState = {
     birdCategories: [],
     categoryBirds: [],
     filteredBirds: [],
-    myBirds: []
+    myBirds: [],
+    singleBird: []
 }
 
 const birdsReducer = (state = initialState, action) => {
@@ -15,7 +16,7 @@ const birdsReducer = (state = initialState, action) => {
                 birdCategories: action.birdCategories
             };
         case "SET_BIRDS":
-            console.log("in reducer", action.categoryBirds)
+            // console.log("in reducer", action.categoryBirds)
             return {
                 ...state,
                 categoryBirds: action.categoryBirds
@@ -29,6 +30,11 @@ const birdsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 myBirds: action.myBirds
+            }
+        case "GET_BIRD":
+            return {
+                ...state,
+                singleBird: action.singleBird
             }
         default:
             return state;

@@ -1,19 +1,25 @@
 import { AsyncStorage } from 'react-native';
 
 
-export const postNewEntry = () => {
+export const postNewEntry = (date, bird, notes, image, latitude, longitude) => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/fieldentries', {
+            const response = await fetch('http://localhost:3000/field_entries', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
-
+                    "user": user,
+                    "date": date,
+                    "bird": bird,
+                    "notes": notes,
+                    "image": image,
+                    "latitude": latitude,
+                    "longitude": longitude
                 })
             })
 
@@ -31,6 +37,31 @@ export const postNewEntry = () => {
     }
 }
 
-export const getFieldEntries = () => {
+export const getMyEntries = () => {
+    return async (dispatch, getState) => {
+        const token = getState().user.token
+        const user = getState().user.user
+        try {
+            const response = await fetch('http://localhost:3000/entries', {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "user": user
+                })
+            })
 
+            if (!response.ok) {
+                throw new Error("error in entries action")
+            }
+
+            const entriesData = await response.json();
+
+            dispatch({ type: 'MY_ENTRIES', entries: entriesData })
+        } catch (err) {
+            throw err;
+        }
+    }
 }

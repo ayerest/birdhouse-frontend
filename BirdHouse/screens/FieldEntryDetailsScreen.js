@@ -1,11 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native';
+// import { FlatList } from 'react-native-gesture-handler';
+import uuid from 'uuid'
+// import { ScrollView } from 'react-native-gesture-handler';
 
 const FieldEntryDetailsScreen = props => {
+
+    // console.log(props.navigation.state.params.entry.images, "what does the details screen have access to?")
+    // console.log("----------------------------------")
+
+    const renderFieldEntryImage = (image) => {
+        return (<View>
+        {/* {console.log(image.item.img_url)}
+        {console.log("=================")} */}
+            <Image style={styles.image} source={{uri: image.item.img_url}}/>
+        </View>)
+    }
+
     return (
-        <View style={styles.screen}>
-            <Text>The Field Entry Details Screen!</Text>
-        </View>
+        <ScrollView>
+
+            <View style={styles.screen}>
+                <Text>{props.navigation.state.params.entryName}</Text>
+                {props.navigation.state.params.entry.images.length > 0 ? 
+                    <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
+                }
+                <Text>{props.navigation.state.params.entry.notes}</Text>
+            </View>
+        </ScrollView>
     )
 }
 
@@ -14,6 +36,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    image: {
+        height: 250,
+        width: 250,
+        marginTop: 20
     }
 })
 

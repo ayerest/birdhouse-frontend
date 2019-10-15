@@ -12,6 +12,11 @@ const entriesReducer = (state = initialState, action) => {
                 ...state, 
                 entries: state.entries.concat(action.entry)
             };
+        case "MY_ENTRIES":
+            return {
+                ...state,
+                entries: action.entries
+            }
         default:
             return state;
     }

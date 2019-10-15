@@ -6,7 +6,7 @@ import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds'
 
 const CategoriesList = (props) => {
-    const [currentCategory, setCurrentCategory] = useState(null)
+    const [currentCategory, setCurrentCategory] = useState()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,18 +25,22 @@ const CategoriesList = (props) => {
         // console.log(category, "setting the category")
         setCurrentCategory(category)
         // console.log("current category", currentCategory)
-        getBirds(category)
+        getBirds()
     }
-
-    const getBirds = async (category) => {
+    
+    const getBirds = async () => {
         try {
-            await dispatch(birdsActions.fetchBirds(category));
+            await dispatch(birdsActions.fetchBirds(currentCategory));
             props.onShowBirds("category")
         } catch (err) {
             console.log(err)
         }
         
     }
+    useEffect(() => {
+
+        getBirds()
+    }, [currentCategory])
 
     const renderCategoryItem = (categoryItem) => {
         return (
