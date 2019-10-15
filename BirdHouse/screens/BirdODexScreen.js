@@ -40,9 +40,12 @@ const BirdODexScreen = props => {
     //     return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
     // }
     const handleOnShowBirds = (type) => {
-        setShowBirds(false);
         setCurrentBirds([]);
+        setShowBirds(false);
         switch(type) {
+            case false:
+                setCurrentBirds([]);
+                return;
             case "mine":
                 setCurrentBirds(myBirds);
                 setShowBirds(true);
@@ -52,11 +55,12 @@ const BirdODexScreen = props => {
                 setShowBirds(true);
                 return;
             case "category":
-                setCurrentBirds(categoryBirds);                
-                setShowBirds(true);
-                return;
+               
+                    setCurrentBirds(categoryBirds)              
+                    setShowBirds(true);
+                    return;
             default:
-                return setCurrentBirds([]);
+                return;
         }
     }
     

@@ -46,7 +46,7 @@ export const fetchBirds = (category) => {
             }
 
             const birdData = await response.json();
-            console.log("json rendering", birdData)
+            // console.log("json rendering", birdData)
 
             dispatch({ type: 'SET_BIRDS', categoryBirds: birdData })
         } catch (err) {

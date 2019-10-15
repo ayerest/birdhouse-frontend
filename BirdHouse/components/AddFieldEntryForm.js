@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, TouchableHighlight} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ImageSelector from './ImageSelector';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -42,7 +42,8 @@ const AddFieldEntryForm = props => {
         return state.birds.filteredBirds
     })
 
-    const displayBirdList = () => {
+    const displayBirdList = (test=true) => {
+        test === false ? setShowSearchResults(false) :
         setShowSearchResults(true)
     }
 
@@ -58,7 +59,7 @@ const AddFieldEntryForm = props => {
     }
 
     return (
-            <Modal animationType="slide" style={styles.form} visible={modalVisible}>
+            <Modal animationType="slide" style={styles.form} visible={props.visible}>
                 <ScrollView>
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Add New Field Entry</Text>
@@ -67,12 +68,18 @@ const AddFieldEntryForm = props => {
                     <Text style={styles.label}>Date: {date.toISOString().slice(0, 10)}</Text>
                     <View style={styles.form}>
                         <SearchBar onShowBirds={displayBirdList}/>
-                        {!!bird ? <Text>Selected Bird: {bird.common_name}</Text> : null }
+                        {!!bird ? <View>
+                                    <Text>Selected Bird: {bird.common_name}</Text>
+                                    <Image style={styles.birdie} source={{uri: bird.img_url}} />
+                                </View> 
+                                : null }
                     </View>
                     {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
                         maxToRenderPerBatch={20} numColumns={1} /> : null}
-                    <TextInput style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}
-                    defaultValue={"Enter notes here"}/>
+                    <Text style={styles.label}>Notes</Text>
+
+                <TextInput multiline={true}
+                    numberOfLines={8} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
                     <ImageSelector onImageSelected={imageSelectedHandler} />
                     
                     {/* <View style={styles.cal}>
@@ -80,8 +87,7 @@ const AddFieldEntryForm = props => {
                     </View> */}
                     <Button title="Close Form"
                         onPress={() => {
-                            console.log(modalVisible)
-                            setModalVisible(false);
+                            props.onHandleModalClose()
                         }}/>
                 </ScrollView>
             </Modal>
@@ -101,8 +107,10 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     textInput: {
+        height: 250,
+        width: '90%',
         backgroundColor: "ghostwhite",
-        borderBottomWidth: 1,
+        borderWidth: 1,
         marginTop: 20
     },
     cal: {
@@ -112,6 +120,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'space-around',
         paddingTop: 50
+    },
+    birdie: {
+        width: 100,
+        height: 100
     }
 })
 

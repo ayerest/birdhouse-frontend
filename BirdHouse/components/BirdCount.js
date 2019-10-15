@@ -9,7 +9,7 @@ import BirdsList from './BirdsList';
 
 const BirdCount = (props) => {
 
-    const [showMyBirds, setShowMyBirds] = useState(false);
+    const [showMyBirds, setShowMyBirds] = useState("Show My Birds");
 
     const dispatch = useDispatch();
     
@@ -26,16 +26,21 @@ const BirdCount = (props) => {
     
 
     const handleShowMyBirds = () => {
-        // setShowMyBirds(true)
-        props.onShowBirds("mine")
+        if (showMyBirds === "Hide My Birds") {
+            setShowMyBirds("Show My Birds")
+            props.onShowBirds(false)
+        } else {
+            setShowMyBirds("Hide My Birds")
+            props.onShowBirds("mine")
+        }
     }
 
     return (
         <View>
             <Text>
-                Bird Count: {!!myBirds ? myBirds.length : null}
+                My Bird Count: {!!myBirds ? myBirds.length : null}
             </Text>
-            <Button title="Show My Birds" onPress={handleShowMyBirds}/>
+            <Button title={showMyBirds} onPress={handleShowMyBirds}/>
             {/* {showMyBirds && (props.myBirds && props.myBirds.length > 0) ? <BirdsList birdList={myBirds} /> : <Text>You have not seen any birds yet!</Text>} */}
         </View>
     )

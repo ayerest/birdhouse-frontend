@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux'
-import { TextInput, StyleSheet, Text, View } from 'react-native';
+import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
 import * as birdActions from '../store/actions/birds'
 
 const SearchBar = props => {
@@ -11,9 +11,14 @@ const SearchBar = props => {
     const handleSearchInput = (text) => {
         searchInput = text
         setSearchTerm(searchInput)
-        if (searchTerm.length >= 2) {
+        if (searchTerm.length >= 1) {
             sendUpSearch()
         }
+    }
+
+    const handleClearSearch = () => {
+        setSearchTerm("")
+        props.onShowBirds(false)
     }
 
     const sendUpSearch = async () => {
@@ -31,6 +36,7 @@ const SearchBar = props => {
             <TextInput autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />
+            {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
         </View>
     );
 };
