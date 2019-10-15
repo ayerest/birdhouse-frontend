@@ -24,7 +24,7 @@ export const fetchBirdCategories = () => {
 }
 
 export const fetchBirds = (category) => {
-    console.log(category, "category in fetch?")
+    // console.log(category, "category in fetch?")
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -46,6 +46,7 @@ export const fetchBirds = (category) => {
             }
 
             const birdData = await response.json();
+            console.log("json rendering", birdData)
 
             dispatch({ type: 'SET_BIRDS', categoryBirds: birdData })
         } catch (err) {
@@ -54,6 +55,33 @@ export const fetchBirds = (category) => {
     }
 }
 
+
+
+export const getBird = (birdId) => {
+    // console.log(birdId, "bird ID in fetch?")
+    return async (dispatch, getState) => {
+        const token = getState().user.token
+        const user = getState().user.user
+        try {
+            const response = await fetch(`http://localhost:3000/birds/${birdId}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+
+            if (!response.ok) {
+                throw new Error("error")
+            }
+
+            const birdData = await response.json();
+            // console.log("coming back from fetch", birdData)
+
+            dispatch({ type: 'GET_BIRD', singleBird: birdData })
+        } catch (err) {
+            throw err;
+        }
+    }
+}
 
 
 

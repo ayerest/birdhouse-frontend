@@ -3,17 +3,18 @@ import { Platform, SafeAreaView, Button, View } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {useDispatch} from 'react-redux';
-import * as authActions from '../store/actions/auth'
-import AddFieldEntryForm from '../components/AddFieldEntryForm'
+import * as authActions from '../store/actions/auth';
+import AddFieldEntryForm from '../components/AddFieldEntryForm';
 
 import HomeScreen from '../screens/HomeScreen';
 import FieldEntriesScreen from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen from '../screens/FieldEntryDetailsScreen';
 import BirdODexScreen from '../screens/BirdODexScreen';
+import BirdsList from '../components/BirdsList';
 import BirdDetailsScreen from '../screens/BirdDetailsScreen';
-import MainViewScreen from '../screens/MainViewScreen'
-import BadgesScreen from '../screens/BadgesScreen'
-import PicturesScreen from '../screens/PicturesScreen'
+import MainViewScreen from '../screens/MainViewScreen';
+import BadgesScreen from '../screens/BadgesScreen';
+import PicturesScreen from '../screens/PicturesScreen';
 
 import Colors from '../constants/Colors'
 import AuthScreen from '../screens/AuthScreen';
@@ -46,6 +47,7 @@ const FieldEntries = createStackNavigator({
 
 const Birds = createStackNavigator({
   BirdODex: BirdODexScreen,
+  BirdsList: BirdsList,
   BirdDetails: BirdDetailsScreen
 })
 

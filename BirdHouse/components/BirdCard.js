@@ -16,14 +16,12 @@ const BirdCard = props => {
     // console.log(props.bird.item.id)
     
     return (
-        <TouchableOpacity onPress={props.onPress} style={styles.bird}>
             <Card>
                 {birdIds.indexOf(props.bird.item.id) >= 0 ? <Image style={styles.image} source={{uri: props.bird.item.img_url}}></Image>:
                 <Image style={styles.stockimage} source={require("../assets/images/birdicon.png")}></Image>}
                 <Text>{props.common_name}</Text>
                 <Text>{props.scientific_name}</Text>
             </Card>
-        </TouchableOpacity>
     );
 };
 

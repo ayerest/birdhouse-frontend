@@ -18,27 +18,27 @@ const BirdODexScreen = props => {
     const dispatch = useDispatch();
     
 
-    const categoryBirds = useSelector(state => {
-        return state.birds.categoryBirds
-    })
-
+    
     const filteredBirds = useSelector(state => {
         return state.birds.filteredBirds
     })
-
+    
     const myBirds = useSelector(state => {
         return state.birds.myBirds
     })
-
-
-    if (error) {
-        return <View style={styles.screen}><Text>An Error occurred!</Text>
-        </View> 
-    }
-    if (isLoading) {
-        return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
-    }
-
+    
+    
+    const categoryBirds = useSelector(state => {
+        return state.birds.categoryBirds
+    })
+    
+    // if (error) {
+    //     return <View style={styles.screen}><Text>An Error occurred!</Text>
+    //     </View> 
+    // }
+    // if (isLoading) {
+    //     return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
+    // }
     const handleOnShowBirds = (type) => {
         setShowBirds(false);
         setCurrentBirds([]);
@@ -52,22 +52,20 @@ const BirdODexScreen = props => {
                 setShowBirds(true);
                 return;
             case "category":
-                console.log("in switch", categoryBirds)
-                setCurrentBirds(categoryBirds);
+                setCurrentBirds(categoryBirds);                
                 setShowBirds(true);
                 return;
             default:
-                return setCurrentBirds(null);
+                return setCurrentBirds([]);
         }
     }
-
     
     return (
         <View style={styles.screen}>
             <Text>The BirdODex Screen!</Text>
             <SearchBar onShowBirds={handleOnShowBirds}/>
             <BirdCount onShowBirds={handleOnShowBirds}/>
-            {showBirds && currentBirds.length > 0 ? <BirdsList birdList={currentBirds}/> : null}
+            {showBirds ? <BirdsList {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
         </View>
     )

@@ -59,18 +59,18 @@ const GeoMap = (props) => {
 
     const addMarkerHandler = (event) => {
         let mapTouchEvent = event
-        // console.log(mapTouchEvent)
+        console.log(mapTouchEvent, "testing testing")
         let lat = mapTouchEvent.nativeEvent.coordinate.latitude
         let lng = mapTouchEvent.nativeEvent.coordinate.longitude
         setNewMarker({latitude: lat, longitude: lng })
     }
 
-    const displayFormHandler = (event) => {
-        // console.log("this marker is clickable", event)
-        let markerTouchEvent = event
-        let lat = markerTouchEvent.nativeEvent.coordinate.latitude
-        let lng = markerTouchEvent.nativeEvent.coordinate.longitude
-    }
+    // const displayFormHandler = (event) => {
+    //     // console.log("this marker is clickable", event)
+    //     let markerTouchEvent = event
+    //     let lat = markerTouchEvent.nativeEvent.coordinate.latitude
+    //     let lng = markerTouchEvent.nativeEvent.coordinate.longitude
+    // }
 
     return (
         <View style={styles.mapContainer}>
@@ -82,9 +82,9 @@ const GeoMap = (props) => {
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
                    
                     {!!newMarker ? 
-                    <Marker image={require('../assets/images/birdicon.png')} title="New Field Entry" description="testing to see what show up here and if the pop up resizes based on the amount of text" coordinate={newMarker}>
-                        <Callout style={styles.modal}>
-                            <AddFieldEntryForm />
+                    <Marker image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker}>
+                        <Callout >
+                            <AddFieldEntryForm visible={true} coords={newMarker}/>
                         </Callout>
                     </Marker> : null
                     }

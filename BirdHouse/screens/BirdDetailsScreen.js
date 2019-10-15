@@ -1,23 +1,48 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Button, Image, ScrollView, TouchableOpacity, Platform, FlatList } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import Colors from '../constants/Colors';
+import uuid from 'uuid';
+import * as birdsActions from '../store/actions/birds';
 
 const BirdDetailsScreen = props => {
-    // const bird_id = props.navigation.getParam('birdId')
-    // console.log(props.navigation.getParam('bird'), "bird in the bird bird details")
-    // console.log("---------------------------------")
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const loadBird = async () => {
+            // let birdId = props.navigation.birdId
+            const birdId = props.navigation.getParam('birdId')
+            console.log(props, "props in bird details")
+            console.log(birdId)
+            dispatch(birdsActions.getBird(birdId));
+        }
+        loadBird();
+    }, [dispatch, singleBird]);
+
+    const singleBird = useSelector(state => {
+        // console.log(state.birds.singleBird, "single bird")
+        return state.birds.singleBird
+    })
     return (
         <View style={styles.screen}>
-            <Text>The Bird Details Screen!</Text>
-            <Text>{props.navigation.getParam('bird').item.common_name}</Text>
-            <Image source={props.navigation.getParam("bird").item.img_url}></Image>
-            <Button title="Go Back" onPress={() => {props.navigation.goBack()}} />
+            <ScrollView>
+                <Text>The Bird Details Screen!</Text>
+                
+                <View>
+                    <Text>{singleBird.common_name}</Text>
+                    <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>
+                    <Text>{singleBird.details}</Text>
+                </View>
+                
+                <Button title="Go Back" onPress={() => {props.navigation.goBack()}} />
+            </ScrollView>
         </View>
     )
 }
 
 BirdDetailsScreen.navigationOptions = (navigationData) => {
     // console.log(navigationData)
-    // const bird_id = navigationData.navigation.getParam('birdId')
     const bird_name = navigationData.navigation.getParam('birdName')
 
     return {
@@ -31,6 +56,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    image: {
+        height: 200,
+        width: 200
+    }
 })
 
 export default BirdDetailsScreen;
