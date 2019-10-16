@@ -6,6 +6,11 @@ import CalendarPicker from 'react-native-calendar-picker';
 import * as entriesActions from '../store/actions/entries';
 import SearchBar from './SearchBar';
 import uuid from 'uuid';
+import { Feather } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
+import Card from './Card';
+
+
 
 
 const AddFieldEntryForm = props => {
@@ -30,7 +35,11 @@ const AddFieldEntryForm = props => {
         let latitude = props.coords.latitude
         let longitude = props.coords.longitude
         await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude))
-        setModalVisible(false)
+        setImage(false);
+        setNotes();
+        setBird();
+        setShowSearchResults(false);
+        props.onHandleModalClose()
             // props.navigation.navigate('Menu');
     }
 
@@ -58,6 +67,17 @@ const AddFieldEntryForm = props => {
         )
     }
 
+    const handlePlayAudio = async () => {
+        const soundObject = new Audio.Sound();
+        try {
+            await soundObject.loadAsync({ uri: bird.birdcall });
+            await soundObject.playAsync();
+            // Your sound is playing!
+        } catch (error) {
+            // An error occurred!
+        }
+    }
+
     return (
             <Modal animationType="slide" style={styles.form} visible={props.visible}>
                 <ScrollView>
@@ -69,8 +89,15 @@ const AddFieldEntryForm = props => {
                     <View style={styles.form}>
                         <SearchBar onShowBirds={displayBirdList}/>
                         {!!bird ? <View>
-                                    <Text>Selected Bird: {bird.common_name}</Text>
-                                    <Image style={styles.birdie} source={{uri: bird.img_url}} />
+                                    <Text>Selected Bird:</Text>
+                                    <Card>
+                                        <View style={styles.row}>
+                                            <Text>{bird.common_name}</Text>
+                                            <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
+                                        </View>
+                                        <Image style={styles.birdie} source={{uri: bird.img_url}} />
+                                        <Feather name="x-square" size={25} onPress={() => setBird()} />
+                                    </Card>
                                 </View> 
                                 : null }
                     </View>
@@ -78,9 +105,9 @@ const AddFieldEntryForm = props => {
                         maxToRenderPerBatch={20} numColumns={1} /> : null}
                     <Text style={styles.label}>Notes</Text>
 
-                <TextInput multiline={true}
+                    <TextInput multiline={true}
                     numberOfLines={8} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
-                    <ImageSelector onImageSelected={imageSelectedHandler} />
+                    <ImageSelector style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                     
                     {/* <View style={styles.cal}>
                         <CalendarPicker />
@@ -96,22 +123,23 @@ const AddFieldEntryForm = props => {
 
 const styles = StyleSheet.create({
     form: {
-        padding: 100,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     formView: {
         justifyContent: 'center'
     },
     label: {
         fontSize: 16,
-        marginBottom: 15
+        marginBottom: 5,
+        alignSelf: "center"
     },
     textInput: {
-        height: 250,
+        height: 200,
         width: '90%',
         backgroundColor: "ghostwhite",
+        alignSelf: "center",
         borderWidth: 1,
-        marginTop: 20
+        marginTop: 5
     },
     cal: {
         width: 200
@@ -119,11 +147,23 @@ const styles = StyleSheet.create({
     formtop: {
         flexDirection: "row",
         justifyContent: 'space-around',
-        paddingTop: 50
+        alignItems: "center",
+        paddingTop: 60
     },
     birdie: {
         width: 100,
-        height: 100
+        height: 100,
+        alignSelf: 'center',
+        borderRadius: 10
+    },
+    imagePicker: {
+        height: 10,
+        width: 10
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: 'space-around',
+        alignItems: "center",
     }
 })
 

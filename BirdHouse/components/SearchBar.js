@@ -9,7 +9,7 @@ const SearchBar = props => {
     dispatch = useDispatch();
 
     const handleSearchInput = (text) => {
-        searchInput = text
+        let searchInput = text
         setSearchTerm(searchInput)
         if (searchTerm.length >= 1) {
             sendUpSearch()
@@ -32,11 +32,13 @@ const SearchBar = props => {
 
     return (
         <View>
-            <Text>Search Birds</Text>
+            <View style={styles.row}>
+                <Text style={styles.label}>Search Birds</Text>
+                {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
+            </View>
             <TextInput autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />
-            {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
         </View>
     );
 };
@@ -44,9 +46,20 @@ const SearchBar = props => {
 const styles = StyleSheet.create({
     input: {
         height: 30,
-        borderBottomColor: 'grey',
+        backgroundColor: 'ghostwhite',
+        borderBottomColor: 'black',
         borderBottomWidth: 1,
-        marginVertical: 10
+        width: '90%',
+        alignSelf: "center",
+        marginBottom: 5
+    },
+    label: {
+        alignSelf: 'center',
+        fontSize: 16
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-around"
     }
 });
 

@@ -24,7 +24,7 @@ export const signup = (username, password, avatar) => {
 
             const signupData = await response.json();
             dispatch({ type: "SIGNUP", payload: signupData})
-            const expirationDate = new Date().getTime() + 60000
+            const expirationDate = new Date(new Date().getTime() + 600000)
             persistDataToStorage(signupData.jwt, signupData.user, expirationDate)
         }
     } else {
@@ -49,7 +49,7 @@ export const signup = (username, password, avatar) => {
 
             const loginData = await response.json();
             dispatch({ type: "LOGIN", payload: loginData })
-            const expirationDate = new Date().getTime() + 60000
+            const expirationDate = new Date(new Date().getTime() + 6000000)
             persistDataToStorage(loginData.jwt, loginData.user, expirationDate)
         }
     }
@@ -59,9 +59,14 @@ export const logout = () => {
    return {type: "LOGOUT"}
 }
 
+export const authenticate = (userId, token) => {
+    return {type: "AUTHENTICATE", payload: {user: userId, token: token}}
+}
+
 const persistDataToStorage = (token, userId, expirationDate) => {
     AsyncStorage.setItem("userData", JSON.stringify({
         token: token,
         userId: userId,
+        expiryDate: expirationDate.toISOString()
     }))
 }

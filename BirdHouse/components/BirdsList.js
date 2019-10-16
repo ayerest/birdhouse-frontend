@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
+import { ScrollView, View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
 import { useSelector } from 'react-redux';
 import uuid from 'uuid';
-import BirdCard from './BirdCard'
+import BirdCard from './BirdCard';
 
 const BirdsList = (props) => {
 
@@ -24,20 +24,33 @@ const BirdsList = (props) => {
                     })
                 }}
             >
-
                 <BirdCard bird={bird} common_name={bird.item.common_name} scientific_name={bird.item.species_name} />
             </TouchableOpacity>
 
         )
     }
 
-    return (
-        <View>
-            {/* <Button title="Go Back" onPress={() => { props.navigation.goBack() }} /> */}
+    const renderFooter = () => {
+        return (
+            <View>
+                <Text>------------------------------</Text>
+            </View>
 
-            <FlatList keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
-                 numColumns={2} />
-        </View>
+        )
+    }
+
+    return (
+
+            <View>
+                {/* <Button title="Go Back" onPress={() => { props.navigation.goBack() }} /> */}
+
+            <FlatList contentContainerStyle={{
+                paddingBottom: 50
+            }} keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
+                numColumns={2}
+            />
+            </View>
+       
     )
 } 
 
@@ -53,8 +66,11 @@ BirdsList.navigationOptions = (navigationData) => {
 }
 
 const styles = StyleSheet.create({
-    bird: {
+    flex: {
         flex: 1
+    },
+    margin: {
+        marginBottom: 100
     },
     stockimage: {
         width: 50,
