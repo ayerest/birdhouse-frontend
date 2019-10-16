@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Platform } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Text, StyleSheet, Button, FlatList, Platform, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
@@ -11,10 +11,12 @@ import uuid from 'uuid';
 const BadgesScreen = props => {
 
     const dispatch = useDispatch();
-
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
         const loadMyBadges = async () => {
-            dispatch(badgesActions.getMyBadges());
+            setIsLoading(true);
+            await dispatch(badgesActions.getMyBadges());
+            setIsLoading(false);
         }
         loadMyBadges();
     }, [dispatch, badgesList]);
@@ -34,8 +36,8 @@ const BadgesScreen = props => {
     return (
         <View style={styles.screen}>
 
-            <Text>The Badges Screen!</Text>
-            {badgesList.length > 0 ? <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={2} />: <Text>You haven't earned any badges yet!</Text>}
+            {!isLoading && badgesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
+            {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={2} />}
             
         </View>
     )

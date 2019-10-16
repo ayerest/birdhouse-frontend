@@ -10,12 +10,14 @@ import BirdsList from './BirdsList';
 const BirdCount = (props) => {
 
     const [showMyBirds, setShowMyBirds] = useState("Show My Birds");
-
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     
     useEffect(() => {
         const loadMyBirdCount = async () => {
-            dispatch(birdsActions.getMyBirds());                
+            setIsLoading(true)
+            await dispatch(birdsActions.getMyBirds());  
+            setIsLoading(false)          
         }
         loadMyBirdCount();
     }, [dispatch]);
@@ -37,10 +39,14 @@ const BirdCount = (props) => {
 
     return (
         <View>
-            <Text>
-                My Bird Count: {!!myBirds ? myBirds.length : null}
-            </Text>
-            <Button title={showMyBirds} onPress={handleShowMyBirds}/>
+            {isLoading ? <ActivityIndicator color="blue" /> :
+                <View style={styles.row}>
+                    <Text>
+                        My Bird Count: {myBirds.length }
+                    </Text>
+                    <Button title={showMyBirds} onPress={handleShowMyBirds}/>
+                </View>
+            }
             {/* {showMyBirds && (props.myBirds && props.myBirds.length > 0) ? <BirdsList birdList={myBirds} /> : <Text>You have not seen any birds yet!</Text>} */}
         </View>
     )
@@ -49,6 +55,11 @@ const BirdCount = (props) => {
 const styles = StyleSheet.create({
     button: {
 
+    }, 
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center"
     }
 })
 

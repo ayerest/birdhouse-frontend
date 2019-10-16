@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { View, Text, StyleSheet, Platform, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
@@ -10,11 +10,14 @@ import uuid from 'uuid'
 
 const PicturesScreen = props => {
 
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
         const loadMyPhotos = async () => {
-            dispatch(photosActions.getMyPhotos());
+            setIsLoading(true);
+            await dispatch(photosActions.getMyPhotos());
+            setIsLoading(false)
         }
         loadMyPhotos();
     }, [dispatch, photosList]);
@@ -34,8 +37,11 @@ const PicturesScreen = props => {
     return (
         <View style={styles.screen}>
 
-            <Text>The Photos Screen!</Text>
-            {photosList.length > 0 ? <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={2} /> : <Text>You haven't taken any photos yet!</Text>}
+            {!isLoading && photosList.length == 0 ? <Text>You haven't taken any photos yet!</Text> : null}
+            {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
+
+            {/* <Text>The Photos Screen!</Text>
+            {photosList.length > 0 ? <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} /> : <Text>You haven't taken any photos yet!</Text>} */}
         </View>
     )
 }
@@ -62,8 +68,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        height: 200,
-        width: 300
+        height: 300,
+        width: 300,
+        marginBottom: 10,
+        borderRadius: 15,
+        borderWidth: 2,
+        borderColor: "black"
     }
 })
 

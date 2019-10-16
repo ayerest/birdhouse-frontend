@@ -85,7 +85,8 @@ const GeoMap = (props) => {
         <View style={styles.mapContainer}>
             <View style={styles.mapExtras}>
                 <Button style={styles.button} title={"Refresh Map"} onPress={displayMapHandler}/>
-                <Text>See a bird? Tap the map to drop a marker and then tap the bird to add a new entry!</Text>
+                <Text style={styles.center}>See a bird?</Text>
+                <Text style={styles.center}>Tap the map to add a bird marker and then tap the bird marker to add a new entry!</Text>
             </View>
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
@@ -112,9 +113,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     mapExtras: {
+    
     },
-    marker: {
-
+    center: {
+        textAlign: "center"
     },
     modal: {
 

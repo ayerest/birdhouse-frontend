@@ -3,7 +3,6 @@ import { Text, StyleSheet, Image } from 'react-native';
 import Card from './Card'
 
 const EntryCard = props => {
-    // console.log(props.fieldentry, "props in the entry card")
     return (
         <Card>
             <Text>{props.fieldentry.date.slice(0, 10)}</Text>

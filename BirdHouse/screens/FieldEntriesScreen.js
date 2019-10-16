@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Platform, FlatList } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Platform, FlatList, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
@@ -11,12 +11,14 @@ import EntryCard from '../components/EntryCard';
 
 
 const FieldEntriesScreen = props => {
-
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
         const loadMyFieldEntries = async () => {
-            dispatch(entriesActions.getMyEntries());
+            setIsLoading(true);
+            await dispatch(entriesActions.getMyEntries());
+            setIsLoading(false);
         }
         loadMyFieldEntries();
     }, [dispatch, fieldEntriesList]);
@@ -49,9 +51,10 @@ const FieldEntriesScreen = props => {
     return (
             <View style={styles.screen}>
 
-                <Text>The Field Entries Screen!</Text>
-                <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />
-                {/* <Button title="Go to Details" onPress={() => {props.navigation.navigate({routeName: 'FieldEntry'})}}/> */}
+                {!isLoading && fieldEntriesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
+                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
+
+            
             </View>
     )
 }

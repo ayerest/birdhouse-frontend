@@ -6,6 +6,7 @@ import * as birdActions from '../store/actions/birds'
 const SearchBar = props => {
     const [searchTerm, setSearchTerm] = useState("")
     const [error, setError] = useState()
+    const [isLoading, setIsLoading] = useState(false)
     dispatch = useDispatch();
 
     const handleSearchInput = (text) => {
@@ -23,7 +24,9 @@ const SearchBar = props => {
 
     const sendUpSearch = async () => {
         try {
+            setIsLoading(true);
             await dispatch(birdActions.searchBirds(searchTerm))
+            setIsLoading(false);
             props.onShowBirds("search")
         } catch (err) {
             setError(err.message)

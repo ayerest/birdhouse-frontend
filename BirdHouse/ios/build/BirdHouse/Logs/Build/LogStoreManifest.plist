@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>487D7074-EE1A-47F6-A4F0-814B7D5C8A23</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>487D7074-EE1A-47F6-A4F0-814B7D5C8A23.xcactivitylog</string>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>BirdHouse project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>BirdHouse</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace BirdHouse with scheme BirdHouse and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>592878352.75858605</real>
+			<key>timeStoppedRecording</key>
+			<real>592878355.29905498</real>
+			<key>title</key>
+			<string>Building workspace BirdHouse with scheme BirdHouse and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>487D7074-EE1A-47F6-A4F0-814B7D5C8A23</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

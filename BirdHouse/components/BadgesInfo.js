@@ -1,0 +1,1 @@
+//info section for how to earn badges, what kind of badges exist

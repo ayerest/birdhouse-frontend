@@ -22,18 +22,18 @@ const CategoriesList = (props) => {
         return state.birds.birdCategories
     }) 
 
-    const setCategory = (category) => {
+    const setCategory = async (category) => {
         // console.log(category, "setting the category")
-        setCurrentCategory(category)
+        await setCurrentCategory(category)
+        // getBirds();
         // !!currentCategory ? getBirds() : getBirds(category)
         // console.log("current category", currentCategory)
     }
     
-    const getBirds = () => {
-        if (!!currentCategory) {
-            setIsLoading(true)
+    const getBirds = async () => {
             try {
-                dispatch(birdsActions.fetchBirds(currentCategory));
+                setIsLoading(true)
+                await dispatch(birdsActions.fetchBirds(currentCategory));
                 props.onShowBirds("category")
                 setIsLoading(false)
                 setCurrentCategory(null)
@@ -42,10 +42,6 @@ const CategoriesList = (props) => {
                 setIsLoading(false)
                 setCurrentCategory(null)
             }
-        } else {
-
-            return
-        }
     }
     useEffect(() => {
 
@@ -62,8 +58,8 @@ const CategoriesList = (props) => {
 
     return (
         <View>
-            <Text>Categories</Text>
-            {isLoading ? <ActivityIndicator /> : null}
+            {/* <Text>Categories</Text> */}
+            {isLoading && !!currentCategory ? <ActivityIndicator /> : null}
             <FlatList keyExtractor={(item, index) => uuid()} data={categoryList} renderItem={renderCategoryItem}
                 numColumns={1} />
         </View>

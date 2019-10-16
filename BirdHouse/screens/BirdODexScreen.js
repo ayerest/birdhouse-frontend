@@ -40,25 +40,30 @@ const BirdODexScreen = props => {
     //     return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
     // }
     const handleOnShowBirds = (type) => {
+        setIsLoading(true)
         setCurrentBirds([]);
         setShowBirds(false);
         switch(type) {
             case false:
                 setCurrentBirds([]);
+                setShowBirds(false);
+                setIsLoading(false);
                 return;
             case "mine":
                 setCurrentBirds(myBirds);
                 setShowBirds(true);
+                setIsLoading(false);
                 return;
             case "search":
                 setCurrentBirds(filteredBirds);
                 setShowBirds(true);
+                setIsLoading(false);
                 return;
             case "category":
-               
-                    setCurrentBirds(categoryBirds)              
-                    setShowBirds(true);
-                    return;
+                setCurrentBirds(categoryBirds)              
+                setShowBirds(true);
+                setIsLoading(false);
+                return;
             default:
                 return;
         }
@@ -74,6 +79,7 @@ const BirdODexScreen = props => {
             {/* <Button title="Go Back" onPress={handleGoBack}/> */}
             <SearchBar onShowBirds={handleOnShowBirds}/>
             <BirdCount onShowBirds={handleOnShowBirds}/>
+            {isLoading ? <ActivityIndicator color="black" /> : null}
             {showBirds ? <BirdsList {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
         </View>
