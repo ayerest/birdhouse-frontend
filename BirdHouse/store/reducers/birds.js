@@ -5,7 +5,8 @@ const initialState = {
     categoryBirds: [],
     filteredBirds: [],
     myBirds: [],
-    singleBird: []
+    singleBird: [],
+    currentBirds: []
 }
 
 const birdsReducer = (state = initialState, action) => {
@@ -19,17 +20,20 @@ const birdsReducer = (state = initialState, action) => {
             // console.log("in reducer", action.categoryBirds)
             return {
                 ...state,
-                categoryBirds: action.categoryBirds
+                categoryBirds: action.categoryBirds,
+                currentBirds: action.categoryBirds
             }
         case "SEARCH_BIRDS":
             return {
                 ...state,
-                filteredBirds: action.filteredBirds
+                filteredBirds: action.filteredBirds,
+                currentBirds: action.categoryBirds
             }
         case "MY_BIRDS":
             return {
                 ...state,
-                myBirds: action.myBirds
+                myBirds: action.myBirds,
+                currentBirds: action.categoryBirds
             }
         case "GET_BIRD":
             return {

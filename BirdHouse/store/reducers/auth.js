@@ -15,6 +15,12 @@ const authReducer = (state=initialState, action) => {
                 user: action.payload.user,
                 token: action.payload.jwt
             }
+        case "AUTHENTICATE":
+            // console.log("auth", action.payload)
+            return {
+                user: action.payload.user,
+                token: action.payload.token
+            }
         case 'LOGOUT':
             return initialState;
         default:

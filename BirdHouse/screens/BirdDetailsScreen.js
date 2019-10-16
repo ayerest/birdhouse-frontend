@@ -5,6 +5,8 @@ import Colors from '../constants/Colors';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
 import { Audio } from 'expo-av';
+import { Feather } from '@expo/vector-icons';
+
 
 const BirdDetailsScreen = props => {
 
@@ -44,7 +46,7 @@ const BirdDetailsScreen = props => {
                 
                 <View>
                     <Text>{singleBird.common_name}</Text>
-                    <Button title="Play Birdcall" onPress={handlePlayAudio}/>
+                    <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
                     <View styles={styles.row}>
                         <View>
                             <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>

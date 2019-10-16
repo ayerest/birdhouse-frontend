@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { Platform, SafeAreaView, Button, View, Image } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {useDispatch} from 'react-redux';
@@ -18,6 +18,7 @@ import PicturesScreen from '../screens/PicturesScreen';
 
 import Colors from '../constants/Colors'
 import AuthScreen from '../screens/AuthScreen';
+import StartupScreen from '../screens/StartupScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -67,6 +68,7 @@ const MenuNavigator = createDrawerNavigator({
     const dispatch = useDispatch();
     return <View style={{flex: 1}}>
       <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+        <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
       <DrawerItems {...props} />
       <Button title="Logout" onPress={() => {
         dispatch(authActions.logout());
@@ -82,6 +84,7 @@ const AuthNavigator = createStackNavigator({
 })
 
 const SwitchMenu = createSwitchNavigator({
+  Startup: StartupScreen,
   Auth: AuthNavigator,
   Menu: MenuNavigator
 })

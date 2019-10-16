@@ -63,10 +63,15 @@ const BirdODexScreen = props => {
                 return;
         }
     }
+
+    const handleGoBack = () => {
+        setCurrentBirds([])
+        setShowBirds(false)
+    } 
     
     return (
         <View style={styles.screen}>
-            <Text>The BirdODex Screen!</Text>
+            {/* <Button title="Go Back" onPress={handleGoBack}/> */}
             <SearchBar onShowBirds={handleOnShowBirds}/>
             <BirdCount onShowBirds={handleOnShowBirds}/>
             {showBirds ? <BirdsList {...props} birdList={currentBirds}/> : null}
@@ -91,7 +96,7 @@ BirdODexScreen.navigationOptions = navData => {
 
 const styles = StyleSheet.create({
     screen: {
-        // flex: 1,
+        flex: 1,
     },
     gridItem: {
         // flex: 1,
