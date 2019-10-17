@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Platform, View, Text, KeyboardAvoidingView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
+import {ScrollView, Platform, View, Text, KeyboardAvoidingView, TouchableWithoutFeedback, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
 import Card from '../components/Card'
 import {useDispatch} from 'react-redux'
 import * as authActions from '../store/actions/auth'
@@ -48,11 +48,15 @@ const AuthScreen = (props) => {
         }
     }
     return (
+        <ScrollView>
+
         <KeyboardAvoidingView behavior="padding" 
         keyboardVerticalOffset={50}
         style={styles.screen}>
             <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
             <Card style={styles.authContainer}>
+            <TouchableWithoutFeedback>
+                
                 {!login ? 
                     <ScrollView>
                         <View style={styles.screen}>
@@ -106,8 +110,10 @@ const AuthScreen = (props) => {
                     }
                 </ScrollView>
                 }
+            </TouchableWithoutFeedback>
             </Card>
         </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 

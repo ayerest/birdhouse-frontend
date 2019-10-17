@@ -64,7 +64,7 @@ const GeoMap = (props) => {
 
     const addMarkerHandler = (event) => {
         let mapTouchEvent = event
-        console.log(mapTouchEvent, "testing testing")
+        // console.log(mapTouchEvent, "testing testing")
         let lat = mapTouchEvent.nativeEvent.coordinate.latitude
         let lng = mapTouchEvent.nativeEvent.coordinate.longitude
         setNewMarker({latitude: lat, longitude: lng })

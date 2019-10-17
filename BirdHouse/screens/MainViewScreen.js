@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
 import Colors from '../constants/Colors';
+import Stepometer from '../components/Stepometer';
 
 const MainViewScreen = props => {
     return (
         <View style={styles.screen}>
+            <Stepometer />
             <GeoMap />
         </View>
     )
@@ -23,7 +25,8 @@ MainViewScreen.navigationOptions = navData => {
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName= {Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => {navData.navigation.toggleDrawer()}} />
-        </HeaderButtons>
+        </HeaderButtons>,
+        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 }
 

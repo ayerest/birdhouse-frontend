@@ -47,7 +47,7 @@ const FieldEntries = createStackNavigator({
 })
 
 const Birds = createStackNavigator({
-  BirdODex: BirdODexScreen,
+  BirdieDex: BirdODexScreen,
   BirdsList: BirdsList,
   BirdDetails: BirdDetailsScreen
 })
@@ -60,7 +60,7 @@ const Main = createStackNavigator({
 const MenuNavigator = createDrawerNavigator({
   Home: Main,
   "Field Entries": FieldEntries,
-  BirdODex: Birds,
+  BirdieDex: Birds,
   "My Badges": Badges,
   "My Photos": Pictures,
 }, {

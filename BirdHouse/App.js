@@ -14,6 +14,7 @@ import authReducer from './store/reducers/auth';
 import badgesReducer from './store/reducers/badges'
 import {Provider} from 'react-redux';
 import photosReducer from './store/reducers/photos';
+import stepsReducer from './store/reducers/steps'
 
 useScreens();
 
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   birds: birdsReducer,
   user: authReducer,
   badges: badgesReducer,
-  photos: photosReducer
+  photos: photosReducer,
+  steps: stepsReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

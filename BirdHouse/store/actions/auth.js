@@ -1,9 +1,11 @@
 // fetch post request for sign up goes here
 import {AsyncStorage} from 'react-native';
+import { base } from './base_url'
+
 export const signup = (username, password, avatar) => {
     if (!!avatar) {
         return async dispatch => {
-            const response = await fetch('http://localhost:3000/users', {
+            const response = await fetch(`http://${base}/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -29,7 +31,7 @@ export const signup = (username, password, avatar) => {
         }
     } else {
         return async dispatch => {
-            const response = await fetch('http://localhost:3000/login', {
+            const response = await fetch(`http://${base}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

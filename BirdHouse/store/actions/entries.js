@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { base } from './base_url'
 
 
 export const postNewEntry = (date, bird, notes, image, latitude, longitude) => {
@@ -6,7 +7,7 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/field_entries', {
+            const response = await fetch(`http://${base}/field_entries`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const getMyEntries = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/entries', {
+            const response = await fetch(`http://${base}/entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

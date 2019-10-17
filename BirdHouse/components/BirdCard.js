@@ -20,11 +20,19 @@ const BirdCard = props => {
     // console.log(birdIds)
     // console.log(props.bird.item.id)
 
+    const soundObject = new Audio.Sound();
     const handlePlayAudio = async () => {
-        const soundObject = new Audio.Sound();
+        
         try {
+            // await soundObject.unloadAsync();
+            
             await soundObject.loadAsync({ uri: props.bird.item.birdcall });
-            await soundObject.playAsync();
+            if (soundObject.isPlaying) {
+                console.log("in try")
+            } else {
+
+                await soundObject.playAsync();
+            }
             // Your sound is playing!
         } catch (error) {
             // An error occurred!
@@ -32,29 +40,40 @@ const BirdCard = props => {
     }
     
     return (
-            <Card>
-                <View>
+            <Card style={styles.card}>
+                <View style={styles.center}>
                     {birdIds.indexOf(props.bird.item.id) >= 0 ? <Image style={styles.image} source={{uri: props.bird.item.img_url}}></Image>:
                     <Image style={styles.stockimage} source={require("../assets/images/birdicon.png")}></Image>}
-                    <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
+                    <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
                 </View>
-                <Text>{props.common_name}</Text>
-                <Text>{props.scientific_name}</Text>
+                <View style={styles.center}>
+                    <Text style={styles.smallFont}>{props.common_name}</Text>
+                    <Text style={styles.smallFont}>{props.scientific_name}</Text>
+                </View>
             </Card>
     );
 };
 
 const styles = StyleSheet.create({
-    bird: {
-        flex: 1
+    card: {
+        height: 200,
+        width: 170,
+        alignContent: "center"
+    }, 
+    center: {
+        alignSelf: "center"
     },
     stockimage: {
-        width: 50,
-        height: 50
+        width: 90,
+        height: 90
     },
     image: {
-        width: 150,
-        height: 150
+        width: 130,
+        height: 100,
+        borderRadius: 10
+    },
+    smallFont: {
+        fontSize: 12
     }
 });
 

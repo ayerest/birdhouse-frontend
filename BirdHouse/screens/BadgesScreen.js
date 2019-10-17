@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Platform, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
@@ -53,7 +53,8 @@ BadgesScreen.navigationOptions = navData => {
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>
+        </HeaderButtons>,
+        headerRight: (<Image style={{width: 25, height: 25}}source={require("../assets/images/birdicon.png")} />)
     }
 }
 

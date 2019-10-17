@@ -1,10 +1,11 @@
 // export const SET_BIRDS = 'SET_BIRDS'
+import { base } from './base_url'
 
 export const fetchBirdCategories = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         try {
-            const response = await fetch('http://localhost:3000/birds', {
+            const response = await fetch(`http://${base}/birds`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -29,7 +30,7 @@ export const fetchBirds = (category) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/birds', {
+            const response = await fetch(`http://${base}/birds`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -63,7 +64,7 @@ export const getBird = (birdId) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://localhost:3000/birds/${birdId}`, {
+            const response = await fetch(`http://${base}/birds/${birdId}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }
@@ -90,7 +91,7 @@ export const searchBirds = (searchTerm) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/bird_entries', {
+            const response = await fetch(`http://${base}/bird_entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -121,7 +122,7 @@ export const getMyBirds = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/bird_images', {
+            const response = await fetch(`http://${base}/bird_images`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

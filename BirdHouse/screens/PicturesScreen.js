@@ -27,8 +27,8 @@ const PicturesScreen = props => {
     })
 
     const renderPhotoItem = (image) => {
-        console.log("---------------------")
-        console.log(image, "what do i have access to?")
+        // console.log("---------------------")
+        // console.log(image, "what do i have access to?")
         return (
             <Image style={styles.image} source={{uri: image.item.img_url}}/>
         )
@@ -57,7 +57,8 @@ PicturesScreen.navigationOptions = navData => {
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>
+        </HeaderButtons>,
+        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 }
 

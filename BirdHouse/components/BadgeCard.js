@@ -3,9 +3,9 @@ import { Text, StyleSheet, Image } from 'react-native';
 import Card from './Card'
 
 const BadgeCard = props => {
-    console.log(props.badge, "in the badge card")
-    let image = "../assets/images/" + props.badge.medal + "-medal.png"
-    console.log(image)
+    // console.log(props.badge, "in the badge card")
+    // let image = "../assets/images/" + props.badge.medal + "-medal.png"
+    // console.log(image)
 
     const renderMedalImage = () => {
         if (props.badge.medal === "Gold") {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
 import {useSelector, useDispatch} from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -88,7 +88,7 @@ const BirdODexScreen = props => {
 
 BirdODexScreen.navigationOptions = navData => {
     return {
-        headerTitle: "BirdODex",
+        headerTitle: "BirdieDex",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"
@@ -96,7 +96,8 @@ BirdODexScreen.navigationOptions = navData => {
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>
+        </HeaderButtons>,
+        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 }
 

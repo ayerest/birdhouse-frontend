@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { base } from './base_url'
 
 
 export const getMyBadges = () => {
@@ -6,7 +7,7 @@ export const getMyBadges = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch('http://localhost:3000/badges', {
+            const response = await fetch(`http://${base}/badges`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -22,7 +23,7 @@ export const getMyBadges = () => {
             }
 
             const badgesData = await response.json();
-            console.log(badgesData, "did I get data back?")
+            // console.log(badgesData, "did I get data back?")
 
             dispatch({ type: 'MY_BADGES', myBadges: badgesData })
         } catch (err) {

@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
 import { Audio } from 'expo-av';
 import { Feather } from '@expo/vector-icons';
+import Card from '../components/Card';
 
 
 const BirdDetailsScreen = props => {
@@ -16,15 +17,15 @@ const BirdDetailsScreen = props => {
         const loadBird = async () => {
             // let birdId = props.navigation.birdId
             const birdId = props.navigation.getParam('birdId')
-            console.log(props, "props in bird details")
-            console.log(birdId)
+            // console.log(props, "props in bird details")
+            // console.log(birdId)
             dispatch(birdsActions.getBird(birdId));
         }
         loadBird();
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
-        // console.log(state.birds.singleBird, "single bird")
+        // console.log(state.birds.singleBird.range_map, "single bird")
         return state.birds.singleBird
     })
 
@@ -41,21 +42,16 @@ const BirdDetailsScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <ScrollView>
-                <Text>The Bird Details Screen!</Text>
-                
-                <View>
-                    <Text>{singleBird.common_name}</Text>
-                    <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
-                    <View styles={styles.row}>
-                        <View>
-                            <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>
-                            <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image>
-                        </View>
-                        <Text>{singleBird.details}</Text>
-                    </View>
-                    <Button title="Go Back" onPress={() => {props.navigation.goBack()}} />
-                </View>
+            <ScrollView>                
+                <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
+                <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>
+                <Card>
+                    <Text>{singleBird.details}</Text>
+                </Card>
+                 
+                {!!singleBird.range_map ?<Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> : null}
+                       
+                <Button title="Go Back" onPress={() => {props.navigation.goBack()}} />
                 
             </ScrollView>
         </View>
@@ -78,12 +74,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        height: 200,
-        width: 200
+        resizeMode: "cover",
+        height: 300,
+        width: '95%',
+        alignSelf: "center",
     },
     row: {
         flexDirection: "row",
         flexWrap: "wrap"
+    },
+    center: {
+        alignSelf: "center"
     }
 })
 

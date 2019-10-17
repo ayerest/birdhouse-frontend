@@ -2597,6 +2597,13 @@ expo-permissions@~7.0.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-7.0.0.tgz#f4135c3cf8e49c673a9a714459a1eb2b40fe2092"
   integrity sha512-C+qyVz+pdZO4YpVR2HSC3gsBZg0Qb8brCFgzmDmWcAtgrOiHClaLPdhI2XtQuGh8ubXcKPUGZp++UCEGiG0Jxg==
 
+expo-sensors@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-7.0.0.tgz#b917fc167151edfaf9a9561a262691fc4fc8ed07"
+  integrity sha512-NBPQ8+E8w0DazYktQcho213SKwerXcBVsmbxsgtaSisGYuIi4fdJo7ZcSRI/SmYXjaHlTc4uTPFvQWRwHGKRuQ==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-sqlite@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-7.0.0.tgz#f52585b342278b4034c06caac8384edb2531afa4"
@@ -5831,6 +5838,11 @@ react-navigation-header-buttons@^3.0.2:
   integrity sha512-dzcJnr5uH76Ym8NhIM39zBxrXPgyJ7MLRRt/D5cuubE5w6uYZ5Hsep/QD7AiFlIV1cJrY3iCU0PXyjx33ZhoGA==
   dependencies:
     react-native-platform-touchable "^1.1.1"
+
+react-navigation-hooks@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-hooks/-/react-navigation-hooks-1.1.0.tgz#337c41a50ebc7b9030bb9d9333cd4fd6e1f86b68"
+  integrity sha512-ZY/aiYJ88KXaOo8iOa4171O/0x6ztGhUPd2OYzdaJhLT/tP64zi5HB/RZFImuKhaBTODXjoSpFaOTA5xpePG4g==
 
 react-navigation-stack@1.5.3:
   version "1.5.3"
