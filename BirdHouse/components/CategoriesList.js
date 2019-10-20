@@ -3,7 +3,9 @@ import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityInd
 import Colors from '../constants/Colors';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
-import * as birdsActions from '../store/actions/birds'
+import * as birdsActions from '../store/actions/birds';
+import { Entypo } from '@expo/vector-icons';
+
 
 const CategoriesList = (props) => {
     const [currentCategory, setCurrentCategory] = useState(null)
@@ -23,11 +25,9 @@ const CategoriesList = (props) => {
     }) 
 
     const setCategory = async (category) => {
-        // console.log(category, "setting the category")
         await setCurrentCategory(category)
         // getBirds();
         // !!currentCategory ? getBirds() : getBirds(category)
-        // console.log("current category", currentCategory)
     }
     
     const getBirds = async () => {
@@ -51,7 +51,8 @@ const CategoriesList = (props) => {
     const renderCategoryItem = (categoryItem) => {
         return (
             <TouchableOpacity style={styles.category} onPress={() => setCategory(categoryItem.item)}>
-                <Text style={styles.text}>{categoryItem.item} - Show</Text>
+                <Text style={styles.text}>{categoryItem.item}</Text>
+                <Entypo name="plus" color={"green"} size={20} />
             </TouchableOpacity>
         )
     }
@@ -81,11 +82,11 @@ const styles = StyleSheet.create({
     },
     category: {
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "flex-start",
         borderColor: "black",
         borderBottomWidth: 2,
         backgroundColor: Colors.myColor,
-        padding: 10
+        padding: 8
     }
 })
 

@@ -21,7 +21,6 @@ export const getMySteps = () => {
             }
 
             const stepsData = await response.json();
-            console.log(stepsData, "what did I get back?")
 
             dispatch({ type: 'GET_STEPS', mySteps: stepsData })
         } catch (err) {
@@ -30,6 +29,9 @@ export const getMySteps = () => {
     }
 }
 
+export const currentSteps = (steps) => {
+    return dispatch({ type: 'NEW_STEPS', newSteps: steps })
+}
 
 export const updateSteps = (steps) => {
     console.log(steps)
@@ -37,8 +39,8 @@ export const updateSteps = (steps) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/steps`, {
-                method: "PATCH",
+            const response = await fetch(`http://${base}/my_steps`, {
+                method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"

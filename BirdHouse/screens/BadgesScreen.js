@@ -7,6 +7,8 @@ import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
+// import { useFocusEffect } from 'react-navigation-hooks';
+
 
 const BadgesScreen = props => {
 
@@ -23,6 +25,10 @@ const BadgesScreen = props => {
 
     const badgesList = useSelector(state => {
         return state.badges.myBadges
+    })
+
+    const newSteps = useSelector(state => {
+        return state.steps.myNewSteps
     })
 
     const renderBadgeItem = (badge) => {

@@ -14,7 +14,7 @@ export const getMyBadges = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "user": user
+                    "user": user,
                 })
             })
 
@@ -23,7 +23,6 @@ export const getMyBadges = () => {
             }
 
             const badgesData = await response.json();
-            // console.log(badgesData, "did I get data back?")
 
             dispatch({ type: 'MY_BADGES', myBadges: badgesData })
         } catch (err) {

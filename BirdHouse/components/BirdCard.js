@@ -7,7 +7,10 @@ import { Feather } from '@expo/vector-icons';
 
 
 const BirdCard = props => {
+
+    
     const [audioIcon, setAudioIcon] = useState("🔊")
+    // const [birdcall, setBirdcall] = useState(null)
 
     const myBirds = useSelector(state => {
         return state.birds.myBirds
@@ -17,26 +20,16 @@ const BirdCard = props => {
         return bird.id
     })
 
-    // console.log(birdIds)
-    // console.log(props.bird.item.id)
-
-    const soundObject = new Audio.Sound();
     const handlePlayAudio = async () => {
+        const soundObject = new Audio.Sound();
         
-        try {
-            // await soundObject.unloadAsync();
-            
-            await soundObject.loadAsync({ uri: props.bird.item.birdcall });
-            if (soundObject.isPlaying) {
-                console.log("in try")
-            } else {
-
-                await soundObject.playAsync();
+            try {
+                await soundObject.loadAsync({ uri: props.bird.item.birdcall })
+                props.onHandlePlayAudio(soundObject);
+            } catch (error) {
+                // An error occurred!
             }
-            // Your sound is playing!
-        } catch (error) {
-            // An error occurred!
-        }
+        
     }
     
     return (

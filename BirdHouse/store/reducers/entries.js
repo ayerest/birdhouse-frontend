@@ -2,7 +2,7 @@
 const initialState = {
     entries: [],
     filteredEntries: [],
-    favoriteEntries: []
+    sharedEntries: []
 }
 
 const entriesReducer = (state = initialState, action) => {
@@ -16,6 +16,17 @@ const entriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 entries: action.entries
+            }
+        case "SHARED_ENTRIES":
+            // console.log("looks like I made it", action)
+            return {
+                ...state,
+                sharedEntries: action.entries
+            }
+        case "DISMISS": 
+            return {
+                ...state,
+                sharedEntries: []
             }
         default:
             return state;

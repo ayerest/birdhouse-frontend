@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TextInput, StyleSheet, Text, View, Button, Alert } from 'react-native';
 import * as stepsActions from '../store/actions/steps';
 import { Pedometer } from 'expo-sensors';
-import {useFocusEffect} from 'react-navigation-hooks';
+// import {useFocusEffect} from 'react-navigation-hooks';
 
 
 const Stepometer = props => {
@@ -17,6 +17,7 @@ const Stepometer = props => {
     //         dispatch(stepsActions.updateSteps(currentStepCount));
     //     }
     // }, []));
+    
     useEffect(() => {
         const loadMyStepCount = async () => {
             // setIsLoading(true)
@@ -26,11 +27,15 @@ const Stepometer = props => {
         loadMyStepCount();
     }, [dispatch, stepCount]);
 
+
     useEffect(() => {
         initialzePedometer();
         
     }, [dispatch, stepCount])
 
+    const user = useSelector(state => {
+        return state.user.user
+    })
     
 
     const verifyPedometer = async () => {
@@ -65,6 +70,7 @@ const Stepometer = props => {
     const watchSteps = () => {
         Pedometer.watchStepCount(result => {
             setCurrentStepCount(result.steps)
+            dispatch(stepsActions.currentSteps(result.steps))
         });
     }
 
@@ -80,8 +86,8 @@ const Stepometer = props => {
     return (
         <View>
             <Text>Current Steps Taken: {currentStepCount} </Text>
-            <Text>Total Steps Taken: {stepCount}</Text>
-            <Button title="Update my steps!" onPress={updateMySteps}/>
+            {/* <Text>Total Steps Taken: {stepCount + currentSteps}</Text> */}
+            {/* <Button title="Update my steps!" onPress={updateMySteps}/> */}
         </View>
     );
 };

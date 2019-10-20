@@ -6,8 +6,8 @@ const EntryCard = props => {
     return (
         <Card>
             <Text>{props.fieldentry.date.slice(0, 10)}</Text>
-            {props.fieldentry.birds.length > 0 ? 
-            <Text>{props.fieldentry.birds.map(bird => bird.common_name).join(", ")}</Text> : null
+            {!!props.fieldentry.bird ? 
+            <Text>{props.fieldentry.bird.common_name}</Text> : null
             }
             <Text>{props.notes}</Text>
             { props.fieldentry.images.length > 0 ?

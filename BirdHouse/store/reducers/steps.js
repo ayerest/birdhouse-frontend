@@ -17,6 +17,11 @@ const stepsReducer = (state = initialState, action) => {
                 myNewSteps: action.steps.newSteps,
                 myTotalSteps: action.steps.totalSteps
             }
+        case 'NEW_STEPS':
+            return {
+                ...state,
+                myNewSteps: action.newSteps
+            }
         default:
             return state;
     }

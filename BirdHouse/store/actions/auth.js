@@ -58,6 +58,7 @@ export const signup = (username, password, avatar) => {
 }
 
 export const logout = () => {
+    //should I add logic to update steps at this point??
    return {type: "LOGOUT"}
 }
 

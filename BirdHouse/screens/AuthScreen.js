@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, Platform, View, Text, KeyboardAvoidingView, TouchableWithoutFeedback, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
 import Card from '../components/Card'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import * as authActions from '../store/actions/auth'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
@@ -32,6 +32,10 @@ const AuthScreen = (props) => {
     const imageSelectedHandler = (image) => {
         setAvatar(image)
     }
+
+    const user = useSelector(state => {
+        return state.user.user
+    })
     
     const signupHandler = async () => {
         setError(null)
@@ -40,7 +44,11 @@ const AuthScreen = (props) => {
             await dispatch(authActions.signup(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
-            props.navigation.navigate('Menu');
+            props.navigation.navigate({
+                routeName:'Menu', params: {
+                    user: user
+                }
+            });
         } catch (err) {
             setError(err.message)
             setAvatar(false)

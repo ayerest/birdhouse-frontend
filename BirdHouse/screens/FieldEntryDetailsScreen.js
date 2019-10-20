@@ -7,8 +7,6 @@ import Card from '../components/Card';
 
 const FieldEntryDetailsScreen = props => {
 
-    // console.log(props.navigation.state.params.entry.images, "what does the details screen have access to?")
-    // console.log("----------------------------------")
 
     const renderFieldEntryImage = (image) => {
         return (<View>

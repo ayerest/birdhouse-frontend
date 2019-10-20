@@ -18,7 +18,7 @@ const GeoMap = (props) => {
 
     useEffect(() => {
         displayMapHandler()
-    }, [displayMapHandler]);
+    }, [displayMapHandler]);  
 
     useEffect(() => {
         setVisible(true)
@@ -41,14 +41,15 @@ const GeoMap = (props) => {
         try {
            setIsGettingLocation(true);
            const location = await Location.getCurrentPositionAsync({timeout: 10000});
-        //    console.log(location)
         // const location = await
         // Location.watchPositionAsync({accuracy: 1, timeInterval: 120000}, () => {})
-        // console.log(location, "location")
+        //at this point I can set the marker state with the same lat long so a marker shows up initially
+            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })
             setCurrentLocation({
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
             })
+
         } catch (err) {
             Alert.alert("Unable to access current location.", "Please try again later.", [{text: "Okay"}])
         }
@@ -64,18 +65,12 @@ const GeoMap = (props) => {
 
     const addMarkerHandler = (event) => {
         let mapTouchEvent = event
-        // console.log(mapTouchEvent, "testing testing")
         let lat = mapTouchEvent.nativeEvent.coordinate.latitude
         let lng = mapTouchEvent.nativeEvent.coordinate.longitude
         setNewMarker({latitude: lat, longitude: lng })
     }
 
-    // const displayFormHandler = (event) => {
-    //     // console.log("this marker is clickable", event)
-    //     let markerTouchEvent = event
-    //     let lat = markerTouchEvent.nativeEvent.coordinate.latitude
-    //     let lng = markerTouchEvent.nativeEvent.coordinate.longitude
-    // }
+   
 
     handleModalClose = () => {
         setVisible(false)
@@ -86,7 +81,7 @@ const GeoMap = (props) => {
             <View style={styles.mapExtras}>
                 <Button style={styles.button} title={"Refresh Map"} onPress={displayMapHandler}/>
                 <Text style={styles.center}>See a bird?</Text>
-                <Text style={styles.center}>Tap the map to add a bird marker and then tap the bird marker to add a new entry!</Text>
+                <Text style={styles.center}>Tap the bird marker to document your sighting!</Text>
             </View>
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
@@ -106,7 +101,7 @@ const GeoMap = (props) => {
 
 const styles = StyleSheet.create({
     mapContainer: {
-        height: '80%',
+        height: '100%',
         width: '100%'
     }, 
     map: {

@@ -9,7 +9,7 @@ import BirdsList from './BirdsList';
 
 const BirdCount = (props) => {
 
-    const [showMyBirds, setShowMyBirds] = useState("Show My Birds");
+    const [showMyBirds, setShowMyBirds] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     
@@ -28,23 +28,20 @@ const BirdCount = (props) => {
     
 
     const handleShowMyBirds = () => {
-        if (showMyBirds === "Hide My Birds") {
-            setShowMyBirds("Show My Birds")
-            props.onShowBirds(false)
-        } else {
-            setShowMyBirds("Hide My Birds")
+            setShowMyBirds(true)
             props.onShowBirds("mine")
-        }
     }
 
     return (
         <View>
             {isLoading ? <ActivityIndicator color="blue" /> :
                 <View style={styles.row}>
-                    <Text>
-                        My Bird Count: {myBirds.length }
-                    </Text>
-                    <Button title={showMyBirds} onPress={handleShowMyBirds}/>
+                    {/* <TouchableOpacity onPress={handleShowMyBirds}> */}
+
+                        <Button onPress={handleShowMyBirds} title="My Birds"/>
+                        <Text>Count: {myBirds.length}</Text>
+                    {/* </TouchableOpacity> */}
+                    {/* <Button title={showMyBirds} onPress={handleShowMyBirds}/> */}
                 </View>
             }
             {/* {showMyBirds && (props.myBirds && props.myBirds.length > 0) ? <BirdsList birdList={myBirds} /> : <Text>You have not seen any birds yet!</Text>} */}

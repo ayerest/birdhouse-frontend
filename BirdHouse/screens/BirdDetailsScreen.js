@@ -17,15 +17,12 @@ const BirdDetailsScreen = props => {
         const loadBird = async () => {
             // let birdId = props.navigation.birdId
             const birdId = props.navigation.getParam('birdId')
-            // console.log(props, "props in bird details")
-            // console.log(birdId)
             dispatch(birdsActions.getBird(birdId));
         }
         loadBird();
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
-        // console.log(state.birds.singleBird.range_map, "single bird")
         return state.birds.singleBird
     })
 
@@ -59,7 +56,6 @@ const BirdDetailsScreen = props => {
 }
 
 BirdDetailsScreen.navigationOptions = (navigationData) => {
-    // console.log(navigationData)
     const bird_name = navigationData.navigation.getParam('birdName')
 
     return {

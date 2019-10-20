@@ -39,7 +39,7 @@ const SearchBar = props => {
                 <Text style={styles.label}>Search Birds</Text>
                 {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
             </View>
-            <TextInput autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
+            <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />
         </View>

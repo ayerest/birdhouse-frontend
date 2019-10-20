@@ -23,7 +23,6 @@ export const getMyPhotos = () => {
             }
 
             const photosData = await response.json();
-            // console.log(photosData, "did I get data back?")
 
             dispatch({ type: 'MY_PHOTOS', myPhotos: photosData })
         } catch (err) {

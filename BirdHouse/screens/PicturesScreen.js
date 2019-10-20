@@ -27,8 +27,7 @@ const PicturesScreen = props => {
     })
 
     const renderPhotoItem = (image) => {
-        // console.log("---------------------")
-        // console.log(image, "what do i have access to?")
+        
         return (
             <Image style={styles.image} source={{uri: image.item.img_url}}/>
         )

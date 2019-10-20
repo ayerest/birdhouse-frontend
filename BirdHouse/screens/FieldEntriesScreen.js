@@ -24,7 +24,6 @@ const FieldEntriesScreen = props => {
     }, [dispatch, fieldEntriesList]);
 
     const fieldEntriesList = useSelector(state => {
-        // console.log(state)
         return state.entries.entries
     })
 

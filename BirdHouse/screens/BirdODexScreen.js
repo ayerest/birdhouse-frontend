@@ -14,6 +14,7 @@ const BirdODexScreen = props => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState();
     const [showBirds, setShowBirds] = useState(false)
+    const [showMyBirdCount, setShowMyBirdCount] = useState(false);
     const [currentBirds, setCurrentBirds] = useState([])
     const dispatch = useDispatch();
     
@@ -47,11 +48,13 @@ const BirdODexScreen = props => {
             case false:
                 setCurrentBirds([]);
                 setShowBirds(false);
+                setShowMyBirdCount(false);
                 setIsLoading(false);
                 return;
             case "mine":
                 setCurrentBirds(myBirds);
                 setShowBirds(true);
+                setShowMyBirdCount(true);
                 setIsLoading(false);
                 return;
             case "search":
@@ -79,8 +82,10 @@ const BirdODexScreen = props => {
             {/* <Button title="Go Back" onPress={handleGoBack}/> */}
             <SearchBar onShowBirds={handleOnShowBirds}/>
             <BirdCount onShowBirds={handleOnShowBirds}/>
+            {/* {showMyBirdCount ? <Text>Count: {myBirds.length}</Text> : null} */}
+
             {isLoading ? <ActivityIndicator color="black" /> : null}
-            {showBirds ? <BirdsList {...props} birdList={currentBirds}/> : null}
+            {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
         </View>
     )

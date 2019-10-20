@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import ImageSelector from './ImageSelector';
+import TakePicture from './TakePicture';
 import CalendarPicker from 'react-native-calendar-picker';
 import * as entriesActions from '../store/actions/entries';
 import SearchBar from './SearchBar';
@@ -9,6 +9,9 @@ import uuid from 'uuid';
 import { Feather } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import Card from './Card';
+import SafeAreaView from 'react-native-safe-area-view';
+import { Entypo } from '@expo/vector-icons';
+
 
 
 
@@ -25,6 +28,7 @@ const AddFieldEntryForm = props => {
     const [showSearchResults, setShowSearchResults] = useState(false);
     const [bird, setBird] = useState();
     const [modalVisible, setModalVisible] = useState(props.visible);
+    const [share, setShare] = useState(false);
     const dispatch = useDispatch();
 
     const date = new Date()
@@ -34,8 +38,9 @@ const AddFieldEntryForm = props => {
         //could throw in a props.navigation.goBack() here if I want to go back a page, not sure how form will work yet though - modal or new page
         let latitude = props.coords.latitude
         let longitude = props.coords.longitude
-        await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude))
+        await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude, share))
         setImage(false);
+        setShare(false);
         setNotes();
         setBird();
         setShowSearchResults(false);
@@ -59,8 +64,8 @@ const AddFieldEntryForm = props => {
     const renderBirdListItem = (bird) => {
         // note to self: pressing here could open a popup with information about the bird?
         return (
-            <TouchableOpacity onPress={() => setBird(bird.item)}>
-                <Text>
+            <TouchableOpacity style={styles.searchResults} onPress={() => setBird(bird.item)}>
+                <Text >
                   {bird.item.common_name}
                 </Text>
             </TouchableOpacity>
@@ -78,14 +83,25 @@ const AddFieldEntryForm = props => {
         }
     }
 
+    const handleShareToggle = (value) => {
+        setShare(!share)
+    }
+
     return (
             <Modal animationType="slide" style={styles.form} visible={props.visible}>
-                <ScrollView>
+                <SafeAreaView>
+
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Add New Field Entry</Text>
-                        <Button title="Submit" onPress={submitHandler}/>
+                        <Feather name="x-square" color={"red"} size={25} onPress={() => {props.onHandleModalClose()}} />
                     </View>
-                    <Text style={styles.label}>Date: {date.toISOString().slice(0, 10)}</Text>
+                    <Text style={styles.label}>{date.toISOString().slice(0, 16).split("T").join(" ")}</Text>
+                </SafeAreaView>
+                <ScrollView>
+                    <View style={styles.formtop}>
+                        <Text style={styles.label}>Share Sighting?</Text>
+                        <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
+                    </View>
                     <View style={styles.form}>
                         <SearchBar onShowBirds={displayBirdList}/>
                         {!!bird ? <View>
@@ -96,26 +112,26 @@ const AddFieldEntryForm = props => {
                                             <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
                                         </View>
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
-                                        <Feather name="x-square" size={25} onPress={() => setBird()} />
+                                        <Feather name="x-square" size={25} color={"red"} onPress={() => setBird()} />
                                     </Card>
                                 </View> 
                                 : null }
                     </View>
                     {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
                         maxToRenderPerBatch={20} numColumns={1} /> : null}
-                    <Text style={styles.label}>Notes</Text>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Notes</Text>
+                        <Entypo name="feather" color={"green"} size={25} />
+
+                    </View>
 
                     <TextInput multiline={true}
-                    numberOfLines={8} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
-                    <ImageSelector style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                    numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                    <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                     
-                    {/* <View style={styles.cal}>
-                        <CalendarPicker />
-                    </View> */}
-                    <Button title="Close Form"
-                        onPress={() => {
-                            props.onHandleModalClose()
-                        }}/>
+                <Button title="Submit Entry" onPress={submitHandler} />
+
+                    
                 </ScrollView>
             </Modal>
     )
@@ -134,21 +150,18 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     textInput: {
-        height: 200,
+        height: 120,
         width: '90%',
         backgroundColor: "ghostwhite",
         alignSelf: "center",
         borderWidth: 1,
         marginTop: 5
     },
-    cal: {
-        width: 200
-    },
     formtop: {
         flexDirection: "row",
         justifyContent: 'space-around',
         alignItems: "center",
-        paddingTop: 60
+        // paddingTop: 60
     },
     birdie: {
         width: 100,
@@ -157,13 +170,21 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     imagePicker: {
-        height: 10,
-        width: 10
+        alignItems: "center"
     },
     row: {
         flexDirection: "row",
         justifyContent: 'space-around',
         alignItems: "center",
+    },
+    searchResults: {
+        alignItems: 'flex-start',
+        marginLeft: 10,
+        padding: 5,
+        backgroundColor: "ghostwhite"
+    },
+    share: {
+        alignSelf: "center"
     }
 })
 
