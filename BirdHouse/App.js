@@ -14,7 +14,8 @@ import authReducer from './store/reducers/auth';
 import badgesReducer from './store/reducers/badges'
 import {Provider} from 'react-redux';
 import photosReducer from './store/reducers/photos';
-import stepsReducer from './store/reducers/steps'
+import stepsReducer from './store/reducers/steps';
+import audioReducer from './store/reducers/audio';
 
 useScreens();
 
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   user: authReducer,
   badges: badgesReducer,
   photos: photosReducer,
-  steps: stepsReducer
+  steps: stepsReducer,
+  audio: audioReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

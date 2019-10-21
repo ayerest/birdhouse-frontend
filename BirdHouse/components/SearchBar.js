@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux'
-import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
+import { TextInput, StyleSheet, Text, View, Button, TouchableWithoutFeedback } from 'react-native';
 import * as birdActions from '../store/actions/birds'
 
 const SearchBar = props => {
@@ -39,9 +39,11 @@ const SearchBar = props => {
                 <Text style={styles.label}>Search Birds</Text>
                 {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
             </View>
+            <TouchableWithoutFeedback>
             <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />
+                </TouchableWithoutFeedback>
         </View>
     );
 };

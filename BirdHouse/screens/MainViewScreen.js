@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Platform } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, ScrollView, Text, Image, StyleSheet, Platform, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
@@ -10,11 +10,14 @@ import * as entriesActions from '../store/actions/entries';
 import SharedEntries from '../components/SharedEntries';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
+// import { Notifications } from 'expo';
+// import registerForPushNotificationsAsync from '../components/RegisterForPushNotificationsAsync';
 
 
 
 const MainViewScreen = props => {
-
+    const [showShares, setShowShares] = useState(false)
+    // const [notification, setNotification] = useState({})
     const user = useSelector(state => {
         return state.user.user
     })
@@ -24,6 +27,15 @@ const MainViewScreen = props => {
     const sharedEntries = useSelector(state => {
         return state.entries.sharedEntries
     })
+
+    // useEffect(() => {
+    //     registerForPushNotificationsAsync(user);
+    //     _notificationSubscription = Notifications.addListener(_handleNotification);
+    // }, [registerForPushNotificationsAsync, user])
+
+    // const _handleNotification = (notification) => {
+    //     setNotification({ notification: notification });
+    // };
     
     useEffect(() => {
         if (!!user && user.last_login) {
@@ -71,15 +83,27 @@ const MainViewScreen = props => {
         return true;
     }
 
+    const handleShowSharesOnMap = () => {
+        console.log("what")
+        setShowShares(true);
+    }
+
+    const handleToggleShares = () => {
+        setShowShares(false);
+    }
+
     return (
         <ScrollView contentContainerStyle={{height: '100%'}}>
             <View style={styles.row}>
-
-                {sharedEntries.length > 0 ? <SharedEntries sharedEntries={sharedEntries}/>: null}
+                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text>Origin: {notification.origin}</Text>
+                    <Text>Data: {JSON.stringify(notification.data)}</Text>
+                </View> */}
+                {sharedEntries.length > 0 ? <SharedEntries showOnMap={handleShowSharesOnMap} sharedEntries={sharedEntries}/>: null}
                 <Stepometer />
             </View>
             <View style={styles.screen}>
-                <GeoMap {...props}/>
+                <GeoMap toggleShares={handleToggleShares} showShares={showShares} {...props}/>
             </View>
         </ScrollView>
     )

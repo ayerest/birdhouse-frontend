@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import { base } from './base_url'
 
 
-export const postNewEntry = (date, bird, notes, image, latitude, longitude) => {
+export const postNewEntry = (date, bird, notes, image, latitude, longitude, share) => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -20,7 +20,8 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude) => {
                     "notes": notes,
                     "image": image,
                     "latitude": latitude,
-                    "longitude": longitude
+                    "longitude": longitude,
+                    "share": share
                 })
             })
 
@@ -88,6 +89,7 @@ export const getSharedEntries = () => {
             }
 
             const entriesData = await response.json();
+            console.log(entriesData, "actions")
             dispatch({ type: 'SHARED_ENTRIES', entries: entriesData })
         } catch (err) {
             throw err;

@@ -59,7 +59,7 @@ const AuthScreen = (props) => {
         <ScrollView>
 
         <KeyboardAvoidingView behavior="padding" 
-        keyboardVerticalOffset={50}
+        keyboardVerticalOffset={80}
         style={styles.screen}>
             <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
             <Card style={styles.authContainer}>

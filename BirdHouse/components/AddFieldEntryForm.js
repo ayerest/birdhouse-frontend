@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, TouchableWithoutFeedback} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TakePicture from './TakePicture';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -11,6 +11,7 @@ import { Audio } from 'expo-av';
 import Card from './Card';
 import SafeAreaView from 'react-native-safe-area-view';
 import { Entypo } from '@expo/vector-icons';
+import * as audioActions from '../store/actions/audio';
 
 
 
@@ -28,8 +29,8 @@ const AddFieldEntryForm = props => {
     const [bird, setBird] = useState();
     const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
-    const [playingAudio, setPlayingAudio] = useState(false);
-    const [currentSound, setCurrentSound] = useState(null);
+    // const [playingAudio, setPlayingAudio] = useState(false);
+    // const [currentSound, setCurrentSound] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -45,6 +46,7 @@ const AddFieldEntryForm = props => {
         setNotes();
         setBird();
         setShowSearchResults(false);
+        await audio.stopAsync();
         props.navigation.goBack();
             // props.navigation.navigate('Menu');
     }
@@ -52,6 +54,10 @@ const AddFieldEntryForm = props => {
     const imageSelectedHandler = (image) => {
         setImage(image)
     }
+
+    const audio = useSelector(state => {
+        return state.audio.currentSound
+    })
 
     const filteredBirds = useSelector(state => {
         return state.birds.filteredBirds
@@ -73,66 +79,67 @@ const AddFieldEntryForm = props => {
     }
 
 
-    const handlePlayingMultiAudio = async (soundObject) => {
-        if (playingAudio) {
-            console.log("what now")
-            // console.log(currentSound)
-            console.log((currentSound === soundObject))
-            await currentSound.stopAsync();
+    // const handlePlayingMultiAudio = async (soundObject) => {
+    //     if (playingAudio) {
+    //         console.log("what now")
+    //         // console.log(currentSound)
+    //         console.log((currentSound === soundObject))
+    //         await currentSound.stopAsync();
 
-        }
-        setCurrentSound(soundObject)
-        soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
-        await soundObject.playAsync();
+    //     }
+    //     setCurrentSound(soundObject)
+    //     soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
+    //     await soundObject.playAsync();
 
-        // setPlayingAudio(true);
-        console.log(soundObject.onPlaybackStatus)
-    }
+    //     // setPlayingAudio(true);
+    //     console.log(soundObject.onPlaybackStatus)
+    // }
 
-    const _onPlaybackStatusUpdate = (playbackStatus) => {
-        if (!playbackStatus.isLoaded) {
-            // Update your UI for the unloaded state
-            console.log("is not loaded!")
-            if (playbackStatus.error) {
-                console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
-                // Send Expo team the error on Slack or the forums so we can help you debug!
-            }
-        } else {
-            // Update your UI for the loaded state
+    // const _onPlaybackStatusUpdate = (playbackStatus) => {
+    //     if (!playbackStatus.isLoaded) {
+    //         // Update your UI for the unloaded state
+    //         console.log("is not loaded!")
+    //         if (playbackStatus.error) {
+    //             console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
+    //             // Send Expo team the error on Slack or the forums so we can help you debug!
+    //         }
+    //     } else {
+    //         // Update your UI for the loaded state
 
-            if (playbackStatus.isPlaying) {
-                // Update your UI for the playing state
-                console.log("is playing!")
-                setPlayingAudio(true);
+    //         if (playbackStatus.isPlaying) {
+    //             // Update your UI for the playing state
+    //             console.log("is playing!")
+    //             setPlayingAudio(true);
 
-            } else {
-                // Update your UI for the paused state
-                // soundObject.playAsync();
-                setPlayingAudio(false);
+    //         } else {
+    //             // Update your UI for the paused state
+    //             // soundObject.playAsync();
+    //             setPlayingAudio(false);
 
-            }
+    //         }
 
-            if (playbackStatus.isBuffering) {
-                // Update your UI for the buffering state
-                console.log("is buffering!")
-                setPlayingAudio(true);
+    //         if (playbackStatus.isBuffering) {
+    //             // Update your UI for the buffering state
+    //             console.log("is buffering!")
+    //             setPlayingAudio(true);
 
-            }
+    //         }
 
-            if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
-                // The player has just finished playing and will stop. Maybe you want to play something else?
-                console.log("is finished!")
-                setPlayingAudio(false);
-            }
+    //         if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+    //             // The player has just finished playing and will stop. Maybe you want to play something else?
+    //             console.log("is finished!")
+    //             setPlayingAudio(false);
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
         try {
             await soundObject.loadAsync({ uri: bird.birdcall });
-            handlePlayingMultiAudio(soundObject)
+            // handlePlayingMultiAudio(soundObject)
+            await dispatch(audioActions.playAudio(soundObject))
             // Your sound is playing!
         } catch (error) {
             // An error occurred!
@@ -143,12 +150,34 @@ const AddFieldEntryForm = props => {
         setShare(!share)
     }
 
-    const handleLeaveForBirdDetails = () => {
-        setModalVisible(false)
-    }
+    // const handleLeaveForBirdDetails = async () => {
+    //     await audio.stopAsync();
+    //     setModalVisible(false)
+    // }
 
     const handleComingBack = () => {
         setModalVisible(true);
+    }
+
+    const handleBackButtonClick = async () => {
+        await audio.stopAsync();
+        props.navigation.goBack()
+    }
+
+    const handleUnsetBird = async () => {
+        await audio.stopAsync();
+        setBird();
+    }
+
+    const handleLeaveForBirdDetails = async () => {
+        await audio.stopAsync();
+        props.navigation.navigate({
+            routeName: 'BirdInfo', params: {
+                birdId: bird.id,
+                birdName: bird.common_name,
+                onComingBack: handleComingBack
+            }
+        })
     }
 
     return (
@@ -160,9 +189,8 @@ const AddFieldEntryForm = props => {
 
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Add New Field Entry</Text>
-                    <Feather name="x-square" color={"red"} size={25} onPress={() => {
-                        props.navigation.goBack()}
-} />
+                    <Feather name="x-square" color={"red"} size={25} onPress={handleBackButtonClick}
+ />
                     </View>
                     <Text style={styles.label}>{date.toISOString().slice(0, 16).split("T").join(" ")}</Text>
                 </SafeAreaView>
@@ -181,19 +209,13 @@ const AddFieldEntryForm = props => {
                                                 <Text>{bird.common_name}</Text>
                                                 <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
                                             </View>
-                        <TouchableOpacity onPress={() => {
-                            {/* handleLeaveForBirdDetails() */}
-                            props.navigation.navigate({
-                                routeName: 'BirdInfo', params: {
-                                    birdId: bird.id,
-                                    birdName: bird.common_name,
-                                    onComingBack: handleComingBack
-                                }
-                            })
-                        }}>
+                        <TouchableOpacity onPress={
+                            handleLeaveForBirdDetails}
+                            
+                        >
                                             <Image style={styles.birdie} source={{uri: bird.img_url}} />
                                     </TouchableOpacity>
-                                            <Feather name="x-square" size={25} color={"red"} onPress={() => setBird()} />
+                                            <Feather name="x-square" size={25} color={"red"} onPress={handleUnsetBird} />
                                         </Card>
                                 </View> 
                                 : null }
@@ -205,10 +227,16 @@ const AddFieldEntryForm = props => {
                         <Entypo name="feather" color={"green"} size={25} />
 
                     </View>
+                <TouchableWithoutFeedback>
+                    <View>
 
-                    <TextInput multiline={true}
-                    numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
-                    <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                        <TextInput multiline={true}
+                        numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                        <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                    </View>
+
+                </TouchableWithoutFeedback>
+
                     
                 <Button title="Submit Entry" onPress={submitHandler} />
 

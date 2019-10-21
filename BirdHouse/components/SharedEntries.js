@@ -12,6 +12,8 @@ const SharedEntries = props => {
     }
 
     const mapViewHandler = async () => {
+        console.log(props, "in map view")
+        props.showOnMap()
        
     }
 
@@ -19,7 +21,7 @@ const SharedEntries = props => {
     return (
         <View style={styles.notificationBar}>
             <Button title="Dismiss" onPress={dismissHandler} />
-            <Button title="View on Map" onPress={mapViewHandler} />
+            <Button title="Show on Map" onPress={mapViewHandler} />
             
         </View>
     )

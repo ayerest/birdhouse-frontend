@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Alert, ActivityIndicator, Button} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import { useDispatch, useSelector } from 'react-redux';
 import ENV from '../env';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import AddFieldEntryForm from './AddFieldEntryForm';
@@ -15,6 +16,10 @@ const GeoMap = (props) => {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [visible, setVisible] = useState(true)
 
+
+    const sharedEntries = useSelector(state => {
+        return state.entries.sharedEntries
+    })
 
     useEffect(() => {
         displayMapHandler()
@@ -76,6 +81,19 @@ const GeoMap = (props) => {
         setVisible(false)
     }
 
+    const renderMarkers = () => {
+        sharedEntries.map(entry => {
+
+            return (<Marker {...props} image={require('../assets/images/birdicon.png')} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
+                props.navigation.navigate({
+                    routeName: 'FieldEntry', params: {
+                        entry: entry
+                    }
+                })
+            }}></Marker>)
+        })
+    }
+
     return (
         <View style={styles.mapContainer}>
             <View style={styles.mapExtras}>
@@ -85,7 +103,7 @@ const GeoMap = (props) => {
             </View>
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
-                   
+                    {props.showShares ? renderMarkers : null}
                     {!!newMarker ? 
                         <Marker {...props} image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
