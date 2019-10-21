@@ -7,7 +7,11 @@ import {MenuButton} from '../components/MenuButton';
 import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';
-import CategoriesList from '../components/CategoriesList'
+import CategoriesList from '../components/CategoriesList';
+import { NavigationEvents } from 'react-navigation';
+import * as audioActions from '../store/actions/audio';
+
+
 
 
 const BirdODexScreen = props => {
@@ -76,6 +80,16 @@ const BirdODexScreen = props => {
         setCurrentBirds([])
         setShowBirds(false)
     } 
+    const audio = useSelector(state => {
+        return state.audio.currentSound
+    })
+
+    const handleLeaving = async () => {
+        if (audio) {
+            await audio.stopAsync();
+            dispatch(audioActions.stopAudio)
+        }
+    }
     
     return (
         <View style={styles.screen}>
@@ -87,6 +101,10 @@ const BirdODexScreen = props => {
             {isLoading ? <ActivityIndicator color="black" /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
+            <NavigationEvents
+
+                onWillBlur={handleLeaving}
+            />
         </View>
     )
 }

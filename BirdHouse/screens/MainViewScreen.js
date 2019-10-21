@@ -88,22 +88,26 @@ const MainViewScreen = props => {
         setShowShares(true);
     }
 
+    const handleHideOnMap = () => {
+        setShowShares(false);
+    }
+
     const handleToggleShares = () => {
         setShowShares(false);
     }
 
     return (
         <ScrollView contentContainerStyle={{height: '100%'}}>
+                {sharedEntries.length > 0 ? <SharedEntries hideOnMap={handleHideOnMap} showOnMap={handleShowSharesOnMap} sharedEntries={sharedEntries}/>: null}
             <View style={styles.row}>
                 {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>Origin: {notification.origin}</Text>
                     <Text>Data: {JSON.stringify(notification.data)}</Text>
                 </View> */}
-                {sharedEntries.length > 0 ? <SharedEntries showOnMap={handleShowSharesOnMap} sharedEntries={sharedEntries}/>: null}
                 <Stepometer />
             </View>
             <View style={styles.screen}>
-                <GeoMap toggleShares={handleToggleShares} showShares={showShares} {...props}/>
+                <GeoMap toggleShares={handleToggleShares} hideOnMap={handleHideOnMap} showShares={showShares} {...props}/>
             </View>
         </ScrollView>
     )
@@ -111,7 +115,6 @@ const MainViewScreen = props => {
 
 MainViewScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
-    // console.log(user, "main view nav")
 
     return {
         headerTitle: "BirdHouse",

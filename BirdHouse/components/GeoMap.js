@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import ENV from '../env';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import AddFieldEntryForm from './AddFieldEntryForm';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
+import { NavigationEvents } from 'react-navigation';
+
 
 
 const GeoMap = (props) => {
@@ -20,10 +22,10 @@ const GeoMap = (props) => {
     const sharedEntries = useSelector(state => {
         return state.entries.sharedEntries
     })
-
-    useEffect(() => {
-        displayMapHandler()
-    }, [displayMapHandler]);  
+   
+    // useEffect(() => {
+    //     displayMapHandler()
+    // }, []);  
 
     useEffect(() => {
         setVisible(true)
@@ -39,6 +41,7 @@ const GeoMap = (props) => {
     }
 
     const displayMapHandler = async () => {
+        props.hideOnMap()
         const hasPermission = await verifyPermissions();
         if (!hasPermission) {
             return;
@@ -70,6 +73,9 @@ const GeoMap = (props) => {
 
     const addMarkerHandler = (event) => {
         let mapTouchEvent = event
+        props.hideOnMap()
+        // mapRegion.latitude = mapTouchEvent.nativeEvent.coordinate.latitude;
+        // mapRegion.longitude = mapTouchEvent.nativeEvent.coordinate.longitude;
         let lat = mapTouchEvent.nativeEvent.coordinate.latitude
         let lng = mapTouchEvent.nativeEvent.coordinate.longitude
         setNewMarker({latitude: lat, longitude: lng })
@@ -82,9 +88,11 @@ const GeoMap = (props) => {
     }
 
     const renderMarkers = () => {
-        sharedEntries.map(entry => {
-
-            return (<Marker {...props} image={require('../assets/images/birdicon.png')} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
+        // console.log("render markers", sharedEntries)
+        return sharedEntries.map(entry => {
+            console.log(entry)
+            console.log("------------------")
+            return (<Marker key={entry.id} {...props} image={require('../assets/images/share-bird.png')} color={"red"} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
                 props.navigation.navigate({
                     routeName: 'FieldEntry', params: {
                         entry: entry
@@ -101,10 +109,13 @@ const GeoMap = (props) => {
                 <Text style={styles.center}>See a bird?</Text>
                 <Text style={styles.center}>Tap the bird marker to document your sighting!</Text>
             </View>
+            <NavigationEvents
+                onWillFocus={displayMapHandler}
+            />
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
-                    {props.showShares ? renderMarkers : null}
-                    {!!newMarker ? 
+                    {props.showShares ? renderMarkers() : 
+                    ( !!newMarker ?
                         <Marker {...props} image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 routeName: 'AddEntry', params: {
@@ -114,11 +125,8 @@ const GeoMap = (props) => {
                                 }
                             })
                         }}>
-                        {/* <Callout >
-                                <AddFieldEntryForm {...props} onHandleModalClose={handleModalClose} visible={visible} coords={newMarker}/>
-                        </Callout> */}
-                    </Marker> : null
-                    }
+                    </Marker>
+                     : null)}
                 </MapView>
             }
         </View>

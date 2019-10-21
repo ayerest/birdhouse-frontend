@@ -8,7 +8,6 @@ import { AsyncStorage } from 'react-native';
 
 export const stopAudio = () => {
     return async (dispatch, getState) => {
-        console.log("in stop action")
         const currentSound = getState().audio.currentSound
         const playingAudio = getState().audio.playingAudio
         await currentSound.stopAsync();
@@ -18,23 +17,16 @@ export const stopAudio = () => {
 
 
 export const playAudio = (soundObject) => {
-    console.log("play audio", soundObject)
-    console.log("-----------------------")
-    // await soundObject.playAsync();
+   
     return async (dispatch, getState) => {
-        // console.log("test")
         const currentSound = getState().audio.currentSound
         const playingAudio = getState().audio.playingAudio
-        console.log(playingAudio)
         if (!!playingAudio) {
-            // console.log("what now")
-            // console.log((currentSound === soundObject))
+            
             await currentSound.stopAsync();
-            // await soundObject.playAsync();
             soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
             await soundObject.playAsync();
             return dispatch({ type: 'PLAY_AUDIO', audio: soundObject })
-            // return dispatch({type: 'STOP_AUDIO'})
         } 
          else {
             soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
@@ -46,7 +38,6 @@ export const playAudio = (soundObject) => {
 
 const _onPlaybackStatusUpdate = (playbackStatus) => {
     return async (dispatch, getState) => {
-        console.log("test")
         const currentSound = getState().audio.currentSound
         const playingAudio = getState().audio.playingAudio
         if (!playbackStatus.isLoaded) {

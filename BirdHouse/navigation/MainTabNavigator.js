@@ -57,6 +57,7 @@ const Birds = createStackNavigator({
 const Main = createStackNavigator({
   Main: MainViewScreen,
   GeoMap: GeoMap,
+  FieldEntry: FieldEntryDetailsScreen,
   AddEntry: AddFieldEntryForm,
   BirdInfo: BirdDetailsScreen
 })

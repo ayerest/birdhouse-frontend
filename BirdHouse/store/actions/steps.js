@@ -30,7 +30,7 @@ export const getMySteps = () => {
 }
 
 export const currentSteps = (steps) => {
-    return dispatch({ type: 'NEW_STEPS', newSteps: steps })
+    return { type: 'NEW_STEPS', newSteps: steps }
 }
 
 export const updateSteps = (steps) => {
@@ -55,7 +55,6 @@ export const updateSteps = (steps) => {
             }
 
             const stepsData = await response.json();
-            // console.log(stepsData, "did I get data back?")
 
             dispatch({ type: 'UPDATE_STEPS', steps: stepsData })
         } catch (err) {

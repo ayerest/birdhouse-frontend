@@ -89,7 +89,6 @@ export const getSharedEntries = () => {
             }
 
             const entriesData = await response.json();
-            console.log(entriesData, "actions")
             dispatch({ type: 'SHARED_ENTRIES', entries: entriesData })
         } catch (err) {
             throw err;

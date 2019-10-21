@@ -7,18 +7,16 @@ import * as birdsActions from '../store/actions/birds';
 import { Audio } from 'expo-av';
 import { Feather } from '@expo/vector-icons';
 import Card from '../components/Card';
-import * as audioActions from '../store/actions/audio'
+import * as audioActions from '../store/actions/audio';
+import {NavigationEvents} from 'react-navigation';
 
 
 const BirdDetailsScreen = props => {
-    console.log(props.navigation.getParam('onComingBack'))
-    // const [playingAudio, setPlayingAudio] = useState(false);
-    // const [currentSound, setCurrentSound] = useState(null);
+   
     const dispatch = useDispatch();
 
     useEffect(() => {
         const loadBird = async () => {
-            // let birdId = props.navigation.birdId
             const birdId = props.navigation.getParam('birdId')
             dispatch(birdsActions.getBird(birdId));
         }
@@ -28,61 +26,6 @@ const BirdDetailsScreen = props => {
     const singleBird = useSelector(state => {
         return state.birds.singleBird
     })
-
-    // const handlePlayingMultiAudio = async (soundObject) => {
-    //     if (playingAudio) {
-    //         console.log("what now")
-    //         // console.log(currentSound)
-    //         console.log((currentSound === soundObject))
-    //         await currentSound.stopAsync();
-
-    //     }
-    //     setCurrentSound(soundObject)
-    //     soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
-    //     await soundObject.playAsync();
-
-    //     // setPlayingAudio(true);
-    //     console.log(soundObject.onPlaybackStatus)
-    // }
-
-    // const _onPlaybackStatusUpdate = (playbackStatus) => {
-    //     if (!playbackStatus.isLoaded) {
-    //         // Update your UI for the unloaded state
-    //         console.log("is not loaded!")
-    //         if (playbackStatus.error) {
-    //             console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
-    //             // Send Expo team the error on Slack or the forums so we can help you debug!
-    //         }
-    //     } else {
-    //         // Update your UI for the loaded state
-
-    //         if (playbackStatus.isPlaying) {
-    //             // Update your UI for the playing state
-    //             console.log("is playing!")
-    //             setPlayingAudio(true);
-
-    //         } else {
-    //             // Update your UI for the paused state
-    //             // soundObject.playAsync();
-    //             setPlayingAudio(false);
-
-    //         }
-
-    //         if (playbackStatus.isBuffering) {
-    //             // Update your UI for the buffering state
-    //             console.log("is buffering!")
-    //             setPlayingAudio(true);
-
-    //         }
-
-    //         if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
-    //             // The player has just finished playing and will stop. Maybe you want to play something else?
-    //             console.log("is finished!")
-    //             setPlayingAudio(false);
-    //         }
-
-    //     }
-    // }
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
@@ -110,10 +53,22 @@ const BirdDetailsScreen = props => {
         await audio.stopAsync();
         props.navigation.goBack()
     }
+
+    const handleLeaving = async () => {
+        if (audio) {
+            await audio.stopAsync();
+            dispatch(audioActions.stopAudio)
+        }
+        props.navigation.goBack()
+    }
     
 
     return (
         <View style={styles.screen}>
+            <NavigationEvents
+                
+                onWillBlur={handleLeaving}
+            />
             <ScrollView>                
                 <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
                 <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>
