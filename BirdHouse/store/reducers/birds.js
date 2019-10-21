@@ -17,7 +17,6 @@ const birdsReducer = (state = initialState, action) => {
                 birdCategories: action.birdCategories
             };
         case "SET_BIRDS":
-            // console.log("in reducer", action.categoryBirds)
             return {
                 ...state,
                 categoryBirds: action.categoryBirds,

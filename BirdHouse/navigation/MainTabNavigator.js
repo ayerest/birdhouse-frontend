@@ -15,10 +15,12 @@ import BirdDetailsScreen from '../screens/BirdDetailsScreen';
 import MainViewScreen from '../screens/MainViewScreen';
 import BadgesScreen from '../screens/BadgesScreen';
 import PicturesScreen from '../screens/PicturesScreen';
+import GeoMap from '../components/GeoMap';
 
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -54,7 +56,9 @@ const Birds = createStackNavigator({
 
 const Main = createStackNavigator({
   Main: MainViewScreen,
-  // AddEntry: AddFieldEntryForm
+  GeoMap: GeoMap,
+  AddEntry: AddFieldEntryForm,
+  BirdInfo: BirdDetailsScreen
 })
 
 const MenuNavigator = createDrawerNavigator({

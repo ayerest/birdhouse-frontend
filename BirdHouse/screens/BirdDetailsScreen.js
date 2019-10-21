@@ -10,6 +10,7 @@ import Card from '../components/Card';
 
 
 const BirdDetailsScreen = props => {
+    console.log(props.navigation.getParam('onComingBack'))
 
     const dispatch = useDispatch();
 
@@ -48,7 +49,13 @@ const BirdDetailsScreen = props => {
                  
                 {!!singleBird.range_map ?<Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> : null}
                        
-                <Button title="Go Back" onPress={() => {props.navigation.goBack()}} />
+                <Button title="Go Back" onPress={() => {
+                    if (props.navigation.getParam('onComingBack')) {
+                        const goBack = props.navigation.getParam('onComingBack');
+                        goBack();
+
+                    }
+                    props.navigation.goBack()}} />
                 
             </ScrollView>
         </View>

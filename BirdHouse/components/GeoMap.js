@@ -59,8 +59,8 @@ const GeoMap = (props) => {
     const mapRegion = {
         latitude: (!!currentLocation ? currentLocation.lat : 46.6062),
         longitude: (!!currentLocation ? currentLocation.lng :-122.306417),
-        latitudeDelta: 0.0522,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.0322,
+        longitudeDelta: 0.0321
     }
 
     const addMarkerHandler = (event) => {
@@ -87,16 +87,33 @@ const GeoMap = (props) => {
                 <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
                    
                     {!!newMarker ? 
-                    <Marker image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker}>
-                        <Callout >
-                            <AddFieldEntryForm onHandleModalClose={handleModalClose} visible={visible} coords={newMarker}/>
-                        </Callout>
+                        <Marker {...props} image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker} onPress={() => {
+                            props.navigation.navigate({
+                                routeName: 'AddEntry', params: {
+                                    onHandleModalClose: handleModalClose,
+                                    visible: visible,
+                                    coords: newMarker
+                                }
+                            })
+                        }}>
+                        {/* <Callout >
+                                <AddFieldEntryForm {...props} onHandleModalClose={handleModalClose} visible={visible} coords={newMarker}/>
+                        </Callout> */}
                     </Marker> : null
                     }
                 </MapView>
             }
         </View>
     )
+}
+
+GeoMap.navigationOptions = (navigationData) => {
+    // const bird_id = navigationData.navigation.getParam('birdId')
+    // const bird_name = navigationData.navigation.getParam('birdName')
+
+    return {
+        headerTitle: "Map View",
+    }
 }
 
 const styles = StyleSheet.create({

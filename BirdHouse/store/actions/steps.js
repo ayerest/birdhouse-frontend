@@ -34,7 +34,6 @@ export const currentSteps = (steps) => {
 }
 
 export const updateSteps = (steps) => {
-    console.log(steps)
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -56,7 +55,7 @@ export const updateSteps = (steps) => {
             }
 
             const stepsData = await response.json();
-            console.log(stepsData, "did I get data back?")
+            // console.log(stepsData, "did I get data back?")
 
             dispatch({ type: 'UPDATE_STEPS', steps: stepsData })
         } catch (err) {

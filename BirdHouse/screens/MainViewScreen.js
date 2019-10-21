@@ -16,7 +16,6 @@ import * as stepsActions from '../store/actions/steps';
 const MainViewScreen = props => {
 
     const user = useSelector(state => {
-        // console.log(state.user.user, "main view screen ")
         return state.user.user
     })
 
@@ -54,16 +53,12 @@ const MainViewScreen = props => {
     const getSteps = async () => {
         const end = new Date();
         const start = new Date(user.last_login);
-        // start.setDate(end.getDate() - 1);
         
-        // if (end.getDate().toString() !== start.slice(8, 10)) {
-        //     // start = parseInt(start.slice(8, 10).toString())
-            console.log(start, end, "test")
+        if (end.getDate() !== start.getDate()) {
             Pedometer.getStepCountAsync(start, end).then(result => {
-                console.log(result.steps)
                 dispatch(stepsActions.updateSteps(result.steps))
-
             })
+        }
         
     }
 
@@ -84,7 +79,7 @@ const MainViewScreen = props => {
                 <Stepometer />
             </View>
             <View style={styles.screen}>
-                <GeoMap />
+                <GeoMap {...props}/>
             </View>
         </ScrollView>
     )
@@ -92,6 +87,7 @@ const MainViewScreen = props => {
 
 MainViewScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
+    // console.log(user, "main view nav")
 
     return {
         headerTitle: "BirdHouse",

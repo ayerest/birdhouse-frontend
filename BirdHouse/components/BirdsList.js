@@ -4,27 +4,18 @@ import Colors from '../constants/Colors';
 import { useSelector } from 'react-redux';
 import uuid from 'uuid';
 import BirdCard from './BirdCard';
-import { useFocusEffect } from 'react-navigation-hooks';
+import AudioPlayer from './AudioPlayer';
+// import { useFocusEffect } from 'react-navigation-hooks';
 
 
 const BirdsList = (props) => {
 
-    // useFocusEffect(() => {
-    //     console.log("how often does focus effect run")
-    //     return () => {
-    //         if (currentSound) {
-
-    //             currentSound.stopAsync()
-    //         }
-    //     }
-    // }, [currentSound])
 
     const [playingAudio, setPlayingAudio] = useState(false);
     const [currentSound, setCurrentSound] = useState(null)
     const birdList = props.birdList
 
     const handlePlayAudio = async (soundObject) => {
-        // console.log(soundObject, "in bird list")
         if (playingAudio) {
             console.log("what now")
             // console.log(currentSound)

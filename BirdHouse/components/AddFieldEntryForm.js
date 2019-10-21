@@ -22,29 +22,30 @@ const AddFieldEntryForm = props => {
         
     }, [modalVisible]);
 
-    // useState to get form data
     const [image, setImage] = useState(false);
     const [notes, setNotes] = useState();
     const [showSearchResults, setShowSearchResults] = useState(false);
     const [bird, setBird] = useState();
     const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
+    const [playingAudio, setPlayingAudio] = useState(false);
+    const [currentSound, setCurrentSound] = useState(null);
+
     const dispatch = useDispatch();
 
     const date = new Date()
 
     const submitHandler = async () => {
-        //dispatch stuff in here);
-        //could throw in a props.navigation.goBack() here if I want to go back a page, not sure how form will work yet though - modal or new page
-        let latitude = props.coords.latitude
-        let longitude = props.coords.longitude
+    
+        let latitude = props.navigation.state.params.coords.latitude
+        let longitude = props.navigation.state.params.coords.longitude
         await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude, share))
         setImage(false);
         setShare(false);
         setNotes();
         setBird();
         setShowSearchResults(false);
-        props.onHandleModalClose()
+        props.navigation.goBack();
             // props.navigation.navigate('Menu');
     }
 
@@ -62,7 +63,6 @@ const AddFieldEntryForm = props => {
     }
 
     const renderBirdListItem = (bird) => {
-        // note to self: pressing here could open a popup with information about the bird?
         return (
             <TouchableOpacity style={styles.searchResults} onPress={() => setBird(bird.item)}>
                 <Text >
@@ -72,11 +72,67 @@ const AddFieldEntryForm = props => {
         )
     }
 
+
+    const handlePlayingMultiAudio = async (soundObject) => {
+        if (playingAudio) {
+            console.log("what now")
+            // console.log(currentSound)
+            console.log((currentSound === soundObject))
+            await currentSound.stopAsync();
+
+        }
+        setCurrentSound(soundObject)
+        soundObject.setOnPlaybackStatusUpdate(_onPlaybackStatusUpdate)
+        await soundObject.playAsync();
+
+        // setPlayingAudio(true);
+        console.log(soundObject.onPlaybackStatus)
+    }
+
+    const _onPlaybackStatusUpdate = (playbackStatus) => {
+        if (!playbackStatus.isLoaded) {
+            // Update your UI for the unloaded state
+            console.log("is not loaded!")
+            if (playbackStatus.error) {
+                console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
+                // Send Expo team the error on Slack or the forums so we can help you debug!
+            }
+        } else {
+            // Update your UI for the loaded state
+
+            if (playbackStatus.isPlaying) {
+                // Update your UI for the playing state
+                console.log("is playing!")
+                setPlayingAudio(true);
+
+            } else {
+                // Update your UI for the paused state
+                // soundObject.playAsync();
+                setPlayingAudio(false);
+
+            }
+
+            if (playbackStatus.isBuffering) {
+                // Update your UI for the buffering state
+                console.log("is buffering!")
+                setPlayingAudio(true);
+
+            }
+
+            if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+                // The player has just finished playing and will stop. Maybe you want to play something else?
+                console.log("is finished!")
+                setPlayingAudio(false);
+            }
+
+        }
+    }
+
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
         try {
             await soundObject.loadAsync({ uri: bird.birdcall });
-            await soundObject.playAsync();
+            handlePlayingMultiAudio(soundObject)
             // Your sound is playing!
         } catch (error) {
             // An error occurred!
@@ -87,13 +143,26 @@ const AddFieldEntryForm = props => {
         setShare(!share)
     }
 
+    const handleLeaveForBirdDetails = () => {
+        setModalVisible(false)
+    }
+
+    const handleComingBack = () => {
+        setModalVisible(true);
+    }
+
     return (
-            <Modal animationType="slide" style={styles.form} visible={props.visible}>
+        <ScrollView>
+
+            {/* <Modal animationType="slide" style={styles.form} visible={props.visible || modalVisible}> */}
                 <SafeAreaView>
+                
 
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Add New Field Entry</Text>
-                        <Feather name="x-square" color={"red"} size={25} onPress={() => {props.onHandleModalClose()}} />
+                    <Feather name="x-square" color={"red"} size={25} onPress={() => {
+                        props.navigation.goBack()}
+} />
                     </View>
                     <Text style={styles.label}>{date.toISOString().slice(0, 16).split("T").join(" ")}</Text>
                 </SafeAreaView>
@@ -106,14 +175,26 @@ const AddFieldEntryForm = props => {
                         <SearchBar onShowBirds={displayBirdList}/>
                         {!!bird ? <View>
                                     <Text>Selected Bird:</Text>
-                                    <Card>
-                                        <View style={styles.row}>
-                                            <Text>{bird.common_name}</Text>
-                                            <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
-                                        </View>
-                                        <Image style={styles.birdie} source={{uri: bird.img_url}} />
-                                        <Feather name="x-square" size={25} color={"red"} onPress={() => setBird()} />
-                                    </Card>
+
+                                        <Card>
+                                            <View style={styles.row}>
+                                                <Text>{bird.common_name}</Text>
+                                                <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
+                                            </View>
+                        <TouchableOpacity onPress={() => {
+                            {/* handleLeaveForBirdDetails() */}
+                            props.navigation.navigate({
+                                routeName: 'BirdInfo', params: {
+                                    birdId: bird.id,
+                                    birdName: bird.common_name,
+                                    onComingBack: handleComingBack
+                                }
+                            })
+                        }}>
+                                            <Image style={styles.birdie} source={{uri: bird.img_url}} />
+                                    </TouchableOpacity>
+                                            <Feather name="x-square" size={25} color={"red"} onPress={() => setBird()} />
+                                        </Card>
                                 </View> 
                                 : null }
                     </View>
@@ -133,8 +214,18 @@ const AddFieldEntryForm = props => {
 
                     
                 </ScrollView>
-            </Modal>
+            {/* </Modal> */}
+        </ScrollView>
     )
+}
+
+AddFieldEntryForm.navigationOptions = (navigationData) => {
+    // const bird_id = navigationData.navigation.getParam('birdId')
+    // const bird_name = navigationData.navigation.getParam('birdName')
+
+    return {
+        headerTitle: "Add Field Entry",
+    }
 }
 
 const styles = StyleSheet.create({

@@ -18,7 +18,6 @@ const entriesReducer = (state = initialState, action) => {
                 entries: action.entries
             }
         case "SHARED_ENTRIES":
-            // console.log("looks like I made it", action)
             return {
                 ...state,
                 sharedEntries: action.entries
