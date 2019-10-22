@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 // import { useFocusEffect } from 'react-navigation-hooks';
 
 
@@ -34,8 +35,16 @@ const BadgesScreen = props => {
     const renderBadgeItem = (badge) => {
         return (
 
-        
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate({
+                routeName: 'BadgeDetails', params: {
+                    entryId: badge.item.id,
+                    entryName: `${badge.item.category}`,
+                    entry: badge.item
+                }
+            })}}>
                 <BadgeCard badge={badge.item}  />
+            </TouchableOpacity>
         )
     }
     //note to self: it would be nice to have an info link here to explain what you can get badges for --- really nice if users could see how close they were to earning a badge
@@ -43,7 +52,7 @@ const BadgesScreen = props => {
         <View style={styles.screen}>
 
             {!isLoading && badgesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
-            {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={2} />}
+            {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />}
             
         </View>
     )

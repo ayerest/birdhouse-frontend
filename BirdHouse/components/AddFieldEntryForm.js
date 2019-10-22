@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, TouchableWithoutFeedback} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TakePicture from './TakePicture';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -34,7 +34,7 @@ const AddFieldEntryForm = props => {
     const date = fullDate[0]
     let time = fullDate[1].toString()
     let hour = parseInt(fullDate[1].split(":")[0])
-    console.log(time, hour)
+    // console.log(time, hour)
     if (hour < 12) {
         time = (hour.toString() + ":" + fullDate[1].split(":")[1] + "AM")
     } else {
@@ -172,11 +172,14 @@ const AddFieldEntryForm = props => {
                         <Entypo name="feather" color={"green"} size={25} />
                     </View>
                 <TouchableWithoutFeedback>
+                    <KeyboardAvoidingView>
                     <View>
                         <TextInput multiline={true}
                         numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
                         <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                     </View>
+
+                    </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
                 <Button title="Submit Entry" onPress={submitHandler} />
                 </ScrollView>

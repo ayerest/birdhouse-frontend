@@ -84,8 +84,8 @@ const Stepometer = props => {
     }
 
     return (
-        <View>
-            <Text>Current Steps Taken: {currentStepCount} </Text>
+        <View style={styles.center}>
+            <Text>Step Count: {currentStepCount} </Text>
             {/* <Text>Total Steps Taken: {stepCount + currentSteps}</Text> */}
             {/* <Button title="Update my steps!" onPress={updateMySteps}/> */}
         </View>
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         justifyContent: "space-around"
+    },
+    center: {
+        alignSelf: 'center'
     }
 });
 

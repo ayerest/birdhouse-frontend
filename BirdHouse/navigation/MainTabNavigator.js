@@ -16,10 +16,12 @@ import MainViewScreen from '../screens/MainViewScreen';
 import BadgesScreen from '../screens/BadgesScreen';
 import PicturesScreen from '../screens/PicturesScreen';
 import GeoMap from '../components/GeoMap';
+import StaticMap from '../components/StaticMap';
 
 import Colors from '../constants/Colors';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 
 
 const config = Platform.select({
@@ -36,7 +38,8 @@ const HomeStack = createStackNavigator(
 );
 
 const Badges = createStackNavigator({
-  MyBadges: BadgesScreen
+  MyBadges: BadgesScreen,
+  BadgeDetails: BadgeDetailsScreen
 })
 
 const Pictures = createStackNavigator({
@@ -57,7 +60,8 @@ const Birds = createStackNavigator({
 const Main = createStackNavigator({
   Main: MainViewScreen,
   GeoMap: GeoMap,
-  FieldEntry: FieldEntryDetailsScreen,
+  StaticMap: StaticMap,
+  FieldDetails: FieldEntryDetailsScreen,
   AddEntry: AddFieldEntryForm,
   BirdInfo: BirdDetailsScreen
 })

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, Alert, ActivityIndicator, Button} from 'react-native';
+import {View, StyleSheet, Text, Alert, ActivityIndicator, Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ const GeoMap = (props) => {
     const [isGettingLocation, setIsGettingLocation] = useState(false);
     const [currentLocation, setCurrentLocation] = useState(null);
     const [visible, setVisible] = useState(true);
-    const [follow, setFollow] = useState(true);
+    const [follow, setFollow] = useState(!props.showShares);
 
 
     const sharedEntries = useSelector(state => {
@@ -26,7 +26,7 @@ const GeoMap = (props) => {
    
     useEffect(() => {
         displayMapHandler()
-    }, [displayMapHandler, renderMarkers]);  
+    }, [displayMapHandler]);  
 
     useEffect(() => {
         setVisible(true)
@@ -42,7 +42,6 @@ const GeoMap = (props) => {
     }
 
     const displayMapHandler = async () => {
-        props.hideOnMap()
         const hasPermission = await verifyPermissions();
         if (!hasPermission) {
             return;
@@ -50,10 +49,8 @@ const GeoMap = (props) => {
         try {
            setIsGettingLocation(true);
            const location = await Location.getCurrentPositionAsync({timeout: 10000});
-        // const location = await
-        // Location.watchPositionAsync({accuracy: 1, timeInterval: 120000}, () => {})
-        //at this point I can set the marker state with the same lat long so a marker shows up initially
-            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })
+        
+            // setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })
             setCurrentLocation({
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
@@ -69,13 +66,12 @@ const GeoMap = (props) => {
     let mapRegion = {
         latitude: (!!currentLocation ? currentLocation.lat : 46.6062),
         longitude: (!!currentLocation ? currentLocation.lng :-122.306417),
-        latitudeDelta: 0.0,
-        longitudeDelta: 0.0
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
     }
 
     const addMarkerHandler = (event) => {
         let mapTouchEvent = event
-        props.hideOnMap()
         // setCurrentLocation({ lat: mapTouchEvent.nativeEvent.coordinate.latitude, lng: mapTouchEvent.nativeEvent.coordinate.longitude})
         // mapRegion.latitude = mapTouchEvent.nativeEvent.coordinate.latitude;
         // mapRegion.longitude = mapTouchEvent.nativeEvent.coordinate.longitude;
@@ -91,75 +87,69 @@ const GeoMap = (props) => {
         setVisible(false)
     }
 
-    const getNewMapRegion = (points) => {
-            // points should be an array of { latitude: X, longitude: Y }
-            let minX, maxX, minY, maxY;
+    // const getNewMapRegion = (points) => {
+    //         // points should be an array of { latitude: X, longitude: Y }
+    //         let minX, maxX, minY, maxY;
 
-            // init first point
-            ((point) => {
-                minX = point.latitude;
-                maxX = point.latitude;
-                minY = point.longitude;
-                maxY = point.longitude;
-            })(points[0]);
+    //         // init first point
+    //         ((point) => {
+    //             minX = point.latitude;
+    //             maxX = point.latitude;
+    //             minY = point.longitude;
+    //             maxY = point.longitude;
+    //         })(points[0]);
 
-            // calculate rect
-            points.map((point) => {
-                minX = Math.min(minX, point.latitude);
-                maxX = Math.max(maxX, point.latitude);
-                minY = Math.min(minY, point.longitude);
-                maxY = Math.max(maxY, point.longitude);
-            });
+    //         // calculate rect
+    //         points.map((point) => {
+    //             minX = Math.min(minX, point.latitude);
+    //             maxX = Math.max(maxX, point.latitude);
+    //             minY = Math.min(minY, point.longitude);
+    //             maxY = Math.max(maxY, point.longitude);
+    //         });
 
-            const midX = (minX + maxX) / 2;
-            const midY = (minY + maxY) / 2;
-            const deltaX = (maxX - minX);
-            const deltaY = (maxY - minY);
-            setMapRegion( {
-                latitude: midX,
-                longitude: midY,
-                latitudeDelta: deltaX,
-                longitudeDelta: deltaY
-            });
-        }
+    //         const midX = (minX + maxX) / 2;
+    //         const midY = (minY + maxY) / 2;
+    //         const deltaX = (maxX - minX);
+    //         const deltaY = (maxY - minY);
+    //         setMapRegion( {
+    //             latitude: midX,
+    //             longitude: midY,
+    //             latitudeDelta: deltaX,
+    //             longitudeDelta: deltaY
+    //         });
+    //     }
     
 
-    const renderMarkers = () => {
-        // console.log("render markers", sharedEntries)
-        let points = sharedEntries.map(entry => {
-            return {latitude: entry.latitude, longitude: entry.longitude}
-        })
-        // mapRegion = getNewMapRegion(points)
-        console.log(points)
-        // setFollow(false);
-        
-        return sharedEntries.map(entry => {
-            // console.log(entry)
-            return (<Marker key={entry.id} {...props} image={require('../assets/images/share-bird.png')} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
-                props.navigation.navigate({
-                    routeName: 'FieldEntry', params: {
-                        entry: entry
-                    }
-                })
-            }}></Marker>)
-        })
-    }
+    // const renderMarkers = () => {
+    //     // console.log("render markers", sharedEntries)
+    //     let points = sharedEntries.map(entry => {
+    //         return {latitude: entry.latitude, longitude: entry.longitude}
+    //     })
+    //     // mapRegion = getNewMapRegion(points)
+    //     console.log(points)
+    //     // setFollow(false);
+         
+    //     return sharedEntries.map(entry => {
+    //         // console.log(entry)
+    //         return (<Marker key={entry.id} {...props} image={require('../assets/images/share-bird.png')} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
+    //             props.navigation.navigate({
+    //                 routeName: 'FieldEntry', params: {
+    //                     entry: entry
+    //                 }
+    //             })
+    //         }}></Marker>)
+    //     })
+    // }
 
     return (
         <View style={styles.mapContainer}>
-            <View style={styles.mapExtras}>
-                <Button style={styles.button} title={"Refresh Map"} onPress={displayMapHandler}/>
-                <Text style={styles.center}>See a bird?</Text>
-                <Text style={styles.center}>Tap the bird marker to document your sighting!</Text>
-            </View>
             {/* <NavigationEvents
                 onWillFocus={displayMapHandler}
             /> */}
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
-                <MapView showsMyLocationButton={true} showsCompass={true}	showsUserLocation={true} followsUserLocation={follow} style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
-                    {props.showShares ? renderMarkers() : 
-                    ( !!newMarker ?
-                        <Marker {...props} image={require('../assets/images/birdicon.png')} title="New Field Entry" coordinate={newMarker} onPress={() => {
+                <MapView showsUserLocation={follow} followsUserLocation={follow} style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
+                    {( !!newMarker ?
+                        <Marker {...props} title="New Field Entry" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 routeName: 'AddEntry', params: {
                                     onHandleModalClose: handleModalClose,
@@ -167,7 +157,7 @@ const GeoMap = (props) => {
                                     coords: newMarker
                                 }
                             })
-                        }}>
+                        }}><Image style={{height: 50, width: 50}}source={require('../assets/images/birdicon.png')} />
                     </Marker>
                      : null)}
                 </MapView>
@@ -181,7 +171,7 @@ GeoMap.navigationOptions = (navigationData) => {
     // const bird_name = navigationData.navigation.getParam('birdName')
 
     return {
-        headerTitle: "Map View",
+        
     }
 }
 

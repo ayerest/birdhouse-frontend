@@ -36,7 +36,7 @@ const FieldEntriesScreen = props => {
                     props.navigation.navigate({
                         routeName: 'FieldEntry', params: {
                             entryId: fieldentry.item.id,
-                            entryName: `Field Entry: ${fieldentry.item.date}`,
+                            entryName: `${fieldentry.item.date}`,
                             entry: fieldentry.item
                         }
                     })

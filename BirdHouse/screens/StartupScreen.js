@@ -11,7 +11,7 @@ const StartupScreen = props => {
             if (!userData) {
                 props.navigation.navigate("Auth")
                 return;
-            }
+            } 
             const transformedData = JSON.parse(userData);
             const {token, userId, expiryDate} = transformedData;
             const expirationDate = new Date(expiryDate)

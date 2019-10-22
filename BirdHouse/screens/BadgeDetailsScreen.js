@@ -5,27 +5,15 @@ import uuid from 'uuid';
 import Card from '../components/Card';
 // import { ScrollView } from 'react-native-gesture-handler';
 
-const FieldEntryDetailsScreen = props => {
-    console.log("field entry", props)
-    console.log('-----------------------------------')
-
-    const renderFieldEntryImage = (image) => {
-        return (<View>
-      
-            <Image style={styles.image} source={{uri: image.item.img_url}}/>
-        </View>)
-    }
+const BadgeDetailsScreen = props => {
 
     return (
         <ScrollView>
             <Card>
                 <View style={styles.screen}>
-                    <Text>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
+                    {/* <Text>{props.navigation.state.params.entryName.slice(0, 10)}</Text>
                     <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
-                    {props.navigation.state.params.entry.images.length > 0 ? 
-                        <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
-                    }
-                    <Text>{props.navigation.state.params.entry.notes}</Text>
+                    <Text>{props.navigation.state.params.entry.notes}</Text> */}
                 </View>
             </Card>
         </ScrollView>
@@ -46,4 +34,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FieldEntryDetailsScreen;
+export default BadgeDetailsScreen;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Platform, Alert } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
@@ -10,6 +10,7 @@ import * as entriesActions from '../store/actions/entries';
 import SharedEntries from '../components/SharedEntries';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
+import StaticMap from '../components/StaticMap';
 // import { Notifications } from 'expo';
 // import registerForPushNotificationsAsync from '../components/RegisterForPushNotificationsAsync';
 
@@ -17,6 +18,7 @@ import * as stepsActions from '../store/actions/steps';
 
 const MainViewScreen = props => {
     const [showShares, setShowShares] = useState(false)
+    const [liveView, setLiveView] = useState(true);
     // const [notification, setNotification] = useState({})
     const user = useSelector(state => {
         return state.user.user
@@ -86,29 +88,46 @@ const MainViewScreen = props => {
     const handleShowSharesOnMap = () => {
         console.log("what")
         setShowShares(true);
+        setLiveView(false);
     }
 
     const handleHideOnMap = () => {
         setShowShares(false);
+        setLiveView(!liveView);
     }
 
     const handleToggleShares = () => {
         setShowShares(false);
     }
 
+    const handleLiveViewToggle = () => {
+        setShowShares(false);
+        setLiveView(!liveView);
+    }
+
     return (
         <ScrollView contentContainerStyle={{height: '100%'}}>
                 {sharedEntries.length > 0 ? <SharedEntries hideOnMap={handleHideOnMap} showOnMap={handleShowSharesOnMap} sharedEntries={sharedEntries}/>: null}
-            <View style={styles.row}>
+            <View style={styles.steps}>
                 {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>Origin: {notification.origin}</Text>
                     <Text>Data: {JSON.stringify(notification.data)}</Text>
                 </View> */}
                 <Stepometer />
+                <View style={styles.row}>
+                    <Text style={styles.label}>Toggle Live View</Text>
+                    <Switch style={styles.share} value={liveView} onValueChange={handleLiveViewToggle} />
+
+                </View>
             </View>
             <View style={styles.screen}>
-                <GeoMap toggleShares={handleToggleShares} hideOnMap={handleHideOnMap} showShares={showShares} {...props}/>
-            </View>
+                <View style={styles.mapExtras}>
+                    <Text >See a bird? Tap the map!</Text>
+                </View>
+                {showShares || !liveView ? 
+                <StaticMap hideOnMap={handleHideOnMap}  {...props} /> : 
+                <GeoMap toggleShares={handleToggleShares} hideOnMap={handleHideOnMap} showShares={showShares} {...props}/> }
+            </View> 
         </ScrollView>
     )
 }
@@ -140,7 +159,18 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: 'flex-end'
+    }, 
+    steps: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    mapExtras: {
+        marginTop: 10,
+        padding: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     }
 })
 
