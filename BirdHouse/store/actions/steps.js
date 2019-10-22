@@ -55,7 +55,7 @@ export const updateSteps = (steps) => {
             }
 
             const stepsData = await response.json();
-
+            console.log(stepsData, "what is going on with all these steps")
             dispatch({ type: 'UPDATE_STEPS', steps: stepsData })
         } catch (err) {
             throw err;

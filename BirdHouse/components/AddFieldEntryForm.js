@@ -14,9 +14,6 @@ import { Entypo } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
 
 
-
-
-
 const AddFieldEntryForm = props => {
 
     useEffect(() => {
@@ -32,7 +29,17 @@ const AddFieldEntryForm = props => {
 
     const dispatch = useDispatch();
 
-    const date = new Date()
+    const fullDate = new Date().toISOString().slice(0, 18).split("T")
+    // console.log(fullDate)
+    const date = fullDate[0]
+    let time = fullDate[1].toString()
+    let hour = parseInt(fullDate[1].split(":")[0])
+    console.log(time, hour)
+    if (hour < 12) {
+        time = (hour.toString() + ":" + fullDate[1].split(":")[1] + "AM")
+    } else {
+        time = (hour - 12).toString() + ":" + fullDate[1].split(":")[1] + "PM";
+    }
 
     const submitHandler = async () => {
     
@@ -133,7 +140,7 @@ const AddFieldEntryForm = props => {
                         <Text style={styles.label}>Add New Field Entry</Text>
                     <Feather name="x-square" color={"red"} size={25} onPress={handleBackButtonClick}/>
                     </View>
-                    <Text style={styles.label}>{date.toISOString().slice(0, 16).split("T").join(" ")}</Text>
+                    <Text style={styles.label}>{date} {time}</Text>
                 </SafeAreaView>
                 <ScrollView>
                     <View style={styles.formtop}>

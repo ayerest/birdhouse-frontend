@@ -71,7 +71,7 @@ const BirdDetailsScreen = props => {
             />
             <ScrollView>                
                 <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
-                <Image style={styles.image} source={{uri: singleBird.img_url}}></Image>
+                <Image style={styles.image} source={{uri: singleBird.img_url}}></Image> 
                 <Card>
                     <Text>{singleBird.details}</Text>
                 </Card>

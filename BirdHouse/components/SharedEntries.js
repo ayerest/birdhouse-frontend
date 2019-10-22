@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, Image, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as entriesActions from '../store/actions/entries'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
 
 
 const SharedEntries = props => {
@@ -14,16 +16,25 @@ const SharedEntries = props => {
     }
 
     const mapViewHandler = async () => {
-        console.log(props, "in map view")
         props.showOnMap()
        
     }
 
+    const sharedEntries = useSelector(state => {
+        return state.entries.sharedEntries
+    })
+
 
     return (
         <View style={styles.notificationBar}>
-            <Text>Bird Alerts!</Text>
-            <Button title="Dismiss" onPress={dismissHandler} />
+            <View style={styles.row}>
+                {sharedEntries.length > 1 ? 
+                    <Text>{sharedEntries.length} new Bird Alerts!</Text> : <Text>{sharedEntries.length} new Bird Alert!</Text>}
+                <TouchableOpacity onPress={dismissHandler}>
+                    <Feather name="x-square" color={"red"} size={25}  />
+                </TouchableOpacity>
+
+            </View>
             <Button title="Show on Map" onPress={mapViewHandler} />
         </View>
     )
@@ -32,9 +43,14 @@ const SharedEntries = props => {
 
 const styles = StyleSheet.create({
     notificationBar: {
-        borderWidth: 2,
         backgroundColor: "thistle"
-    }
+    }, 
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+   
 })
 
 export default SharedEntries;
