@@ -50,7 +50,10 @@ const BirdDetailsScreen = props => {
             const goBack = props.navigation.getParam('onComingBack');
             goBack();
         }
-        await audio.stopAsync();
+        if (audio) {
+            await audio.stopAsync();
+            dispatch(audioActions.stopAudio)
+        }
         props.navigation.goBack()
     }
 
@@ -69,14 +72,22 @@ const BirdDetailsScreen = props => {
                 
                 onWillBlur={handleLeaving}
             />
-            <ScrollView>                
-                <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
-                <Image style={styles.image} source={{uri: singleBird.img_url}}></Image> 
+            <ScrollView>      
                 <Card>
+                <View style={styles.row}>
+                    <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
+                    {!!singleBird.range_map ?<Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> : null}
+                </View>          
+                <TouchableOpacity>
+                    <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
+                </TouchableOpacity>
                     <Text>{singleBird.details}</Text>
+                    <View style={styles.citation}>
+                        <Text style={styles.italic}>{singleBird.citation}</Text>
+
+                    </View>
                 </Card>
                  
-                {!!singleBird.range_map ?<Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> : null}
                        
                 <Button title="Go Back" onPress={handleBackButtonClick} />
                 
@@ -100,17 +111,32 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        resizeMode: "cover",
-        height: 300,
-        width: '95%',
-        alignSelf: "center",
+        resizeMode: "contain",
+        height: 200,
+        width: '50%',
+        borderRadius: 10,
     },
+    birdImage: {
+        resizeMode: "cover",
+        height: 200,
+        width: '50%',
+        borderRadius: 10,
+    }, 
     row: {
         flexDirection: "row",
         flexWrap: "wrap"
     },
     center: {
         alignSelf: "center"
+    }, 
+    citation: {
+        backgroundColor: "thistle",
+        padding: 5,
+        borderRadius: 10,
+        marginTop: 10
+    },
+    italic: {
+        fontStyle: 'italic',
     }
 })
 

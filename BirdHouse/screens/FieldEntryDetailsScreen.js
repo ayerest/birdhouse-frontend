@@ -1,48 +1,79 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native';
 // import { FlatList } from 'react-native-gesture-handler';
 import uuid from 'uuid';
 import Card from '../components/Card';
 // import { ScrollView } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps';
+
 
 const FieldEntryDetailsScreen = props => {
-    console.log("field entry", props)
+    console.log("field entry", props.navigation)
     console.log('-----------------------------------')
 
     const renderFieldEntryImage = (image) => {
-        return (<View>
-      
+        return <View>
             <Image style={styles.image} source={{uri: image.item.img_url}}/>
-        </View>)
+        </View>
     }
 
     return (
-        <ScrollView>
-            <Card>
-                <View style={styles.screen}>
-                    <Text>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
-                    <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
-                    {props.navigation.state.params.entry.images.length > 0 ? 
-                        <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
-                    }
-                    <Text>{props.navigation.state.params.entry.notes}</Text>
-                </View>
+        <Card style={styles.screen}>
+            <ScrollView >
+                    <View >
+                        <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
+                        <TouchableOpacity>
+
+                            <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
+                            {props.navigation.state.params.entry.images.length > 0 ? 
+                                <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
+                            }
+                        </TouchableOpacity>
+                    
+                        <Text>{props.navigation.state.params.entry.notes}</Text>
+                    </View>
+                    <View style={styles.mapContainer}>
+                        <MapView style={styles.map} region={{
+                            latitude: props.navigation.state.params.entry.latitude,
+                            longitude: props.navigation.state.params.entry.longitude,
+                            latitudeDelta: 0.01,
+                            longitudeDelta: 0.01}}>
+                            <Marker coordinate={{latitude: props.navigation.state.params.entry.latitude, longitude: props.navigation.state.params.entry.longitude}}>
+                            <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
+                            </Marker>
+                        </MapView>
+                        {/* <Image source={{ uri: this.state.mapSnapshot.uri }} /> */}
+                        {/* <TouchableOpacity onPress={this.takeSnapshot}>
+                            Take Snapshot
+                        </TouchableOpacity> */}
+                    </View>
+                </ScrollView>
             </Card>
-        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1
     },
     image: {
-        height: 250,
-        width: 250,
+        height: 200,
+        width: 200,
         marginTop: 5,
-        borderRadius: 15
+        borderRadius: 25,
+        resizeMode: 'contain'
+    }, 
+    map: {
+        flex: 1
+    },
+    mapContainer: {
+        height: '80%',
+        width: '100%'
+    },
+    right: {
+        alignSelf: 'flex-end'
     }
 })
 

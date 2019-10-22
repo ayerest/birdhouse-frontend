@@ -58,7 +58,7 @@ const StaticMap = (props) => {
             // const location = await
             // Location.watchPositionAsync({accuracy: 1, timeInterval: 120000}, () => {})
             //at this point I can set the marker state with the same lat long so a marker shows up initially
-            // setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })
+            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })   
             // setCurrentLocation({
             //     lat: location.coords.latitude,
             //     lng: location.coords.longitude
@@ -69,7 +69,7 @@ const StaticMap = (props) => {
                 longitude: location.coords.longitude,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
-            })
+            })   
 
 
         } catch (err) {
