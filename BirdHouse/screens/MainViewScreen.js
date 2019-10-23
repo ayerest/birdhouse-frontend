@@ -79,7 +79,7 @@ const MainViewScreen = props => {
     const verifyPedometer = async () => {
         const result = await Pedometer.isAvailableAsync();
         if (!result) {
-            Alert.alert("You do not have access to use the pedometer feature.", [{ text: "Okay" }]);
+            Alert.alert("You do not have access to use the pedometer feature.");
             return false;
         }
         return true;

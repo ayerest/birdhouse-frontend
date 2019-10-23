@@ -26,7 +26,7 @@ export const signup = (username, password, avatar) => {
 
             const signupData = await response.json();
             dispatch({ type: "SIGNUP", payload: signupData})
-            const expirationDate = new Date(new Date().getTime() + 600000)
+            const expirationDate = new Date(new Date().getTime() + 1200000)
             persistDataToStorage(signupData.jwt, signupData.user, expirationDate)
         }
     } else {
@@ -51,7 +51,7 @@ export const signup = (username, password, avatar) => {
 
             const loginData = await response.json();
             dispatch({ type: "LOGIN", payload: loginData })
-            const expirationDate = new Date(new Date().getTime() + 6000000)
+            const expirationDate = new Date(new Date().getTime() + 12000000)
             persistDataToStorage(loginData.jwt, loginData.user, expirationDate)
         }
     }

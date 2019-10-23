@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Alert, Dimensions} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TakePicture from './TakePicture';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -28,6 +28,7 @@ const AddFieldEntryForm = props => {
     const [bird, setBird] = useState();
     const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
+    const [error, setError] = useState()
 
     const dispatch = useDispatch();
 
@@ -45,17 +46,23 @@ const AddFieldEntryForm = props => {
     
         let latitude = props.navigation.state.params.coords.latitude
         let longitude = props.navigation.state.params.coords.longitude
-        await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude, share))
-        setImage(false);
-        setShare(false);
-        setNotes();
-        setBird();
-        setShowSearchResults(false);
-        if (audio) {
+        try {
+            await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude, share))
+            setImage(false);
+            setShare(false);
+            setNotes();
+            setBird();
+            setShowSearchResults(false);
+            if (audio) {
 
-            await audio.stopAsync();
+                await audio.stopAsync();
+            }
+            props.navigation.goBack();
+        } catch (err) {
+            // An error occurred!
+            setError(err.message)
+            Alert.alert("You must select a bird using the search bar to submit your entry.")
         }
-        props.navigation.goBack();
     }
 
     const imageSelectedHandler = (image) => {
@@ -75,9 +82,13 @@ const AddFieldEntryForm = props => {
         setShowSearchResults(true)
     }
 
+    const selectThatBird = (bird) => {
+        setBird(bird);
+    }
+
     const renderBirdListItem = (bird) => {
         return (
-            <TouchableOpacity style={styles.searchResults} onPress={() => setBird(bird.item)}>
+            <TouchableOpacity style={styles.searchResults} onPress={() => selectThatBird(bird.item)}>
                 <Text >
                   {bird.item.common_name}
                 </Text>
@@ -132,18 +143,23 @@ const AddFieldEntryForm = props => {
             }
         })
     }
-
+    // safeareaview should always wrap top most view (top most of the whole thing (app view?))
+    //nav actually takes care of it for you
+    // scrollview wraps keyboardavoiding wraps touchablewithoutfeedback
+    // padding works better for android and position works best for ios with keyboardavoiding
+    // use position with keyboardvertical offset to move field up
     return (
         <ScrollView>
             <NavigationEvents
                 onWillBlur={handleUnsetBird}
             />
-                <SafeAreaView>
-                    <View style={styles.space}>
-                        <Text style={styles.label}>{date} {time}</Text>
-                        <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
-                    </View>
-                </SafeAreaView>
+            <SafeAreaView>
+                <View style={styles.space}>
+                    <Text style={styles.label}>{date} {time}</Text>
+                    <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
+                </View>
+            </SafeAreaView>
+              
                 <ScrollView>
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Share Sighting?</Text>
@@ -176,6 +192,7 @@ const AddFieldEntryForm = props => {
                             </View> 
                         : null }
                     </View>
+                    </TouchableWithoutFeedback>
 
                     {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
                         maxToRenderPerBatch={20} numColumns={1} /> : null}
@@ -191,8 +208,7 @@ const AddFieldEntryForm = props => {
                             </View>
                     </KeyboardAvoidingView>
                 <Button title="Submit Entry" onPress={submitHandler} />
-                </TouchableWithoutFeedback>
-
+                {/* {error ? <Text>{error}</Text> : null} */}
                 </ScrollView>
         </ScrollView>
     )
@@ -236,13 +252,15 @@ const styles = StyleSheet.create({
         // paddingTop: 60
     },
     birdie: {
-        width: 100,
-        height: 100,
+        width: Dimensions.get('window').width / 2,
+        height: Dimensions.get('window').height / 3,
         alignSelf: 'center',
         borderRadius: 10
     },
     imagePicker: {
-        alignItems: "center"
+        alignItems: "center",
+        width: Dimensions.get('window').width / 2,
+        height: Dimensions.get('window').height / 3,
     },
     row: {
         flexDirection: "row",

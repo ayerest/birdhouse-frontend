@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, Alert, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
@@ -10,7 +10,7 @@ const TakePicture = props => {
         //note to self - if I want the user to take a picture in app later on I need askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
         const result = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA);
         if (result.status !== 'granted') {
-            Alert.alert("Please grant permissions to provide an image.", [{ text: "Okay" }]);
+            Alert.alert("Please grant permissions to provide an image.");
             return false;
         }
         return true;
@@ -41,8 +41,8 @@ const TakePicture = props => {
 
 const styles = StyleSheet.create({
     imagePreview: {
-        width: 200,
-        height: 150,
+        width: '80%',
+        height: '40%',
         borderWidth: 1,
         flex: 1,
         justifyContent: "center",
@@ -50,7 +50,10 @@ const styles = StyleSheet.create({
     },
     imageTaker: {
         justifyContent: 'center',
-        alignItems: "center"
+        alignItems: "center",
+        flex: 1,
+        width: Dimensions.get('window').width / 2,
+        height: Dimensions.get('window').height / 3
     },
     image: {
         width: '100%',

@@ -43,7 +43,7 @@ const StaticMap = (props) => {
     const verifyPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION);
         if (result.status !== 'granted') {
-            Alert.alert("Please grant location permissions to use the map feature.", [{ text: "Okay" }]);
+            Alert.alert("Please grant location permissions to use the map feature.");
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ const StaticMap = (props) => {
 
 
         } catch (err) {
-            Alert.alert("Unable to access current location.", "Please try again later.", [{ text: "Okay" }])
+            Alert.alert("Unable to access current location.", "Please try again later.")
         }
        
         setIsGettingLocation(false);
