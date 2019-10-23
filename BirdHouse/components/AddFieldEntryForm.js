@@ -12,6 +12,8 @@ import Card from './Card';
 import SafeAreaView from 'react-native-safe-area-view';
 import { Entypo } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
+import { NavigationEvents } from 'react-navigation';
+
 
 
 const AddFieldEntryForm = props => {
@@ -133,6 +135,9 @@ const AddFieldEntryForm = props => {
 
     return (
         <ScrollView>
+            <NavigationEvents
+                onWillBlur={handleUnsetBird}
+            />
                 <SafeAreaView>
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Add New Field Entry</Text>
@@ -176,7 +181,6 @@ const AddFieldEntryForm = props => {
                         numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
                         <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                     </View>
-
                     </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
                 <Button title="Submit Entry" onPress={submitHandler} />

@@ -73,14 +73,14 @@ const FieldEntriesScreen = props => {
 
         const midX = (minX + maxX) / 2;
         const midY = (minY + maxY) / 2;
-        const deltaX = (maxX - minX + 0.06);
-        const deltaY = (maxY - minY + 0.06);
+        const deltaX = (maxX - minX + 0.1);
+        const deltaY = (maxY - minY + 0.1);
         setMapRegion({
             latitude: midX,
             longitude: midY,
             latitudeDelta: deltaX,
             longitudeDelta: deltaY
-        });
+        }); 
     }
 
 
@@ -93,13 +93,12 @@ const FieldEntriesScreen = props => {
                     }
                 })
             }}>
-                <Image style={{ height: 50, width: 50 }} source={require('../assets/images/share-bird.png')} />
+                <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
             </Marker>)
         })
     }
 
     const showOnMapHandler = () => {
-        console.log("what now")
         let points = fieldEntriesList.map(entry => {
             return { latitude: entry.latitude, longitude: entry.longitude }
         })
@@ -127,9 +126,9 @@ const FieldEntriesScreen = props => {
                             {renderMarkers()}
                         </MapView>
                     </View>
-                : 
-                !isLoading && fieldEntriesList.length == 0 ? <Text>You haven't posted any bird sightings yet!</Text> : null}
-                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} /> }
+                : null}
+                {!isLoading && fieldEntriesList.length == 0 ? <Text>You haven't posted any bird sightings yet!</Text> : null}
+                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
             </View>
     )
 }

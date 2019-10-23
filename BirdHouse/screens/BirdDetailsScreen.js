@@ -65,6 +65,13 @@ const BirdDetailsScreen = props => {
         props.navigation.goBack()
     }
     
+    const renderDetails = () => {
+        if (singleBird.details) {
+            return singleBird.details.split("!PARAGRAPH!").map(paragraph => {
+                return <Text style={styles.paragraph} key={uuid()}>{paragraph}</Text>
+            })
+        }
+    }
 
     return (
         <View style={styles.screen}>
@@ -81,10 +88,9 @@ const BirdDetailsScreen = props => {
                 <TouchableOpacity>
                     <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
                 </TouchableOpacity>
-                    <Text>{singleBird.details}</Text>
+                    {renderDetails()}
                     <View style={styles.citation}>
                         <Text style={styles.italic}>{singleBird.citation}</Text>
-
                     </View>
                 </Card>
                  
@@ -132,10 +138,12 @@ const styles = StyleSheet.create({
         backgroundColor: "thistle",
         padding: 5,
         borderRadius: 10,
-        marginTop: 10
     },
     italic: {
         fontStyle: 'italic',
+    },
+    paragraph: {
+        margin: 2
     }
 })
 

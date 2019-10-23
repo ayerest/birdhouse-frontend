@@ -87,60 +87,6 @@ const GeoMap = (props) => {
         setVisible(false)
     }
 
-    // const getNewMapRegion = (points) => {
-    //         // points should be an array of { latitude: X, longitude: Y }
-    //         let minX, maxX, minY, maxY;
-
-    //         // init first point
-    //         ((point) => {
-    //             minX = point.latitude;
-    //             maxX = point.latitude;
-    //             minY = point.longitude;
-    //             maxY = point.longitude;
-    //         })(points[0]);
-
-    //         // calculate rect
-    //         points.map((point) => {
-    //             minX = Math.min(minX, point.latitude);
-    //             maxX = Math.max(maxX, point.latitude);
-    //             minY = Math.min(minY, point.longitude);
-    //             maxY = Math.max(maxY, point.longitude);
-    //         });
-
-    //         const midX = (minX + maxX) / 2;
-    //         const midY = (minY + maxY) / 2;
-    //         const deltaX = (maxX - minX);
-    //         const deltaY = (maxY - minY);
-    //         setMapRegion( {
-    //             latitude: midX,
-    //             longitude: midY,
-    //             latitudeDelta: deltaX,
-    //             longitudeDelta: deltaY
-    //         });
-    //     }
-    
-
-    // const renderMarkers = () => {
-    //     // console.log("render markers", sharedEntries)
-    //     let points = sharedEntries.map(entry => {
-    //         return {latitude: entry.latitude, longitude: entry.longitude}
-    //     })
-    //     // mapRegion = getNewMapRegion(points)
-    //     console.log(points)
-    //     // setFollow(false);
-         
-    //     return sharedEntries.map(entry => {
-    //         // console.log(entry)
-    //         return (<Marker key={entry.id} {...props} image={require('../assets/images/share-bird.png')} title="Bird Alert" coordinate={{latitude: entry.latitude, longitude: entry.longitude}} onPress={() => {
-    //             props.navigation.navigate({
-    //                 routeName: 'FieldEntry', params: {
-    //                     entry: entry
-    //                 }
-    //             })
-    //         }}></Marker>)
-    //     })
-    // }
-
     return (
         <View style={styles.mapContainer}>
             {/* <NavigationEvents

@@ -26,9 +26,12 @@ const StaticMap = (props) => {
     })
 
     useEffect(() => {
-        let points = sharedEntries.map(entry => {
+        let points = [];
+        if (sharedEntries.length > 0) {
+            points = sharedEntries.map(entry => {
             return { latitude: entry.latitude, longitude: entry.longitude }
         })
+        }
         points.length > 0 ?
         getNewMapRegion(points) : displayMapHandler();
     }, [sharedEntries]);
@@ -139,10 +142,12 @@ const StaticMap = (props) => {
 
 
     const renderMarkers = () => {
-        let points = sharedEntries.map(entry => {
-            return { latitude: entry.latitude, longitude: entry.longitude }
-        })
+
+        // let points = sharedEntries.map(entry => {
+        //     return { latitude: entry.latitude, longitude: entry.longitude }
+        // })
         // setFollow(false);
+    
 
         return sharedEntries.map(entry => {
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
@@ -164,8 +169,9 @@ const StaticMap = (props) => {
                 onWillFocus={displayMapHandler}
             /> */}
             {!!isGettingLocation ? <ActivityIndicator /> :
-                <MapView style={styles.map} region={mapRegion} onPress={addMarkerHandler}>
-                    {renderMarkers()}
+                <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
+                    {sharedEntries.length > 0 ? 
+                    renderMarkers() : null }
                     {!!newMarker ?
                         <Marker {...props}   title="New Field Entry" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({

@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 // import { useFocusEffect } from 'react-navigation-hooks';
 
 
@@ -28,31 +28,37 @@ const BadgesScreen = props => {
         return state.badges.myBadges
     })
 
+    const user = useSelector(state => {
+        return state.user.user
+    })
+
     const newSteps = useSelector(state => {
         return state.steps.myNewSteps
     })
 
     const renderBadgeItem = (badge) => {
         return (
-
-            <TouchableOpacity onPress={() => {
-                props.navigation.navigate({
-                routeName: 'BadgeDetails', params: {
-                    entryId: badge.item.id,
-                    entryName: `${badge.item.category}`,
-                    entry: badge.item
-                }
-            })}}>
-                <BadgeCard badge={badge.item}  />
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    props.navigation.navigate({
+                    routeName: 'BadgeDetails', params: {
+                        entryId: badge.item.id,
+                        entryName: `${badge.item.category}`,
+                        entry: badge.item
+                    }
+                })}}>
+                    <BadgeCard badge={badge.item}  />
+                </TouchableOpacity>
         )
     }
     //note to self: it would be nice to have an info link here to explain what you can get badges for --- really nice if users could see how close they were to earning a badge
     return (
         <View style={styles.screen}>
+            <ScrollView>
+                {!isLoading && badgesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
+                {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />}
 
-            {!isLoading && badgesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
-            {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />}
+            </ScrollView>
+
             
         </View>
     )

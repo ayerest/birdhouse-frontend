@@ -44,8 +44,8 @@ const FieldEntryDetailsScreen = props => {
                         <MapView style={styles.map} region={{
                             latitude: props.navigation.state.params.entry.latitude,
                             longitude: props.navigation.state.params.entry.longitude,
-                            latitudeDelta: 0.01,
-                            longitudeDelta: 0.01}}>
+                            latitudeDelta: 0.03,
+                            longitudeDelta: 0.03}}>
                             <Marker coordinate={{latitude: props.navigation.state.params.entry.latitude, longitude: props.navigation.state.params.entry.longitude}}>
                             <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
                             </Marker>

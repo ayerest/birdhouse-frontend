@@ -22,6 +22,7 @@ import Colors from '../constants/Colors';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
+import MyAccountScreen from '../screens/MyAccountScreen';
 
 
 const config = Platform.select({
@@ -68,12 +69,17 @@ const Main = createStackNavigator({
   BirdInfo: BirdDetailsScreen
 })
 
+const Account = createStackNavigator({
+  MyAccount: MyAccountScreen
+})
+
 const MenuNavigator = createDrawerNavigator({
   Home: Main,
   "Field Entries": FieldEntries,
   BirdieDex: Birds,
   "My Badges": Badges,
   "My Photos": Pictures,
+  "My Account": Account
 }, {
   contentComponent: props => {
     const dispatch = useDispatch();

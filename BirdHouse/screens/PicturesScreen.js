@@ -69,11 +69,12 @@ const styles = StyleSheet.create({
     },
     image: {
         height: 300,
-        width: 300,
+        width: 250,
         marginBottom: 10,
         borderRadius: 15,
         borderWidth: 2,
-        borderColor: "black"
+        borderColor: "black",
+        resizeMode: 'cover'
     }
 })
 

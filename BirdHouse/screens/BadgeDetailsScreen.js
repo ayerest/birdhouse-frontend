@@ -1,19 +1,39 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native';
-// import { FlatList } from 'react-native-gesture-handler';
 import uuid from 'uuid';
 import Card from '../components/Card';
-// import { ScrollView } from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import * as factoidActions from '../store/actions/factoids'
+
+
 
 const BadgeDetailsScreen = props => {
 
+    const dispatch = useDispatch();
+    
+
+    useEffect(() => {
+        getRandomFact();
+    }, [dispatch])
+
+    const fact = useSelector(state => {
+        return state.factoids.fact
+    })
+
+    const getRandomFact = async () => {
+        await dispatch(factoidActions.getFact())
+    }
+
     return (
         <ScrollView>
+            {/* <NavigationEvents
+                onWillFocus={getRandomFact()}
+            /> */}
             <Card>
                 <View style={styles.screen}>
-                    {/* <Text>{props.navigation.state.params.entryName.slice(0, 10)}</Text>
-                    <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
-                    <Text>{props.navigation.state.params.entry.notes}</Text> */}
+                    <Text>Bonus Bird Fact</Text>
+                    {fact ? <Text>{fact.fact}</Text> : null}
                 </View>
             </Card>
         </ScrollView>
