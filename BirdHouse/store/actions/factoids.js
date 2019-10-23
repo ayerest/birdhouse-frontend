@@ -15,7 +15,6 @@ export const getFact = () => {
             }
 
             const fact = await response.json();
-            // console.log(fact, "in action");
 
             return dispatch({ type: 'GET_FACT', fact: fact })
         } catch (err) {

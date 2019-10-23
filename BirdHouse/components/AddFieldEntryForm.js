@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, StyleSheet, Modal, FlatList, TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TakePicture from './TakePicture';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -139,19 +139,20 @@ const AddFieldEntryForm = props => {
                 onWillBlur={handleUnsetBird}
             />
                 <SafeAreaView>
-                    <View style={styles.formtop}>
-                        <Text style={styles.label}>Add New Field Entry</Text>
-                    <Feather name="x-square" color={"red"} size={25} onPress={handleBackButtonClick}/>
+                    <View style={styles.space}>
+                        <Text style={styles.label}>{date} {time}</Text>
+                        <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
                     </View>
-                    <Text style={styles.label}>{date} {time}</Text>
                 </SafeAreaView>
                 <ScrollView>
                     <View style={styles.formtop}>
                         <Text style={styles.label}>Share Sighting?</Text>
                         <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
                     </View>
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
                     <View style={styles.form}>
-                        <SearchBar onShowBirds={displayBirdList}/>
+                        <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList}/>
                         {!!bird ? 
                             <View>
                                 <Text>Selected Bird:</Text>
@@ -163,27 +164,35 @@ const AddFieldEntryForm = props => {
                                     <TouchableOpacity onPress={handleLeaveForBirdDetails}>
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
                                     </TouchableOpacity>
-                                    <Feather name="x-square" size={25} color={"red"} onPress={handleUnsetBird} />
+                                    <View style={styles.space}>
+                                        <TouchableOpacity onPress={handleUnsetBird}>
+                                            <Feather name="x-square" size={25} color={"red"} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => setShowSearchResults(false)}>
+                                            <Feather name="check-square" size={25} color={"green"} />
+                                        </TouchableOpacity>
+                                    </View>
                                 </Card>
                             </View> 
                         : null }
                     </View>
+
                     {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
                         maxToRenderPerBatch={20} numColumns={1} /> : null}
                     <View style={styles.row}>
                         <Text style={styles.label}>Notes</Text>
                         <Entypo name="feather" color={"green"} size={25} />
                     </View>
-                <TouchableWithoutFeedback>
-                    <KeyboardAvoidingView>
-                    <View>
-                        <TextInput multiline={true}
-                        numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
-                        <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
-                    </View>
+                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
+                            <View style={styles.inner}>
+                                <TextInput multiline={true}
+                                numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                                <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                            </View>
                     </KeyboardAvoidingView>
-                </TouchableWithoutFeedback>
                 <Button title="Submit Entry" onPress={submitHandler} />
+                </TouchableWithoutFeedback>
+
                 </ScrollView>
         </ScrollView>
     )
@@ -208,6 +217,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         marginBottom: 5,
+        marginRight: 10,
         alignSelf: "center"
     },
     textInput: {
@@ -220,8 +230,9 @@ const styles = StyleSheet.create({
     },
     formtop: {
         flexDirection: "row",
-        justifyContent: 'space-around',
+        // justifyContent: 'space-evenly',
         alignItems: "center",
+        marginLeft: '4%'
         // paddingTop: 60
     },
     birdie: {
@@ -235,7 +246,7 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: "row",
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         alignItems: "center",
     },
     searchResults: {
@@ -246,6 +257,16 @@ const styles = StyleSheet.create({
     },
     share: {
         alignSelf: "center"
+    },
+    space: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: '4%',
+        marginVertical: '2%',
+    },
+    inner: {
+        justifyContent: 'flex-end'
     }
 })
 

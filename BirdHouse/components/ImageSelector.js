@@ -35,7 +35,7 @@ const ImageSelector = props => {
 
     return (
     <View>
-        <Button title="Select Image" onPress={selectImageHandler}/>
+        <Button title="Select Avatar Image" onPress={selectImageHandler}/>
         
             {!!selectedImage ? 
             <View>

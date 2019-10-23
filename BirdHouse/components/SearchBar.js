@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux'
-import { TextInput, StyleSheet, Text, View, Button, TouchableWithoutFeedback } from 'react-native';
+import { TextInput, StyleSheet, Text, View, Button, KeyboardAvoidingView, Keyboard } from 'react-native';
 import * as birdActions from '../store/actions/birds'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const SearchBar = props => {
     const [searchTerm, setSearchTerm] = useState("")
@@ -34,17 +35,16 @@ const SearchBar = props => {
     }
 
     return (
-        <View>
+        <KeyboardAvoidingView>
+
             <View style={styles.row}>
                 <Text style={styles.label}>Search Birds</Text>
                 {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
             </View>
-            <TouchableWithoutFeedback>
-            <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
+                <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
                 initialValue=""
             {...props} style={{ ...styles.input, ...props.style }} />
-                </TouchableWithoutFeedback>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -64,7 +64,10 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "space-between",
+        alignItems: 'center',
+        marginHorizontal: '4%',
+        marginVertical: '2%'
     }
 });
 

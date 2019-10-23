@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Platform, View, Text, KeyboardAvoidingView, TouchableWithoutFeedback, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
+import {ScrollView, Platform, View, Text, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
 import Card from '../components/Card'
 import {useDispatch, useSelector} from 'react-redux'
 import * as authActions from '../store/actions/auth'
@@ -56,72 +56,72 @@ const AuthScreen = (props) => {
         }
     }
     return (
-        <ScrollView>
 
         <KeyboardAvoidingView behavior="padding" 
-        keyboardVerticalOffset={80}
         style={styles.screen}>
-            <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
-            <Card style={styles.authContainer}>
-            <TouchableWithoutFeedback>
-                
-                {!login ? 
-                    <ScrollView>
-                        <View style={styles.screen}>
-                            <Text style={styles.label}>Username</Text>
-                            <TextInput  autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
-                                initialValue="" />
+            <SafeAreaView style={{flex: 1}}>
+
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.inner}>
+                        
+                        <View style={styles.authContainer}>
+                        
+                        <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
+                            
+                            {!login ? 
+                                <ScrollView>
+                                    <View style={styles.screen}>
+                                        <Text style={styles.label}>Username</Text>
+                                        <TextInput  autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
+                                            initialValue="" />
+                                    </View>
+                                    <View style={styles.screen}>
+                                        <Text style={styles.label}>Password</Text>
+                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none"
+                                            minLength={3}
+                                            errorText="Please enter a valid password." onChangeText={text => {
+                                                setPassword(text)
+                                            }}
+                                            initialValue="" />
+                                    <View style={styles.screen}>
+                                        {/* need to change to select an image and make sure a default image can be chosen */}
+                                        <ImageSelector onImageSelected={imageSelectedHandler}/>
+                                    </View>
+                                    </View>
+                                    {isLoading ? <ActivityIndicator /> : 
+                                    <View>
+                                    <Button title="Sign Up" color="gray" onPress={signupHandler} />
+                                    <Button title="Already have an account?" color="gray" onPress={() => setLogin(true)} />
+                                    </View>
+                                    }
+                                </ScrollView>
+                            : 
+                            <ScrollView>
+                                <View style={styles.screen}>
+                                    <Text style={styles.label}>Username</Text>
+                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" autoCapitalize="none" onChangeText={text => setUsername(text)}
+                                    initialValue="" />
+                                </View>
+                                <View style={styles.screen}>
+                                    <Text style={styles.label}>Password</Text>
+                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required
+                                    minLength={3}
+                                    errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
+                                        initialValue="" />
+                                </View>
+                                {isLoading ? <ActivityIndicator /> :
+                                    <View>
+                                    <Button title="Login" color="gray" onPress={signupHandler}/>
+                                    <Button title="Create an account" color="gray" onPress={() => setLogin(false)}/>
+                                    </View>
+                                }
+                            </ScrollView>
+                            }
                         </View>
-                        <View style={styles.screen}>
-                            <Text style={styles.label}>Password</Text>
-                            <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none"
-                                minLength={3}
-                                 errorText="Please enter a valid password." onChangeText={text => {
-                                     setPassword(text)
-                                 }}
-                                initialValue="" />
-                        </View>
-                        <View style={styles.screen}>
-                            <Text style={styles.label}>Avatar</Text>
-                            {/* need to change to select an image and make sure a default image can be chosen */}
-                            <ImageSelector onImageSelected={imageSelectedHandler}/>
-                            {/* <TextInput style={styles.input} id="avatar" label="avatar" keyboardType="default" autoCapitalize="none"
-                                onChangeText={text => setAvatar(text)}
-                                initialValue="" /> */}
-                        </View>
-                        {isLoading ? <ActivityIndicator /> : 
-                        <View>
-                        <Button title="Sign Up" color="gray" onPress={signupHandler} />
-                        <Button title="Already have an account?" color="gray" onPress={() => setLogin(true)} />
-                        </View>
-                        }
-                    </ScrollView>
-                : 
-                <ScrollView>
-                    <View style={styles.screen}>
-                        <Text style={styles.label}>Username</Text>
-                            <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" autoCapitalize="none" onChangeText={text => setUsername(text)}
-                        initialValue="" />
                     </View>
-                    <View style={styles.screen}>
-                        <Text style={styles.label}>Password</Text>
-                            <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required
-                        minLength={3}
-                         errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
-                            initialValue="" />
-                    </View>
-                    {isLoading ? <ActivityIndicator /> :
-                        <View>
-                        <Button title="Login" color="gray" onPress={signupHandler}/>
-                        <Button title="Create an account" color="gray" onPress={() => setLogin(false)}/>
-                        </View>
-                    }
-                </ScrollView>
-                }
-            </TouchableWithoutFeedback>
-            </Card>
+                </TouchableWithoutFeedback>
+            </SafeAreaView>
         </KeyboardAvoidingView>
-        </ScrollView>
     )
 }
 
@@ -132,25 +132,23 @@ AuthScreen.navigationOptions = navData => {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"
         },
-        // headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
-        //   <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-        //     onPress={() => { navData.navigation.toggleDrawer() }} />
-        // </HeaderButtons>
+        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 };
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        flexDirection: "column",
-        justifyContent: 'center',
     },
     input: {
-        width: 300,
+        width: '90%',
         backgroundColor: "ghostwhite",
-        padding: 10
+        padding: 10,
+        alignSelf: 'center'
     },
     authContainer: {
+        backgroundColor: 'white',
+        height: '95%'
     },
     label: {
         paddingTop: 10,
@@ -158,8 +156,15 @@ const styles = StyleSheet.create({
     },
     logo: {
         alignSelf: "center",
-        height: 200,
-        width: 180
+        // width: '50%',
+        // height: '40%',
+        flex: 1,
+        resizeMode: 'contain'
+    },
+    inner: {
+        padding: 5,
+        flex: 1,
+        justifyContent: 'flex-end'
     }
 });
 

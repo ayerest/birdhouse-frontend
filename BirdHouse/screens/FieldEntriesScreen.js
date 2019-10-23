@@ -83,7 +83,6 @@ const FieldEntriesScreen = props => {
         }); 
     }
 
-
     const renderMarkers = () => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
@@ -155,8 +154,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     mapContainer: {
-        height: '85%',
-        width: '100%'
+        height: '92%',
+        width: '100%',
     },
     map: {
         flex: 1

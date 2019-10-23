@@ -59,7 +59,8 @@ export const signup = (username, password, avatar) => {
 
 export const logout = () => {
     //should I add logic to update steps at this point??
-   return {type: "LOGOUT"}
+    removeDataFromStorage()
+    return {type: "LOGOUT"}
 }
 
 export const authenticate = (userId, token) => {
@@ -73,3 +74,7 @@ const persistDataToStorage = (token, userId, expirationDate) => {
         expiryDate: expirationDate.toISOString()
     }))
 }
+
+const removeDataFromStorage = () => {
+    AsyncStorage.clear();
+}  
