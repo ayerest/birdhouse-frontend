@@ -8,8 +8,6 @@ import MapView, { Marker } from 'react-native-maps';
 
 
 const FieldEntryDetailsScreen = props => {
-    console.log("field entry", props.navigation)
-    console.log('-----------------------------------')
 
     const renderFieldEntryImage = (image) => {
         return <View>
@@ -18,18 +16,28 @@ const FieldEntryDetailsScreen = props => {
     }
 
     return (
-        <Card style={styles.screen}>
+        <View style={styles.screen}>
+
+        <Card>
             <ScrollView >
-                    <View >
-                        <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
-                        <TouchableOpacity>
+                    <View style={styles.row}>
+                        <TouchableOpacity style={styles.imageContainer} onPress={() => {
+                            props.navigation.navigate({
+                                routeName: 'BirdStuff', params: {
+                                    birdId: props.navigation.state.params.entry.bird.id,
+                                    birdName: props.navigation.state.params.entry.bird.common_name,
+                                }
+                            })}}>
 
                             <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
                             {props.navigation.state.params.entry.images.length > 0 ? 
                                 <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
                             }
                         </TouchableOpacity>
-                    
+                        <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.label}>Notes:</Text>
                         <Text>{props.navigation.state.params.entry.notes}</Text>
                     </View>
                     <View style={styles.mapContainer}>
@@ -49,6 +57,7 @@ const FieldEntryDetailsScreen = props => {
                     </View>
                 </ScrollView>
             </Card>
+        </View>
     )
 }
 
@@ -59,21 +68,28 @@ const styles = StyleSheet.create({
         flex: 1
     },
     image: {
-        height: 200,
-        width: 200,
+        width: '100%',
+        height: 180,
         marginTop: 5,
-        borderRadius: 25,
         resizeMode: 'contain'
     }, 
     map: {
         flex: 1
     },
     mapContainer: {
-        height: '80%',
+        height: '100%',
         width: '100%'
     },
-    right: {
-        alignSelf: 'flex-end'
+    center: {
+        alignSelf: 'center'
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    imageContainer: {
+        width: '80%',
+        height: '100%'
     }
 })
 

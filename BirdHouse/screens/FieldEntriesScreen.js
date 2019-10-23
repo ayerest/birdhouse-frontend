@@ -7,11 +7,15 @@ import Colors from '../constants/Colors';
 import uuid from 'uuid';
 import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
+import MapView, { Marker } from 'react-native-maps';
+
 
 
 
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
+    const [showMap, setShowMap] = useState(false);
+    const [mapRegion, setMapRegion] = useState(null)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -47,13 +51,85 @@ const FieldEntriesScreen = props => {
         )
     }
 
+    const getNewMapRegion = (points) => {
+        // points should be an array of { latitude: X, longitude: Y }
+        let minX, maxX, minY, maxY;
+
+        // init first point
+        ((point) => {
+            minX = point.latitude;
+            maxX = point.latitude;
+            minY = point.longitude;
+            maxY = point.longitude;
+        })(points[0]);
+
+        // calculate rect
+        points.map((point) => {
+            minX = Math.min(minX, point.latitude);
+            maxX = Math.max(maxX, point.latitude);
+            minY = Math.min(minY, point.longitude);
+            maxY = Math.max(maxY, point.longitude);
+        });
+
+        const midX = (minX + maxX) / 2;
+        const midY = (minY + maxY) / 2;
+        const deltaX = (maxX - minX + 0.06);
+        const deltaY = (maxY - minY + 0.06);
+        setMapRegion({
+            latitude: midX,
+            longitude: midY,
+            latitudeDelta: deltaX,
+            longitudeDelta: deltaY
+        });
+    }
+
+
+    const renderMarkers = () => {
+        return fieldEntriesList.map(entry => {
+            return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
+                props.navigation.navigate({
+                    routeName: 'EntryInfo', params: {
+                        entry: entry
+                    }
+                })
+            }}>
+                <Image style={{ height: 50, width: 50 }} source={require('../assets/images/share-bird.png')} />
+            </Marker>)
+        })
+    }
+
+    const showOnMapHandler = () => {
+        console.log("what now")
+        let points = fieldEntriesList.map(entry => {
+            return { latitude: entry.latitude, longitude: entry.longitude }
+        })
+        if (points.length == 0) {
+            return;
+        } else {
+
+            getNewMapRegion(points);
+            setShowMap(true);
+        }
+    }
+
+    const hideMapHandler = () => {
+        setShowMap(false);
+    }
+
     return (
             <View style={styles.screen}>
-
-                {!isLoading && fieldEntriesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
-                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
-
-            
+                {!showMap ?
+                <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} /> :
+                <Button title="Hide Map" onPress={hideMapHandler} /> }
+                {showMap && !!mapRegion ? 
+                    <View style={styles.mapContainer}>
+                        <MapView style={styles.map} region={mapRegion}>
+                            {renderMarkers()}
+                        </MapView>
+                    </View>
+                : 
+                !isLoading && fieldEntriesList.length == 0 ? <Text>You haven't posted any bird sightings yet!</Text> : null}
+                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} /> }
             </View>
     )
 }
@@ -78,7 +154,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    mapContainer: {
+        height: '85%',
+        width: '100%'
+    },
+    map: {
+        flex: 1
+    },
 })
 
 export default FieldEntriesScreen;
+
+
+
+
+
+
+
+

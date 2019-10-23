@@ -30,11 +30,9 @@ const AddFieldEntryForm = props => {
     const dispatch = useDispatch();
 
     const fullDate = new Date().toISOString().slice(0, 18).split("T")
-    // console.log(fullDate)
     const date = fullDate[0]
     let time = fullDate[1].toString()
     let hour = parseInt(fullDate[1].split(":")[0])
-    // console.log(time, hour)
     if (hour < 12) {
         time = (hour.toString() + ":" + fullDate[1].split(":")[1] + "AM")
     } else {

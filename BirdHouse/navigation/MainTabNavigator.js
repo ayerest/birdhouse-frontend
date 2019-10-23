@@ -48,8 +48,9 @@ const Pictures = createStackNavigator({
 
 const FieldEntries = createStackNavigator({
   FieldEntries: FieldEntriesScreen,
+  EntryInfo: FieldEntryDetailsScreen,
   FieldEntry: FieldEntryDetailsScreen,
-  BirdDetails: BirdDetailsScreen
+  BirdStuff: BirdDetailsScreen
 })
 
 const Birds = createStackNavigator({

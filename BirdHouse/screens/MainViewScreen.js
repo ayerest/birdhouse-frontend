@@ -86,7 +86,6 @@ const MainViewScreen = props => {
     }
 
     const handleShowSharesOnMap = () => {
-        console.log("what")
         setShowShares(true);
         setLiveView(false);
     }

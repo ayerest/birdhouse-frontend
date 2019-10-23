@@ -31,7 +31,6 @@ const StaticMap = (props) => {
         })
         points.length > 0 ?
         getNewMapRegion(points) : displayMapHandler();
-        console.log(mapRegion, "use effect")
     }, [sharedEntries]);
 
     // useEffect(() => {
@@ -107,7 +106,6 @@ const StaticMap = (props) => {
     const getNewMapRegion = (points) => {
         // points should be an array of { latitude: X, longitude: Y }
         setIsGettingLocation(true);
-        console.log(points)
         let minX, maxX, minY, maxY;
 
         // init first point
@@ -130,7 +128,6 @@ const StaticMap = (props) => {
         const midY = (minY + maxY) / 2;
         const deltaX = (maxX - minX + 0.02);
         const deltaY = (maxY - minY + 0.02);
-        console.log(midX, midY, deltaX, deltaY)
         setMapRegion({
             latitude: midX,
             longitude: midY,
@@ -142,17 +139,13 @@ const StaticMap = (props) => {
 
 
     const renderMarkers = () => {
-        // console.log("render markers", sharedEntries)
         let points = sharedEntries.map(entry => {
             return { latitude: entry.latitude, longitude: entry.longitude }
         })
-        console.log(points)
         // setFollow(false);
 
         return sharedEntries.map(entry => {
-            // console.log(entry)
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
-                console.log(props.navigation, "what do I got")
                 props.navigation.navigate({
                     routeName: 'FieldDetails', params: {
                         entry: entry
