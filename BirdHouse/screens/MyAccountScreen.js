@@ -85,11 +85,11 @@ const MyAccountScreen = props => {
             
                 {user && !isLoading ? 
                     <Card style={styles.screen}>
-                        <Text>{user.username} Account Information</Text>
+                        <Text style={styles.label}>{user.username} Account Information</Text>
                         <Image style={styles.image} source={{uri: user.avatar}}></Image>
-                        <Text>{steps} Total Steps!</Text>
-                        <Text>You have documented {user.field_entries.length} bird sightings in the field!</Text>
-                        <Text>You have seen {user.birds.length} bird species!</Text>
+                        <Text style={styles.label}>{steps} Total Steps!</Text>
+                        <Text style={styles.label}>You have documented {user.field_entries.length} bird sightings in the field!</Text>
+                        <Text style={styles.label}>You have seen {user.birds.length} bird species!</Text>
                     </Card>
                      : <ActivityIndicator /> }
           
@@ -144,6 +144,13 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderWidth: 1,
         borderRadius: 50
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 })
 

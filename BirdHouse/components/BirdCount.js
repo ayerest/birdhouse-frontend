@@ -39,7 +39,7 @@ const BirdCount = (props) => {
                     {/* <TouchableOpacity onPress={handleShowMyBirds}> */}
 
                         <Button onPress={handleShowMyBirds} title="My Birds"/>
-                        <Text>Count: {myBirds.length}</Text>
+                        <Text style={styles.label}>Count: {myBirds.length}</Text>
                     {/* </TouchableOpacity> */}
                     {/* <Button title={showMyBirds} onPress={handleShowMyBirds}/> */}
                 </View>
@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center"
+    },
+    label: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16
     }
 })
 

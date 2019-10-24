@@ -86,7 +86,7 @@ const BirdDetailsScreen = props => {
                     <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
                     <View>
                     <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
-                    {!!singleBird.range_map ? <Text>Scroll right to view geographic range map</Text> : null}
+                    {!!singleBird.range_map ? <Text style={styles.label}>Scroll right to view geographic range map</Text> : null}
                     </View>
                     {!!singleBird.range_map ?
                     <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> 
@@ -169,7 +169,16 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     paragraph: {
-        margin: 2
+        margin: 2,
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 })
 

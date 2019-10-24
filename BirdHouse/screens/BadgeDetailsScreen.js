@@ -31,8 +31,8 @@ const BadgeDetailsScreen = props => {
                 onWillFocus={getRandomFact()}
             /> */}
             <Card style={styles.screen}>
-                    <Text>Bonus Bird Fact</Text>
-                    {fact ? <Text>{fact.fact}</Text> : null}
+                    <Text style={styles.label}>Bonus Bird Fact</Text>
+                    {fact ? <Text style={styles.label}>{fact.fact}</Text> : null}
             </Card>
         </ScrollView>
     )
@@ -54,6 +54,13 @@ const styles = StyleSheet.create({
         width: 250,
         marginTop: 5,
         borderRadius: 15
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 })
 

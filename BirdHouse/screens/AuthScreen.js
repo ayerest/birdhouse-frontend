@@ -92,12 +92,12 @@ const AuthScreen = (props) => {
                                     </View>
                                     <View style={styles.screen}>
                                         <Text style={styles.label}>Username</Text>
-                                        <TextInput autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
+                                        <TextInput autoCapitalize="none" accessibilityRole="text" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
                                             initialValue="" />
                                     </View>
                                     <View style={styles.screen}>
                                         <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none"
+                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none" accessibilityRole="text"
                                             minLength={3}
                                             errorText="Please enter a valid password." onChangeText={text => {
                                                 setPassword(text)
@@ -121,12 +121,12 @@ const AuthScreen = (props) => {
                             <ScrollView>
                                 <View style={styles.screen}>
                                     <Text style={styles.label}>Username</Text>
-                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" autoCapitalize="none" onChangeText={text => setUsername(text)}
+                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" accessibilityRole="text" autoCapitalize="none" onChangeText={text => setUsername(text)}
                                     initialValue="" />
                                 </View>
                                 <View style={styles.screen}>
                                     <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required
+                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required accessibilityRole="text"
                                     minLength={3}
                                     errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
                                         initialValue="" />

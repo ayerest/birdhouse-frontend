@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "black",
-        alignSelf: "center"
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16
     },
     category: {
         flexDirection: "row",

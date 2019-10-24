@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
         borderBottomColor: "black",
         borderBottomWidth: 10,
         backgroundColor: Colors.myColor
-    }
+    },
+    
 })
 
 export default BirdODexScreen;

@@ -29,6 +29,7 @@ const AddFieldEntryForm = props => {
     const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
     const [error, setError] = useState()
+    const [confirmed, setConfirmed] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -84,12 +85,13 @@ const AddFieldEntryForm = props => {
 
     const selectThatBird = (bird) => {
         setBird(bird);
+        setConfirmed(false);
     }
 
     const renderBirdListItem = (bird) => {
         return (
             <TouchableOpacity style={styles.searchResults} onPress={() => selectThatBird(bird.item)}>
-                <Text >
+                <Text style={styles.label}>
                   {bird.item.common_name}
                 </Text>
             </TouchableOpacity>
@@ -129,6 +131,7 @@ const AddFieldEntryForm = props => {
         await audio.stopAsync();
         }
         setBird();
+        setConfirmed(false);
     }
 
     const handleLeaveForBirdDetails = async () => {
@@ -150,71 +153,85 @@ const AddFieldEntryForm = props => {
     // use position with keyboardvertical offset to move field up
     return (
         <ScrollView>
-            <NavigationEvents
-                onWillBlur={handleUnsetBird}
-            />
-            <SafeAreaView>
+                <NavigationEvents
+                    onWillBlur={handleUnsetBird}
+                />
+        <KeyboardAvoidingView behavior="positon" style={{flex: 1}} keyboardVerticalOffset={50}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={{flex: 1}}>
+
                 <View style={styles.space}>
                     <Text style={styles.label}>{date} {time}</Text>
                     <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
                 </View>
-            </SafeAreaView>
               
-                <ScrollView>
-                    <View style={styles.formtop}>
-                        <Text style={styles.label}>Share Sighting?</Text>
-                        <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
-                    </View>
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <View style={{flex: 1}}>
+                            <View style={styles.formtop}>
+                                <Text style={styles.label}>Share Sighting?</Text>
+                                <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
+                            </View>
 
-                    <View style={styles.form}>
-                        <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList}/>
+                            <View style={styles.form}>
+                                <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList}/>
+                            </View>
+
+                        </View>
+                    <View></View>
                         {!!bird ? 
                             <View>
-                                <Text>Selected Bird:</Text>
+                                <View >
+                                    <Text style={styles.label}>Selected Bird:</Text>
+
+                                </View>
+                                { confirmed ? <Text style={styles.label}>{bird.common_name}</Text> : 
                                 <Card>
                                     <View style={styles.row}>
-                                        <Text>{bird.common_name}</Text>
+                                        <Text style={styles.label}>{bird.common_name}</Text>
                                         <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
                                     </View>
                                     <TouchableOpacity onPress={handleLeaveForBirdDetails}>
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
-                                    </TouchableOpacity>
+                                        </TouchableOpacity>
                                     <View style={styles.spaceEven}>
+                                        <TouchableOpacity onPress={() => {
+                                            setConfirmed(true);
+                                            setShowSearchResults(false);
+                                        }}>
+                                            <Feather name="check-square" size={25} color={"green"} />
+                                        </TouchableOpacity>
                                         <TouchableOpacity onPress={handleUnsetBird}>
                                             <Feather name="x-square" size={25} color={"red"} />
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => setShowSearchResults(false)}>
-                                            <Feather name="check-square" size={25} color={"green"} />
-                                        </TouchableOpacity>
                                     </View>
-                                </Card>
+                                </Card> }
                             </View> 
                         : null }
+                    {showSearchResults ?
+                    <View style={{flex: 1}}>
+                        <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
+                            numColumns={1} />
                     </View>
-                    </TouchableWithoutFeedback>
-                    
-                    {showSearchResults ? 
-                        <View >
-                            <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
-                                maxToRenderPerBatch={20} numColumns={1} /> 
-                        </View>
                     : null}
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Notes</Text>
-                        <Entypo name="feather" color={"green"} size={25} />
-                    </View>
-                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
-                            <View style={styles.inner}>
-                                <TextInput multiline={true}
-                                numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onChangeText={(text) => {setNotes(text)}}/>
-                                <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
-                            </View>
-                    </KeyboardAvoidingView>
+
+                        <View style={styles.inner}>
+
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Notes</Text>
+                            <Entypo name="feather" color={"green"} size={25} />
+                        </View>
+                                <View>
+                                    <TextInput multiline={true}
+                                    numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                                    <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                        
+                                </View>
+                        </View>
                 <Button title="Submit Entry" onPress={submitHandler} />
                 {/* {error ? <Text>{error}</Text> : null} */}
-                </ScrollView>
-        </ScrollView>
+            </View>
+        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
+                    </ScrollView>
     )
 }
 
@@ -238,7 +255,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
         marginRight: 10,
-        alignSelf: "center"
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     },
     textInput: {
         height: 120,
@@ -250,14 +268,15 @@ const styles = StyleSheet.create({
     },
     formtop: {
         flexDirection: "row",
-        // justifyContent: 'space-evenly',
+        flex: 1,
+        justifyContent: 'flex-start',
         alignItems: "center",
         marginLeft: '4%'
         // paddingTop: 60
     },
     birdie: {
         width: Dimensions.get('window').width / 2,
-        height: Dimensions.get('window').height / 3,
+        height: Dimensions.get('window').height / 4,
         alignSelf: 'center',
         borderRadius: 10
     },
@@ -286,6 +305,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: '4%',
         marginVertical: '2%',
+        flex: 1
     },
     spaceEven: {
         flexDirection: 'row',

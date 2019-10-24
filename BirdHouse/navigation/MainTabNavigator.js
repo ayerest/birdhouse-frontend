@@ -45,7 +45,7 @@ const Badges = createStackNavigator({
       title: 'My Badges',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 20,
         fontWeight: '400'
       }
     }
@@ -60,7 +60,7 @@ const Pictures = createStackNavigator({
       title: 'My Photos',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 20,
         fontWeight: '400'
       }
     }
@@ -74,7 +74,7 @@ const FieldEntries = createStackNavigator({
       title: 'My Field Entries',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 18,
         fontWeight: '400'
       }
     }
@@ -84,7 +84,7 @@ const FieldEntries = createStackNavigator({
     title: 'Field Entry',
     headerTitleStyle: {
       fontFamily: 'Fred-Great',
-      fontSize: 21,
+      fontSize: 20,
       fontWeight: '400'
     }
   }
@@ -95,7 +95,7 @@ const FieldEntries = createStackNavigator({
       title: 'Field Entry',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 20,
         fontWeight: '400'
       }
     }
@@ -133,7 +133,17 @@ const Main = createStackNavigator({
   GeoMap: GeoMap,
   StaticMap: StaticMap,
   FieldDetails: FieldEntryDetailsScreen,
-  AddEntry: AddFieldEntryForm,
+  AddEntry: {
+    screen: AddFieldEntryForm,
+    navigationOptions: {
+      title: 'Add Field Entry',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 19,
+        fontWeight: '400'
+      }
+    }
+  },
   BirdInfo: BirdDetailsScreen,
   BirdStuff: BirdDetailsScreen
 })
