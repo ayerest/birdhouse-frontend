@@ -8,6 +8,7 @@ import uuid from 'uuid';
 import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
+import AvatarButton from '../components/AvatarButton';
 
 
 
@@ -148,7 +149,16 @@ FieldEntriesScreen.navigationOptions = navData => {
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
         headerRight: (
-            <TouchableOpacity onPress={() => {
+            <AvatarButton handleClick={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                    }
+                })
+            }} />
+        )
+    }
+}
+            {/* <TouchableOpacity onPress={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {
                         user: user
@@ -157,10 +167,7 @@ FieldEntriesScreen.navigationOptions = navData => {
             }}>
                 {user ?
                     <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
-            </TouchableOpacity>
-        )
-    }
-}
+            </TouchableOpacity> */}
 
 const styles = StyleSheet.create({
     screen: {

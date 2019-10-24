@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Condensed',
         fontSize: Dimensions.get('window').width > 350 ? 20 : 18,
         paddingLeft: 8,
-        opacity: 0.8
+        opacity: 0.8 
     }
 })
 

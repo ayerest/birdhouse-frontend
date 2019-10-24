@@ -10,6 +10,7 @@ import BirdCount from '../components/BirdCount';
 import CategoriesList from '../components/CategoriesList';
 import { NavigationEvents } from 'react-navigation';
 import * as audioActions from '../store/actions/audio';
+import AvatarButton from '../components/AvatarButton'
 
 
 
@@ -126,7 +127,14 @@ BirdODexScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 40, height: 40, resizeMode: 'cover' }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (
+            <AvatarButton handleClick={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                    }
+                })
+            }} />
+        )
     }
 }
 

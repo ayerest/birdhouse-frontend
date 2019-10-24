@@ -11,6 +11,7 @@ import SharedEntries from '../components/SharedEntries';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
 import StaticMap from '../components/StaticMap';
+import AvatarButton from '../components/AvatarButton';
 // import { Notifications } from 'expo';
 // import registerForPushNotificationsAsync from '../components/RegisterForPushNotificationsAsync';
 
@@ -145,17 +146,26 @@ MainViewScreen.navigationOptions = navData => {
             onPress={() => {navData.navigation.toggleDrawer()}} />
         </HeaderButtons>,
         headerRight: (
-            <TouchableOpacity onPress={() => {
+            <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {
                         user: user
                     }
                 })
-                }}>  
-                {user ? 
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'cover', borderRadius: 10 }} source={require('../assets/images/birdicon.png')} /> }
-            </TouchableOpacity>
+            }}/>
         )
+        // headerRight: (
+        //     <TouchableOpacity onPress={() => {
+        //         navData.navigation.navigate({
+        //             routeName: 'MyAccount', params: {
+        //                 user: user
+        //             }
+        //         })
+        //         }}>  
+        //         {user ? 
+        //             <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'cover', borderRadius: 10 }} source={require('../assets/images/birdicon.png')} /> }
+        //     </TouchableOpacity>
+        // )
     }
 }
 

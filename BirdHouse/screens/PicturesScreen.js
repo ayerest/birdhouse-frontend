@@ -6,7 +6,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import * as photosActions from '../store/actions/photos';
-import uuid from 'uuid'
+import uuid from 'uuid';
+import AvatarButton from '../components/AvatarButton';
 
 const PicturesScreen = props => {
 
@@ -57,15 +58,14 @@ PicturesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: < TouchableOpacity onPress = {() => {
-        navData.navigation.navigate({
-            routeName: 'MyAccount', params: {
-            }
-        })
-    }
-}>
-    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />
-        </TouchableOpacity >
+        headerRight: (
+            <AvatarButton handleClick={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                    }
+                })
+            }}/>
+        )
     }
 }
 

@@ -9,6 +9,7 @@ import { Feather } from '@expo/vector-icons';
 import Card from '../components/Card';
 import * as audioActions from '../store/actions/audio';
 import {NavigationEvents} from 'react-navigation';
+import AvatarButton from '../components/AvatarButton';
 
 
 const BirdDetailsScreen = props => {
@@ -121,16 +122,12 @@ BirdDetailsScreen.navigationOptions = (navigationData) => {
             fontWeight: '400'
         },
         headerRight: (
-            <TouchableOpacity onPress={() => {
+            <AvatarButton handleClick={() => {
                 navigationData.navigation.navigate({
                     routeName: 'MyAccount', params: {
-                        user: user
                     }
                 })
-            }}>
-                {user ?
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
-            </TouchableOpacity>
+            }} />
         )
     }
 }

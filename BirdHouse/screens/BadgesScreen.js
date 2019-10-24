@@ -9,6 +9,7 @@ import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 // import { useFocusEffect } from 'react-navigation-hooks';
+import AvatarButton from '../components/AvatarButton';
 
 
 const BadgesScreen = props => {
@@ -76,14 +77,14 @@ BadgesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: <TouchableOpacity onPress={() => {
-            navData.navigation.navigate({
-                routeName: 'MyAccount', params: {
-                }
-            })
-        }}>
-             <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />
-        </TouchableOpacity>
+        headerRight: (
+            <AvatarButton handleClick={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                    }
+                })
+            }} />
+        )
     }
 }
 

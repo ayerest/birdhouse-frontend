@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import Card from '../components/Card';
 // import { ScrollView } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
+import AvatarButton from '../components/AvatarButton';
 
 
 const FieldEntryDetailsScreen = props => {
@@ -63,16 +64,12 @@ FieldEntryDetailsScreen.navigationOptions = navData => {
 
     return {
         headerRight: (
-            <TouchableOpacity onPress={() => {
+            <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {
-                        user: user
                     }
                 })
-            }}>
-                {user ?
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
-            </TouchableOpacity>
+            }} />
         )
     }
 }
