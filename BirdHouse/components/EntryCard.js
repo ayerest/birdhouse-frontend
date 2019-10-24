@@ -3,19 +3,17 @@ import { Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Card from './Card'
 
 const EntryCard = props => {
-    console.log(props.fieldentry)
-    console.log("------------------------")
   
     return (
         <Card style={styles.entry}>
-            <Text>{props.fieldentry.date.slice(0, 10)}</Text>
+            <Text style={styles.label}>{props.fieldentry.date.slice(0, 10)}</Text>
             {!!props.fieldentry.bird ? 
-            <Text>{props.fieldentry.bird.common_name}</Text> : null
+            <Text style={styles.label}>{props.fieldentry.bird.common_name}</Text> : null
             }
             { props.fieldentry.images.length > 0 ?
                 <Image style={styles.picture} source={{ uri: props.fieldentry.images[0].img_url }}></Image> : <Image style={styles.picture} source={require('../assets/images/birdicon.png')}></Image>
             }
-            <Text>{props.notes}</Text>
+            <Text style={styles.label}>{props.notes}</Text>
         </Card>
     );
 };
@@ -33,6 +31,13 @@ const styles = StyleSheet.create({
         width: '70%',
         borderRadius: 15,
         resizeMode: 'cover'
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 });
 

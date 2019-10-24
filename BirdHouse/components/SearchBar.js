@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     },
     label: {
         alignSelf: 'center',
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'Roboto-Condensed',
     },
     row: {
         flexDirection: "row",

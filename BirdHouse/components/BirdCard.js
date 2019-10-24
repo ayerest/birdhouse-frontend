@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     smallFont: {
-        fontSize: 12
+        fontSize: 14,
+        fontFamily: 'Roboto-Condensed',
     }
 });
 

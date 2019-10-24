@@ -21,11 +21,11 @@ const FieldEntryDetailsScreen = props => {
             <ScrollView contentContainerStyle={{paddingBottom: 50}}>
                     <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text> 
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
-                            console.log(props.navigation.state.params)
                             props.navigation.navigate({
                                 routeName: 'BirdStuff', params: {
                                     birdId: props.navigation.state.params.entry.bird.id,
                                     birdName: props.navigation.state.params.entry.bird.common_name,
+                                    user: props.navigation.state.params.entry.user
                                 }
                             })}}>
 
@@ -56,6 +56,25 @@ const FieldEntryDetailsScreen = props => {
                 </ScrollView>
             </Card>
     )
+}
+
+FieldEntryDetailsScreen.navigationOptions = navData => {
+    const user = navData.navigation.getParam('user')
+
+    return {
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
+                })
+            }}>
+                {user ?
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
+            </TouchableOpacity>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

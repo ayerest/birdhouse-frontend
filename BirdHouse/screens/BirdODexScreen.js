@@ -98,7 +98,7 @@ const BirdODexScreen = props => {
             <BirdCount onShowBirds={handleOnShowBirds}/>
             {/* {showMyBirdCount ? <Text>Count: {myBirds.length}</Text> : null} */}
 
-            {isLoading ? <ActivityIndicator color="black" /> : null}
+            {isLoading ? <ActivityIndicator /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
             <NavigationEvents
@@ -110,6 +110,7 @@ const BirdODexScreen = props => {
 }
 
 BirdODexScreen.navigationOptions = navData => {
+    console.log(navData, "birdodex")
     return {
         headerTitle: "BirdieDex",
         headerStyle: {
@@ -120,7 +121,7 @@ BirdODexScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (<Image style={{ width: 40, height: 40, resizeMode: 'cover' }} source={require("../assets/images/birdicon.png")} />)
     }
 }
 
@@ -142,7 +143,8 @@ const styles = StyleSheet.create({
         borderBottomColor: "black",
         borderBottomWidth: 10,
         backgroundColor: Colors.myColor
-    }
+    },
+    
 })
 
 export default BirdODexScreen;

@@ -116,9 +116,10 @@ const FieldEntriesScreen = props => {
 
     return (
             <View style={styles.screen}>
-                {!showMap ?
+                {!isLoading ? !showMap ? 
+                
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} /> :
-                <Button title="Hide Map" onPress={hideMapHandler} /> }
+                <Button title="Hide Map" onPress={hideMapHandler} />  : null }
                 {showMap && !!mapRegion ? 
                     <View style={styles.mapContainer}>
                         <MapView style={styles.map} region={mapRegion}>
@@ -126,13 +127,16 @@ const FieldEntriesScreen = props => {
                         </MapView>
                     </View>
                 : null}
-                {!isLoading && fieldEntriesList.length == 0 ? <Text>You haven't posted any bird sightings yet!</Text> : null}
+                {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
                 {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
             </View>
     )
 }
 
 FieldEntriesScreen.navigationOptions = navData => {
+    const user = navData.navigation.getParam('user')
+    console.log("user in field entries", user)
+
     return {
         headerTitle: "My Field Entries",
         headerStyle: {
@@ -143,7 +147,18 @@ FieldEntriesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
+                })
+            }}>
+                {user ?
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
+            </TouchableOpacity>
+        )
     }
 }
 
@@ -160,6 +175,13 @@ const styles = StyleSheet.create({
     map: {
         flex: 1
     },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
+    }
 })
 
 export default FieldEntriesScreen;

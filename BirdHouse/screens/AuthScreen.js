@@ -18,7 +18,7 @@ const AuthScreen = (props) => {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [avatar, setAvatar] = useState(false);
+    const [avatar, setAvatar] = useState('https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg');
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -38,28 +38,28 @@ const AuthScreen = (props) => {
         return state.user.user
     })
     
-    const signupHandler = async () => {
+    const signupHandler = async (type) => {
         setError(null)
         setIsLoading(true);
         try {
             await dispatch(authActions.signup(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
-        } catch (err) {
-            setError(err.message)
-            setAvatar(false)
-            setIsLoading(false);
-        }
             props.navigation.navigate({
                 routeName:'Main', params: {
                     user: user
                 }
             });
+        } catch (err) {
+            setError(err.message)
+            setAvatar(false)
+            setIsLoading(false);
+        }
         
     }
     return (
         
-        <KeyboardAvoidingView behavior="padding" 
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={15} 
         style={styles.screen}>
             <SafeAreaView style={{flex: 1}}>
 
@@ -68,7 +68,7 @@ const AuthScreen = (props) => {
                         
                         <View style={styles.authContainer}>
                         
-                        <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
+                            <Image style={styles.logo} source={require('../assets/images/birdhouse_logo_drawn.png')}></Image>
 
                         {!login && !signup ? 
                             <View style={styles.screen}>
@@ -92,12 +92,12 @@ const AuthScreen = (props) => {
                                     </View>
                                     <View style={styles.screen}>
                                         <Text style={styles.label}>Username</Text>
-                                        <TextInput autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
+                                        <TextInput autoCapitalize="none" accessibilityRole="text" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
                                             initialValue="" />
                                     </View>
                                     <View style={styles.screen}>
                                         <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none"
+                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none" accessibilityRole="text"
                                             minLength={3}
                                             errorText="Please enter a valid password." onChangeText={text => {
                                                 setPassword(text)
@@ -121,12 +121,12 @@ const AuthScreen = (props) => {
                             <ScrollView>
                                 <View style={styles.screen}>
                                     <Text style={styles.label}>Username</Text>
-                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" autoCapitalize="none" onChangeText={text => setUsername(text)}
+                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" accessibilityRole="text" autoCapitalize="none" onChangeText={text => setUsername(text)}
                                     initialValue="" />
                                 </View>
                                 <View style={styles.screen}>
                                     <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required
+                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required accessibilityRole="text"
                                     minLength={3}
                                     errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
                                         initialValue="" />

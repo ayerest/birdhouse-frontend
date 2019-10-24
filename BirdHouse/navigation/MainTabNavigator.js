@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, SafeAreaView, Button, View, Image } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 
@@ -45,7 +45,7 @@ const Badges = createStackNavigator({
       title: 'My Badges',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 20,
         fontWeight: '400'
       }
     }
@@ -60,7 +60,7 @@ const Pictures = createStackNavigator({
       title: 'My Photos',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 20,
         fontWeight: '400'
       }
     }
@@ -74,13 +74,32 @@ const FieldEntries = createStackNavigator({
       title: 'My Field Entries',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 21,
+        fontSize: 18,
         fontWeight: '400'
       }
     }
   },
-  EntryInfo: FieldEntryDetailsScreen,
-  FieldEntry: FieldEntryDetailsScreen,
+  EntryInfo: {screen: FieldEntryDetailsScreen,
+  navigationOptions: {
+    title: 'Field Entry',
+    headerTitleStyle: {
+      fontFamily: 'Fred-Great',
+      fontSize: 20,
+      fontWeight: '400'
+    }
+  }
+},
+  FieldEntry: {
+    screen: FieldEntryDetailsScreen,
+    navigationOptions: {
+      title: 'Field Entry',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 20,
+        fontWeight: '400'
+      }
+    }
+  },
   BirdStuff: BirdDetailsScreen
 })
 
@@ -114,7 +133,17 @@ const Main = createStackNavigator({
   GeoMap: GeoMap,
   StaticMap: StaticMap,
   FieldDetails: FieldEntryDetailsScreen,
-  AddEntry: AddFieldEntryForm,
+  AddEntry: {
+    screen: AddFieldEntryForm,
+    navigationOptions: {
+      title: 'Add Field Entry',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 19,
+        fontWeight: '400'
+      }
+    }
+  },
   BirdInfo: BirdDetailsScreen,
   BirdStuff: BirdDetailsScreen
 })
@@ -134,7 +163,7 @@ const Account = createStackNavigator({
 })
 
 const MenuNavigator = createDrawerNavigator({
-  Home: Main,
+  Home: Main, 
   "Field Entries": FieldEntries,
   BirdieDex: Birds,
   "My Badges": Badges,
@@ -143,11 +172,11 @@ const MenuNavigator = createDrawerNavigator({
 }, {
   contentComponent: props => {
     const dispatch = useDispatch();
-    return <View style={{flex: 1}}>
-      <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+    return <View>
+      <SafeAreaView forceInset={{flex: 1, top: 'always', horizontal: 'never'}}>
         <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-      <DrawerItems {...props} />
-      <Button title="Logout" onPress={() => {
+      <DrawerItems {...props} itemStyle={{fontFamily: 'Roboto-Condensed'}} />
+      <Button title="Logout" style={{alignSelf: 'flex-start'}} onPress={() => {
         dispatch(authActions.logout());
         props.navigation.navigate("Auth")
         }}/>

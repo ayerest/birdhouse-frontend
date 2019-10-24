@@ -25,6 +25,10 @@ const StaticMap = (props) => {
         return state.entries.sharedEntries
     })
 
+    const user = useSelector(state => {
+        return state.user.user
+    })
+
     useEffect(() => {
         let points = [];
         if (sharedEntries.length > 0) {
@@ -151,9 +155,11 @@ const StaticMap = (props) => {
 
         return sharedEntries.map(entry => {
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
+                console.log(props.navigation)
                 props.navigation.navigate({
                     routeName: 'FieldDetails', params: {
-                        entry: entry
+                        entry: entry,
+                        user: props.navigation.state.params.user
                     }
                 })
             }}>

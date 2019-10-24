@@ -133,7 +133,6 @@ const MainViewScreen = props => {
 
 MainViewScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
-    // console.log(navData.navigation, "main view nav")
 
     return {
         headerTitle: "BirdHouse",
@@ -148,11 +147,13 @@ MainViewScreen.navigationOptions = navData => {
         headerRight: (
             <TouchableOpacity onPress={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount'
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
                 })
                 }}>  
                 {user ? 
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} /> }
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'cover', borderRadius: 10 }} source={require('../assets/images/birdicon.png')} /> }
             </TouchableOpacity>
         )
     }

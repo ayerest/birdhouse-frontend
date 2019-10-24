@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
     },
     center: {
         alignSelf: 'center',
-        marginBottom: 5
+        marginBottom: 5,
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16
     },
     card: {
         backgroundColor: "ghostwhite"

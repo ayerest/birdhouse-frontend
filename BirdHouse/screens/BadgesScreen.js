@@ -65,6 +65,7 @@ const BadgesScreen = props => {
 }
 
 BadgesScreen.navigationOptions = navData => {
+    
     return {
         headerTitle: "My Badges",
         headerStyle: {
@@ -75,7 +76,14 @@ BadgesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{width: 25, height: 25}}source={require("../assets/images/birdicon.png")} />)
+        headerRight: <TouchableOpacity onPress={() => {
+            navData.navigation.navigate({
+                routeName: 'MyAccount', params: {
+                }
+            })
+        }}>
+             <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />
+        </TouchableOpacity>
     }
 }
 
