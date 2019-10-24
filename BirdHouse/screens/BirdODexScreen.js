@@ -110,6 +110,7 @@ const BirdODexScreen = props => {
 }
 
 BirdODexScreen.navigationOptions = navData => {
+    console.log(navData, "birdodex")
     return {
         headerTitle: "BirdieDex",
         headerStyle: {
@@ -120,7 +121,7 @@ BirdODexScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (<Image style={{ width: 40, height: 40, resizeMode: 'cover' }} source={require("../assets/images/birdicon.png")} />)
     }
 }
 

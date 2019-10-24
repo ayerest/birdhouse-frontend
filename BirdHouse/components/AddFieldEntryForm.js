@@ -161,11 +161,11 @@ const AddFieldEntryForm = props => {
             <View style={{flex: 1}}>
 
                 <View style={styles.space}>
-                    <Text style={styles.label}>{date} {time}</Text>
+                    <Text style={styles.label}>{date}</Text>
                     <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
                 </View>
               
-                        <View style={{flex: 1}}>
+                        <View >
                             <View style={styles.formtop}>
                                 <Text style={styles.label}>Share Sighting?</Text>
                                 <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
@@ -181,9 +181,15 @@ const AddFieldEntryForm = props => {
                             <View>
                                 <View >
                                     <Text style={styles.label}>Selected Bird:</Text>
-
                                 </View>
-                                { confirmed ? <Text style={styles.label}>{bird.common_name}</Text> : 
+                                { confirmed ? 
+                                <View style={styles.row}>
+                                <Text style={styles.label}>{bird.common_name}</Text>
+                                    <Feather name="x-square" color={"red"} size={25} onPress={() => {
+                                        setBird()
+                                        setConfirmed(false)
+                                        }} />
+                                </View> : 
                                 <Card>
                                     <View style={styles.row}>
                                         <Text style={styles.label}>{bird.common_name}</Text>
@@ -221,13 +227,17 @@ const AddFieldEntryForm = props => {
                         </View>
                                 <View>
                                     <TextInput multiline={true}
-                                    numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                                    numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onFocus={()=> {
+                                        setShowSearchResults(false)
+                                        setConfirmed(true)
+                                        }} onChangeText={(text) => {setNotes(text)}}/>
                                     <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                         
                                 </View>
                         </View>
                 <Button title="Submit Entry" onPress={submitHandler} />
                 {/* {error ? <Text>{error}</Text> : null} */}
+                <View style={{flex: 1, paddingBottom: 100}} ></View>
             </View>
         </TouchableWithoutFeedback>
                     </KeyboardAvoidingView>
@@ -304,7 +314,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: '4%',
-        marginVertical: '2%',
+        // marginVertical: '%',
         flex: 1
     },
     spaceEven: {

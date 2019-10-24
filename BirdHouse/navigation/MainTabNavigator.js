@@ -163,7 +163,7 @@ const Account = createStackNavigator({
 })
 
 const MenuNavigator = createDrawerNavigator({
-  Home: Main,
+  Home: Main, 
   "Field Entries": FieldEntries,
   BirdieDex: Birds,
   "My Badges": Badges,
@@ -172,11 +172,11 @@ const MenuNavigator = createDrawerNavigator({
 }, {
   contentComponent: props => {
     const dispatch = useDispatch();
-    return <View style={{flex: 1}}>
-      <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+    return <View>
+      <SafeAreaView forceInset={{flex: 1, top: 'always', horizontal: 'never'}}>
         <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-      <DrawerItems {...props} />
-      <Button title="Logout" onPress={() => {
+      <DrawerItems {...props} itemStyle={{fontFamily: 'Roboto-Condensed'}} />
+      <Button title="Logout" style={{alignSelf: 'flex-start'}} onPress={() => {
         dispatch(authActions.logout());
         props.navigation.navigate("Auth")
         }}/>

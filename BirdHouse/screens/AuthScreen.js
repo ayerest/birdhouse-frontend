@@ -68,7 +68,7 @@ const AuthScreen = (props) => {
                         
                         <View style={styles.authContainer}>
                         
-                            <Image style={styles.logo} source={{uri: "https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg"}}></Image>
+                            <Image style={styles.logo} source={require('../assets/images/birdhouse_logo_drawn.png')}></Image>
 
                         {!login && !signup ? 
                             <View style={styles.screen}>
