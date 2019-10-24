@@ -68,12 +68,30 @@ const AuthScreen = (props) => {
                         <View style={styles.authContainer}>
                         
                         <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
+
+                        {!login && !signup ? 
+                            <View style={styles.screen}>
+                                <Button title="Create an account" onPress={() => {
+                                    setLogin(false)
+                                    setSignup(true)
+                                    }}/>
+                                <Button title="Already have an account?" onPress={() => {
+                                    setLogin(true);
+                                    setSignup(false)
+                                    }} />
+                            </View> : null
+                        }
                             
-                            {!login ? 
+
+                        {!login && signup ? 
                                 <ScrollView>
                                     <View style={styles.screen}>
+                                        {/* need to change to select an image and make sure a default image can be chosen */}
+                                        <ImageSelector onImageSelected={imageSelectedHandler} />
+                                    </View>
+                                    <View style={styles.screen}>
                                         <Text style={styles.label}>Username</Text>
-                                        <TextInput  autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
+                                        <TextInput autoCapitalize="none" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
                                             initialValue="" />
                                     </View>
                                     <View style={styles.screen}>
@@ -84,19 +102,21 @@ const AuthScreen = (props) => {
                                                 setPassword(text)
                                             }}
                                             initialValue="" />
-                                    <View style={styles.screen}>
-                                        {/* need to change to select an image and make sure a default image can be chosen */}
-                                        <ImageSelector onImageSelected={imageSelectedHandler}/>
                                     </View>
-                                    </View>
-                                    {isLoading ? <ActivityIndicator /> : 
-                                    <View>
-                                    <Button title="Sign Up" onPress={signupHandler} />
-                                    <Button title="Already have an account?"  onPress={() => setLogin(true)} />
-                                    </View>
+                                    {isLoading ? <ActivityIndicator /> :
+                                        <View>
+                                            <Button title="Sign Up" onPress={signupHandler} />
+                                            <Button title="Already have an account?" onPress={() => {
+                                                setLogin(true);
+                                                setSignup(false);
+                                                }} />
+                                        </View>
                                     }
                                 </ScrollView>
-                            : 
+                        : null
+                        }
+
+                        {!signup && login ? 
                             <ScrollView>
                                 <View style={styles.screen}>
                                     <Text style={styles.label}>Username</Text>
@@ -113,10 +133,13 @@ const AuthScreen = (props) => {
                                 {isLoading ? <ActivityIndicator /> :
                                     <View>
                                     <Button title="Login" onPress={signupHandler}/>
-                                    <Button title="Create an account" onPress={() => setLogin(false)}/>
+                                    <Button title="Create a new account?" onPress={() => {
+                                        setLogin(false);
+                                        setSignup(true);
+                                        }}/>
                                     </View>
                                 }
-                            </ScrollView>
+                            </ScrollView> : null
                             }
                         </View>
                     </View>
@@ -166,7 +189,8 @@ const styles = StyleSheet.create({
         padding: 5,
         flex: 1,
         justifyContent: 'flex-end'
-    }
+    },
+
 });
 
 export default AuthScreen;
