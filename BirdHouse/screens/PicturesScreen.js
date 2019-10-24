@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
@@ -57,7 +57,15 @@ PicturesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: < TouchableOpacity onPress = {() => {
+        navData.navigation.navigate({
+            routeName: 'MyAccount', params: {
+            }
+        })
+    }
+}>
+    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />
+        </TouchableOpacity >
     }
 }
 

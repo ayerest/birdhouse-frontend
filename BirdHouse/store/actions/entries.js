@@ -27,7 +27,6 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude, shar
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData)
                 const errorType = errorData.message
                 throw new Error("You must select a bird using the search bar to submit your sighting!")
             }

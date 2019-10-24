@@ -133,6 +133,8 @@ const FieldEntriesScreen = props => {
 }
 
 FieldEntriesScreen.navigationOptions = navData => {
+    const user = navData.navigation.getParam('user')
+
     return {
         headerTitle: "My Field Entries",
         headerStyle: {
@@ -143,7 +145,18 @@ FieldEntriesScreen.navigationOptions = navData => {
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
+                })
+            }}>
+                {user ?
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
+            </TouchableOpacity>
+        )
     }
 }
 

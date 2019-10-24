@@ -111,13 +111,27 @@ const BirdDetailsScreen = props => {
 
 BirdDetailsScreen.navigationOptions = (navigationData) => {
     const bird_name = navigationData.navigation.getParam('birdName')
+    const user = navigationData.navigation.getParam('user')
+
     return {
         headerTitle: bird_name,
         headerTitleStyle: {
             fontFamily: 'Fred-Great',
             fontSize: 21,
             fontWeight: '400'
-        }
+        },
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+                navigationData.navigation.navigate({
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
+                })
+            }}>
+                {user ?
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
+            </TouchableOpacity>
+        )
     }
 }
 

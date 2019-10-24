@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, SafeAreaView, Button, View, Image } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 
@@ -79,8 +79,27 @@ const FieldEntries = createStackNavigator({
       }
     }
   },
-  EntryInfo: FieldEntryDetailsScreen,
-  FieldEntry: FieldEntryDetailsScreen,
+  EntryInfo: {screen: FieldEntryDetailsScreen,
+  navigationOptions: {
+    title: 'Field Entry',
+    headerTitleStyle: {
+      fontFamily: 'Fred-Great',
+      fontSize: 21,
+      fontWeight: '400'
+    }
+  }
+},
+  FieldEntry: {
+    screen: FieldEntryDetailsScreen,
+    navigationOptions: {
+      title: 'Field Entry',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
   BirdStuff: BirdDetailsScreen
 })
 

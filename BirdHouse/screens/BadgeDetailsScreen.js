@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, ScrollView, Dimensions } from 'react-native';
 import uuid from 'uuid';
 import Card from '../components/Card';
 import { NavigationEvents } from 'react-navigation';
@@ -30,21 +30,24 @@ const BadgeDetailsScreen = props => {
             {/* <NavigationEvents
                 onWillFocus={getRandomFact()}
             /> */}
-            <Card>
-                <View style={styles.screen}>
+            <Card style={styles.screen}>
                     <Text>Bonus Bird Fact</Text>
                     {fact ? <Text>{fact.fact}</Text> : null}
-                </View>
             </Card>
         </ScrollView>
     )
 }
 
+
+
+
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'thistle'
+        // height: Dimensions.get('window').height * 0.3
     },
     image: {
         height: 250,

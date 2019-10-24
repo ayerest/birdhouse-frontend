@@ -98,7 +98,7 @@ const BirdODexScreen = props => {
             <BirdCount onShowBirds={handleOnShowBirds}/>
             {/* {showMyBirdCount ? <Text>Count: {myBirds.length}</Text> : null} */}
 
-            {isLoading ? <ActivityIndicator color="black" /> : null}
+            {isLoading ? <ActivityIndicator /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
             <NavigationEvents

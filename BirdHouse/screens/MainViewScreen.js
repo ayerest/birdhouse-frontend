@@ -133,8 +133,7 @@ const MainViewScreen = props => {
 
 MainViewScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
-    // console.log(navData.navigation, "main view nav")
-
+    
     return {
         headerTitle: "BirdHouse",
         headerStyle: {
@@ -148,7 +147,9 @@ MainViewScreen.navigationOptions = navData => {
         headerRight: (
             <TouchableOpacity onPress={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount'
+                    routeName: 'MyAccount', params: {
+                        user: user
+                    }
                 })
                 }}>  
                 {user ? 

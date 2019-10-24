@@ -18,7 +18,7 @@ const AuthScreen = (props) => {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [avatar, setAvatar] = useState(false);
+    const [avatar, setAvatar] = useState('https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg');
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -38,28 +38,28 @@ const AuthScreen = (props) => {
         return state.user.user
     })
     
-    const signupHandler = async () => {
+    const signupHandler = async (type) => {
         setError(null)
         setIsLoading(true);
         try {
             await dispatch(authActions.signup(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
-        } catch (err) {
-            setError(err.message)
-            setAvatar(false)
-            setIsLoading(false);
-        }
             props.navigation.navigate({
                 routeName:'Main', params: {
                     user: user
                 }
             });
+        } catch (err) {
+            setError(err.message)
+            setAvatar(false)
+            setIsLoading(false);
+        }
         
     }
     return (
         
-        <KeyboardAvoidingView behavior="padding" 
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={15} 
         style={styles.screen}>
             <SafeAreaView style={{flex: 1}}>
 
@@ -68,7 +68,7 @@ const AuthScreen = (props) => {
                         
                         <View style={styles.authContainer}>
                         
-                        <Image style={styles.logo} source={require("../assets/images/birdhouse_logo_drawn.png")}></Image>
+                            <Image style={styles.logo} source={{uri: "https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg"}}></Image>
 
                         {!login && !signup ? 
                             <View style={styles.screen}>
