@@ -36,7 +36,7 @@ const PicturesScreen = props => {
     return (
         <View style={styles.screen}>
 
-            {!isLoading && photosList.length == 0 ? <Text>You haven't taken any photos yet!</Text> : null}
+            {!isLoading && photosList.length == 0 ? <Text style={styles.label}>You haven't taken any photos yet!</Text> : null}
             {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
 
             {/* <Text>The Photos Screen!</Text>
@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "black",
         resizeMode: 'cover'
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 })
 

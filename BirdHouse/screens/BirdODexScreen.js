@@ -44,7 +44,7 @@ const BirdODexScreen = props => {
     // if (isLoading) {
     //     return <View style={styles.screen}><ActivityIndicator size='large' color={Colors.tintColor}/></View>
     // }
-    const handleOnShowBirds = (type) => {
+    const handleOnShowBirds = async (type) => {
         setIsLoading(true)
         setCurrentBirds([]);
         setShowBirds(false);
@@ -56,6 +56,10 @@ const BirdODexScreen = props => {
                 setIsLoading(false);
                 return;
             case "mine":
+                if (audio) {
+                    await audio.stopAsync();
+                    dispatch(audioActions.stopAudio)
+                }
                 setCurrentBirds(myBirds);
                 setShowBirds(true);
                 setShowMyBirdCount(true);
@@ -111,6 +115,7 @@ const BirdODexScreen = props => {
 
 BirdODexScreen.navigationOptions = navData => {
     console.log(navData, "birdodex")
+    console.log("-----------------------------")
     return {
         headerTitle: "BirdieDex",
         headerStyle: {

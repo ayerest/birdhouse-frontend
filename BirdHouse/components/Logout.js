@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../store/actions/auth'
 

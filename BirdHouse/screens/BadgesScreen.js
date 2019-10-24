@@ -54,7 +54,7 @@ const BadgesScreen = props => {
     return (
         <View style={styles.screen}>
             <ScrollView>
-                {!isLoading && badgesList.length == 0 ? <Text>You haven't earned any badges yet!</Text> : null}
+                {!isLoading && badgesList.length == 0 ? <Text style={styles.label}>You haven't earned any badges yet!</Text> : null}
                 {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />}
 
             </ScrollView>
@@ -92,6 +92,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginRight: 10,
+        alignSelf: "center",
+        fontFamily: 'Roboto-Condensed',
     }
 })
 

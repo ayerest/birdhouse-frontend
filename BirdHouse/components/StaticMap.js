@@ -155,7 +155,6 @@ const StaticMap = (props) => {
 
         return sharedEntries.map(entry => {
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
-                console.log(props.navigation)
                 props.navigation.navigate({
                     routeName: 'FieldDetails', params: {
                         entry: entry,

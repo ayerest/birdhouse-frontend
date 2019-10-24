@@ -78,7 +78,8 @@ const AuthScreen = (props) => {
                                     }}/>
                                 <Button title="Already have an account?" onPress={() => {
                                     setLogin(true);
-                                    setSignup(false)
+                                    setSignup(false);
+                                    setAvatar(false);
                                     }} />
                             </View> : null
                         }

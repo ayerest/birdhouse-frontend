@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, SafeAreaView, Button, View, Image } from 'react-native';
+import { Platform, SafeAreaView, Button, View, Image, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {useDispatch, useSelector} from 'react-redux';
@@ -23,6 +23,8 @@ import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
+import CustomDrawer from './CustomDrawer';
+
 
 
 const config = Platform.select({
@@ -169,21 +171,35 @@ const MenuNavigator = createDrawerNavigator({
   "My Badges": Badges,
   "My Photos": Pictures,
   "My Account": Account
-}, {
-  contentComponent: props => {
-    const dispatch = useDispatch();
-    return <View>
-      <SafeAreaView forceInset={{flex: 1, top: 'always', horizontal: 'never'}}>
-        <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-      <DrawerItems {...props} itemStyle={{fontFamily: 'Roboto-Condensed'}} />
-      <Button title="Logout" style={{alignSelf: 'flex-start'}} onPress={() => {
-        dispatch(authActions.logout());
-        props.navigation.navigate("Auth")
-        }}/>
-      </SafeAreaView>
-    </View>
+},
+{
+  // contentComponent: props => {
+    
+  //   const dispatch = useDispatch();
+  //   return <View style={{justifyContent: 'center',}}>
+  //     <SafeAreaView forceInset={{flex: 1, top: 'always', horizontal: 'never', justifyContent: 'center', alignItems: 'center'}}>
+  //       <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
+  //       <DrawerItems {...props} />
+  //       <Button title="Logout" accessibilityLabel="Logout" onPress={() => {
+  //       dispatch(authActions.logout());
+  //       props.navigation.navigate("Auth")
+  //       }}/>
+  //     </SafeAreaView>
+  //   </View>
+  // }
+  contentComponent: CustomDrawer,
+  drawerWidth: Dimensions.get('window').width / 1.5,
+  contentOptions: {
+    activeBackgroundColor: 'thistle',
+    labelStyle: {
+      fontFamily: 'Roboto-Condensed',
+      fontSize: Dimensions.get('window').width > 350 ? 20 : 18,
+      fontWeight: 'bold'
+    }
+    
   }
-})
+,}
+)
 
 const AuthNavigator = createStackNavigator({
   Auth: {

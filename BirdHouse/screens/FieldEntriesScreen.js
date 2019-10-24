@@ -116,6 +116,7 @@ const FieldEntriesScreen = props => {
 
     return (
             <View style={styles.screen}>
+                {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
                 {!isLoading ? !showMap ? 
                 
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} /> :
@@ -127,7 +128,6 @@ const FieldEntriesScreen = props => {
                         </MapView>
                     </View>
                 : null}
-                {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
                 {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
             </View>
     )
@@ -135,7 +135,7 @@ const FieldEntriesScreen = props => {
 
 FieldEntriesScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
-    console.log("user in field entries", user)
+    console.log("user in field entries", navData)
 
     return {
         headerTitle: "My Field Entries",
