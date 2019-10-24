@@ -41,28 +41,24 @@ const TakePicture = props => {
 
 const styles = StyleSheet.create({
     imagePreview: {
-        width: '80%',
-        height: '40%',
-        borderWidth: 1,
-        flex: 1,
-        justifyContent: "center",
-        backgroundColor: "ghostwhite"
-    },
-    imageTaker: {
+        width: 100,
+        height: 100,
         justifyContent: 'center',
-        alignItems: "center",
-        flex: 1,
-        width: Dimensions.get('window').width / 2,
-        height: Dimensions.get('window').height / 3
+        alignSelf: 'center'
     },
     image: {
         width: '100%',
         height: '100%',
-        resizeMode: 'contain'
+        borderRadius: 50,
+        resizeMode: 'cover'
     },
     center: {
-        justifyContent: "center"
-    }
+        alignSelf: 'center'
+    },
+    imageTaker: {
+        justifyContent: 'center',
+        alignItems: "center",
+    },
 })
 
 export default TakePicture;

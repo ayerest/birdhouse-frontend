@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, Image } from 'react-native';
+import { Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Card from './Card'
 
 const EntryCard = props => {
@@ -13,7 +13,7 @@ const EntryCard = props => {
             <Text>{props.fieldentry.bird.common_name}</Text> : null
             }
             { props.fieldentry.images.length > 0 ?
-            <Image style={styles.picture}source={{uri: props.fieldentry.images[0].img_url}}></Image> : null
+                <Image style={styles.picture} source={{ uri: props.fieldentry.images[0].img_url }}></Image> : <Image style={styles.picture} source={require('../assets/images/birdicon.png')}></Image>
             }
             <Text>{props.notes}</Text>
         </Card>
@@ -23,12 +23,16 @@ const EntryCard = props => {
 const styles = StyleSheet.create({
     entry: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: Dimensions.get('window').width * 0.9,
+        height: Dimensions.get('window').height * 0.4
     },
     picture: {
-        height: 100,
-        width: 100,
-        borderRadius: 15
+        flex: 1,
+        height: '100%',
+        width: '70%',
+        borderRadius: 15,
+        resizeMode: 'cover'
     }
 });
 

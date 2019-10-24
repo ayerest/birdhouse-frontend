@@ -20,6 +20,7 @@ const AuthScreen = (props) => {
     const [password, setPassword] = useState("");
     const [avatar, setAvatar] = useState(false);
     const [login, setLogin] = useState(false);
+    const [signup, setSignup] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
 
@@ -56,7 +57,7 @@ const AuthScreen = (props) => {
         }
     }
     return (
-
+        
         <KeyboardAvoidingView behavior="padding" 
         style={styles.screen}>
             <SafeAreaView style={{flex: 1}}>
@@ -90,8 +91,8 @@ const AuthScreen = (props) => {
                                     </View>
                                     {isLoading ? <ActivityIndicator /> : 
                                     <View>
-                                    <Button title="Sign Up" color="gray" onPress={signupHandler} />
-                                    <Button title="Already have an account?" color="gray" onPress={() => setLogin(true)} />
+                                    <Button title="Sign Up" onPress={signupHandler} />
+                                    <Button title="Already have an account?"  onPress={() => setLogin(true)} />
                                     </View>
                                     }
                                 </ScrollView>
@@ -111,8 +112,8 @@ const AuthScreen = (props) => {
                                 </View>
                                 {isLoading ? <ActivityIndicator /> :
                                     <View>
-                                    <Button title="Login" color="gray" onPress={signupHandler}/>
-                                    <Button title="Create an account" color="gray" onPress={() => setLogin(false)}/>
+                                    <Button title="Login" onPress={signupHandler}/>
+                                    <Button title="Create an account" onPress={() => setLogin(false)}/>
                                     </View>
                                 }
                             </ScrollView>
@@ -132,7 +133,7 @@ AuthScreen.navigationOptions = navData => {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"
         },
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        // headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 };
 

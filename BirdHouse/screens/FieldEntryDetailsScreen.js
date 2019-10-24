@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 // import { FlatList } from 'react-native-gesture-handler';
 import uuid from 'uuid';
 import Card from '../components/Card';
@@ -9,6 +9,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 const FieldEntryDetailsScreen = props => {
 
+    console.log(props.navigation.state.params.entry.notes)
     const renderFieldEntryImage = (image) => {
         return <View>
             <Image style={styles.image} source={{uri: image.item.img_url}}/>
@@ -20,7 +21,8 @@ const FieldEntryDetailsScreen = props => {
 
         <Card>
             <ScrollView >
-                    <View style={styles.row}>
+                    <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
+                    <View style={styles.center}>
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
                             props.navigation.navigate({
                                 routeName: 'BirdStuff', params: {
@@ -31,10 +33,9 @@ const FieldEntryDetailsScreen = props => {
 
                             <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
                             {props.navigation.state.params.entry.images.length > 0 ? 
-                                <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : null
+                                <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')}></Image>
                             }
                         </TouchableOpacity>
-                        <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
                     </View>
                     <View>
                         <Text style={styles.label}>Notes:</Text>
@@ -68,9 +69,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     image: {
-        width: '100%',
-        height: 180,
-        marginTop: 5,
+        width: Dimensions.get('window').width * .8,
+        height: Dimensions.get('window').height * 0.3,
         resizeMode: 'contain'
     }, 
     map: {
@@ -81,11 +81,10 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     center: {
-        alignSelf: 'center'
+        alignItems: 'center'
     },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+    right: {
+        alignSelf: 'flex-end'
     },
     imageContainer: {
         width: '80%',

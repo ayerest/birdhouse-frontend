@@ -35,16 +35,16 @@ const SearchBar = props => {
     }
 
     return (
-        <KeyboardAvoidingView>
-
-            <View style={styles.row}>
-                <Text style={styles.label}>Search Birds</Text>
-                {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
+            <View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Search Birds</Text>
+                    {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
+                </View>
+                    <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
+                    initialValue="" placeholder="Enter bird name or keyword"
+                {...props} style={{ ...styles.input, ...props.style }} />
             </View>
-                <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
-                initialValue=""
-            {...props} style={{ ...styles.input, ...props.style }} />
-        </KeyboardAvoidingView>
+
     );
 };
 

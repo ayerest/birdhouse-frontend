@@ -47,7 +47,7 @@ const BirdsList = (props) => {
             <View>
                 {/* <Button title="Go Back" onPress={() => { props.navigation.goBack() }} /> */}
             <Button title="Back" onPress={handleBackButtonPress}/>
-            <FlatList contentContainerStyle={{paddingBottom: 50}} keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
+            <FlatList contentContainerStyle={{paddingBottom: 100}} keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
                 numColumns={1}
             />
             </View>
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     image: {
         width: 150,
         height: 150
+    },
+    gridItem: {
+        justifyContent: 'center',
+        alignSelf: 'center',
     }
 });
 

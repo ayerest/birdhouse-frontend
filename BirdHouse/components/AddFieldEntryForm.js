@@ -180,7 +180,7 @@ const AddFieldEntryForm = props => {
                                     <TouchableOpacity onPress={handleLeaveForBirdDetails}>
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
                                     </TouchableOpacity>
-                                    <View style={styles.space}>
+                                    <View style={styles.spaceEven}>
                                         <TouchableOpacity onPress={handleUnsetBird}>
                                             <Feather name="x-square" size={25} color={"red"} />
                                         </TouchableOpacity>
@@ -193,9 +193,13 @@ const AddFieldEntryForm = props => {
                         : null }
                     </View>
                     </TouchableWithoutFeedback>
-
-                    {showSearchResults ? <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
-                        maxToRenderPerBatch={20} numColumns={1} /> : null}
+                    
+                    {showSearchResults ? 
+                        <View >
+                            <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
+                                maxToRenderPerBatch={20} numColumns={1} /> 
+                        </View>
+                    : null}
                     <View style={styles.row}>
                         <Text style={styles.label}>Notes</Text>
                         <Entypo name="feather" color={"green"} size={25} />
@@ -203,7 +207,7 @@ const AddFieldEntryForm = props => {
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
                             <View style={styles.inner}>
                                 <TextInput multiline={true}
-                                numberOfLines={5} style={styles.textInput} value={notes} onChangeText={(text) => {setNotes(text)}}/>
+                                numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onChangeText={(text) => {setNotes(text)}}/>
                                 <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
                             </View>
                     </KeyboardAvoidingView>
@@ -279,6 +283,13 @@ const styles = StyleSheet.create({
     space: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: '4%',
+        marginVertical: '2%',
+    },
+    spaceEven: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         marginHorizontal: '4%',
         marginVertical: '2%',

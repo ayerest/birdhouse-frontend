@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Image, ScrollView, TouchableOpacity, Platform, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ScrollView, ActivityIndicator, TouchableOpacity, Platform, FlatList, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
 import uuid from 'uuid';
@@ -12,15 +12,17 @@ import {NavigationEvents} from 'react-navigation';
 
 
 const BirdDetailsScreen = props => {
-   
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true);
         const loadBird = async () => {
             const birdId = props.navigation.getParam('birdId')
-            dispatch(birdsActions.getBird(birdId));
+            await dispatch(birdsActions.getBird(birdId));
         }
         loadBird();
+        setIsLoading(false);
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
@@ -76,15 +78,20 @@ const BirdDetailsScreen = props => {
     return (
         <View style={styles.screen}>
             <NavigationEvents
-                
                 onWillBlur={handleLeaving}
             />
-            <ScrollView>      
+            <ScrollView>
+                { isLoading ? <ActivityIndicator size="large" color="blue" style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}/> : 
                 <Card>
-                <View style={styles.row}>
+                    <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
+                    <View>
                     <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
-                    {!!singleBird.range_map ?<Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> : null}
-                </View>          
+                    {!!singleBird.range_map ? <Text>Scroll right to view geographic range map</Text> : null}
+                    </View>
+                    {!!singleBird.range_map ?
+                    <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> 
+                    : null}
+                </ScrollView>          
                 <TouchableOpacity>
                     <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
                 </TouchableOpacity>
@@ -92,7 +99,7 @@ const BirdDetailsScreen = props => {
                     <View style={styles.citation}>
                         <Text style={styles.italic}>{singleBird.citation}</Text>
                     </View>
-                </Card>
+                </Card> }
                  
                        
                 <Button title="Go Back" onPress={handleBackButtonClick} />
@@ -116,15 +123,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        resizeMode: "contain",
-        height: 200,
-        width: '50%',
+        resizeMode: "cover",
+        height: Dimensions.get('window').height * 0.3,
+        width: Dimensions.get('window').width * 0.8,
         borderRadius: 10,
     },
     birdImage: {
-        resizeMode: "cover",
-        height: 200,
-        width: '50%',
+        resizeMode: "contain",
+        height: Dimensions.get('window').height * 0.3,
+        width: Dimensions.get('window').width * 0.87,
         borderRadius: 10,
     }, 
     row: {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
 import { Audio } from 'expo-av';
@@ -57,20 +57,20 @@ const BirdCard = props => {
 
 const styles = StyleSheet.create({
     card: {
-        height: 200,
-        width: 170,
+        height: Dimensions.get('window').height * 0.4,
+        width: Dimensions.get('window').width * 0.7,
         alignContent: "center"
     }, 
     center: {
         alignSelf: "center"
     },
     stockimage: {
-        width: 90,
-        height: 90
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.22
     },
     image: {
-        width: 130,
-        height: 100,
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').height * 0.25,
         borderRadius: 10
     },
     smallFont: {
