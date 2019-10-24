@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert, Dimensions, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
@@ -121,7 +121,7 @@ const MainViewScreen = props => {
             </View>
             <View style={styles.screen}>
                 <View style={styles.mapExtras}>
-                    <Text >See a bird? Tap the map!</Text>
+                    <Text style={styles.text} >See a bird? Tap the map!</Text>
                 </View>
                 {showShares || !liveView ? 
                 <StaticMap hideOnMap={handleHideOnMap}  {...props} /> : 
@@ -133,18 +133,28 @@ const MainViewScreen = props => {
 
 MainViewScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
+    // console.log(navData.navigation, "main view nav")
 
     return {
         headerTitle: "BirdHouse",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
+            color: "black",
         },
         headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName= {Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => {navData.navigation.toggleDrawer()}} />
         </HeaderButtons>,
-        headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+                navData.navigation.navigate({
+                    routeName: 'MyAccount'
+                })
+                }}>  
+                {user ? 
+                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} /> }
+            </TouchableOpacity>
+        )
     }
 }
 
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     }, 
     steps: {
         flexDirection: 'row',
@@ -169,7 +179,17 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 8,
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+    }, 
+    label: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+        padding: 2
+    },
+    text: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16,
+        paddingTop: 10
     }
 })
 

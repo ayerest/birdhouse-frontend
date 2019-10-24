@@ -20,9 +20,9 @@ const BirdDetailsScreen = props => {
         const loadBird = async () => {
             const birdId = props.navigation.getParam('birdId')
             await dispatch(birdsActions.getBird(birdId));
+            setIsLoading(false);
         }
         loadBird();
-        setIsLoading(false);
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
@@ -113,6 +113,11 @@ BirdDetailsScreen.navigationOptions = (navigationData) => {
     const bird_name = navigationData.navigation.getParam('birdName')
     return {
         headerTitle: bird_name,
+        headerTitleStyle: {
+            fontFamily: 'Fred-Great',
+            fontSize: 21,
+            fontWeight: '400'
+        }
     }
 }
 

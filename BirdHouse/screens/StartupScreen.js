@@ -22,7 +22,11 @@ const StartupScreen = props => {
                 return;
             }
 
-            props.navigation.navigate("Menu");
+            props.navigation.navigate({
+                routeName: 'Main', params: {
+                    user: userId
+                }
+            });
             dispatch(authActions.authenticate(userId, token))
 
         };

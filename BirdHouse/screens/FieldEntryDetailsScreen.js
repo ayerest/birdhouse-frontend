@@ -9,7 +9,6 @@ import MapView, { Marker } from 'react-native-maps';
 
 const FieldEntryDetailsScreen = props => {
 
-    console.log(props.navigation.state.params.entry.notes)
     const renderFieldEntryImage = (image) => {
         return <View>
             <Image style={styles.image} source={{uri: image.item.img_url}}/>
@@ -17,13 +16,12 @@ const FieldEntryDetailsScreen = props => {
     }
 
     return (
-        <View style={styles.screen}>
 
-        <Card>
-            <ScrollView >
-                    <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text>
-                    <View style={styles.center}>
+        <Card style={styles.screen}>
+            <ScrollView contentContainerStyle={{paddingBottom: 50}}>
+                    <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text> 
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
+                            console.log(props.navigation.state.params)
                             props.navigation.navigate({
                                 routeName: 'BirdStuff', params: {
                                     birdId: props.navigation.state.params.entry.bird.id,
@@ -31,15 +29,14 @@ const FieldEntryDetailsScreen = props => {
                                 }
                             })}}>
 
-                            <Text>{props.navigation.state.params.entry.bird.common_name}</Text>
+                            <Text style={styles.text}>{props.navigation.state.params.entry.bird.common_name}</Text>
                             {props.navigation.state.params.entry.images.length > 0 ? 
                                 <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')}></Image>
                             }
                         </TouchableOpacity>
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Notes:</Text>
-                        <Text>{props.navigation.state.params.entry.notes}</Text>
+                    <View style={styles.flex}>
+                        <Text style={styles.text}>Notes:</Text>
+                        <Text style={styles.text}>{props.navigation.state.params.entry.notes}</Text>
                     </View>
                     <View style={styles.mapContainer}>
                         <MapView style={styles.map} region={{
@@ -58,7 +55,6 @@ const FieldEntryDetailsScreen = props => {
                     </View>
                 </ScrollView>
             </Card>
-        </View>
     )
 }
 
@@ -69,26 +65,49 @@ const styles = StyleSheet.create({
         flex: 1
     },
     image: {
-        width: Dimensions.get('window').width * .8,
+        width: Dimensions.get('window').width * 0.7,
         height: Dimensions.get('window').height * 0.3,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        borderRadius: 10,
+        justifyContent: 'center',
+        marginTop: 0
     }, 
     map: {
+        height: '100%',
+        width: '100%',
         flex: 1
     },
     mapContainer: {
-        height: '100%',
-        width: '100%'
-    },
-    center: {
+        height: '80%',
+        width: '95%',
+        justifyContent: 'center',
         alignItems: 'center'
     },
+    // center: {
+    //     alignItems: 'center'
+    // },
     right: {
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+        padding: 2,
     },
     imageContainer: {
-        width: '80%',
-        height: '100%'
+        width: '90%',
+        height: '90%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text:{
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+    },
+    flex: {
+        flex: 1,
+        height: '15%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

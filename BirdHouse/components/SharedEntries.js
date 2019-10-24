@@ -27,15 +27,16 @@ const SharedEntries = props => {
 
     return (
         <View style={styles.notificationBar}>
-            <View style={styles.row}>
+            <View></View>
+            <View style={styles.center}>
                 {sharedEntries.length > 1 ? 
-                    <Text>{sharedEntries.length} new Bird Alerts!</Text> : <Text>{sharedEntries.length} new Bird Alert!</Text>}
-                <TouchableOpacity onPress={dismissHandler}>
-                    <Feather name="x-square" color={"red"} size={25}  />
-                </TouchableOpacity>
+                    <Text style={styles.text}>{sharedEntries.length} new Bird Alerts!</Text> : <Text style={styles.text}>{sharedEntries.length} new Bird Alert!</Text>}
 
+                <Button title="Show on Map" onPress={mapViewHandler} />
             </View>
-            <Button title="Show on Map" onPress={mapViewHandler} />
+            <TouchableOpacity style={styles.icon} onPress={dismissHandler}>
+                <Feather name="x-square" color={"red"} size={30}  />
+            </TouchableOpacity>
         </View>
     )
 
@@ -43,13 +44,17 @@ const SharedEntries = props => {
 
 const styles = StyleSheet.create({
     notificationBar: {
-        backgroundColor: "thistle"
+        backgroundColor: "thistle",
+        borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }, 
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
+    text: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+        padding: 2,
+        alignSelf: 'center'
+    }
    
 })
 

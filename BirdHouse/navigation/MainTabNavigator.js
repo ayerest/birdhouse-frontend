@@ -39,38 +39,98 @@ const HomeStack = createStackNavigator(
 );
 
 const Badges = createStackNavigator({
-  MyBadges: BadgesScreen,
+  MyBadges: {
+    screen: BadgesScreen,
+    navigationOptions: {
+      title: 'My Badges',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
   BadgeDetails: BadgeDetailsScreen
 })
 
 const Pictures = createStackNavigator({
-  MyPhotos: PicturesScreen
+  MyPhotos: {
+    screen: PicturesScreen,
+    navigationOptions: {
+      title: 'My Photos',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
 })
 
 const FieldEntries = createStackNavigator({
-  FieldEntries: FieldEntriesScreen,
+  FieldEntries: {
+    screen: FieldEntriesScreen,
+    navigationOptions: {
+      title: 'My Field Entries',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
   EntryInfo: FieldEntryDetailsScreen,
   FieldEntry: FieldEntryDetailsScreen,
   BirdStuff: BirdDetailsScreen
 })
 
 const Birds = createStackNavigator({
-  BirdieDex: BirdODexScreen,
+  BirdieDex: {
+    screen: BirdODexScreen,
+    navigationOptions: {
+      title: 'BirdieDex',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
   BirdsList: BirdsList,
   BirdDetails: BirdDetailsScreen
 })
 
 const Main = createStackNavigator({
-  Main: MainViewScreen,
+  Main: {
+    screen: MainViewScreen,
+    navigationOptions: {
+      title: 'BirdHouse',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }},
   GeoMap: GeoMap,
   StaticMap: StaticMap,
   FieldDetails: FieldEntryDetailsScreen,
   AddEntry: AddFieldEntryForm,
-  BirdInfo: BirdDetailsScreen
+  BirdInfo: BirdDetailsScreen,
+  BirdStuff: BirdDetailsScreen
 })
 
 const Account = createStackNavigator({
-  MyAccount: MyAccountScreen
+  MyAccount: {
+    screen: MyAccountScreen,
+    navigationOptions: {
+      title: 'My Account',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
 })
 
 const MenuNavigator = createDrawerNavigator({
@@ -97,7 +157,17 @@ const MenuNavigator = createDrawerNavigator({
 })
 
 const AuthNavigator = createStackNavigator({
-  Auth: AuthScreen
+  Auth: {
+    screen: AuthScreen,
+    navigationOptions: {
+      title: 'BirdHouse',
+      headerTitleStyle: {
+        fontFamily: 'Fred-Great',
+        fontSize: 21,
+        fontWeight: '400'
+      }
+    }
+  },
 })
 
 const SwitchMenu = createSwitchNavigator({
