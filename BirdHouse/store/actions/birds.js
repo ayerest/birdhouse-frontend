@@ -57,6 +57,7 @@ export const fetchBirds = (category) => {
 
 
 export const getBird = (birdId) => {
+    console.log(birdId)
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user

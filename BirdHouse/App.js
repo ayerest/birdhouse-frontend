@@ -41,7 +41,7 @@ export default function App(props) {
       <AppLoading
         startAsync={loadResourcesAsync}
         onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
+        onFinish={() => setLoadingComplete(true)}
       />
     );
   } else {
@@ -68,6 +68,8 @@ async function loadResourcesAsync() {
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'Roboto-Condensed': require('./assets/fonts/RobotoCondensed-Regular.ttf'),
+      'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf')
     }),
   ]);
 }
@@ -76,10 +78,6 @@ function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
   console.warn(error);
-}
-
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
 }
 
 const styles = StyleSheet.create({

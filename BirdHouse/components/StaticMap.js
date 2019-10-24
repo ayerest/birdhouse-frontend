@@ -129,8 +129,8 @@ const StaticMap = (props) => {
 
         const midX = (minX + maxX) / 2;
         const midY = (minY + maxY) / 2;
-        const deltaX = (maxX - minX + 0.02);
-        const deltaY = (maxY - minY + 0.02);
+        const deltaX = (maxX - minX + 0.1);
+        const deltaY = (maxY - minY + 0.1);
         setMapRegion({
             latitude: midX,
             longitude: midY,

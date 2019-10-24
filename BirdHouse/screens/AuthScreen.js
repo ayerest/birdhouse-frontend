@@ -45,16 +45,17 @@ const AuthScreen = (props) => {
             await dispatch(authActions.signup(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
-            props.navigation.navigate({
-                routeName:'Menu', params: {
-                    user: user
-                }
-            });
         } catch (err) {
             setError(err.message)
             setAvatar(false)
             setIsLoading(false);
         }
+            props.navigation.navigate({
+                routeName:'Main', params: {
+                    user: user
+                }
+            });
+        
     }
     return (
         
@@ -154,7 +155,9 @@ AuthScreen.navigationOptions = navData => {
         headerTitle: "BirdHouse",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
+            color: "black",
+            fontFamily: 'Fred-Great',
+            fontSize: 18,
         },
         // headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
@@ -176,7 +179,9 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingTop: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
     },
     logo: {
         alignSelf: "center",

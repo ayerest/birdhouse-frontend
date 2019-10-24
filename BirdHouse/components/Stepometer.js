@@ -85,7 +85,7 @@ const Stepometer = props => {
 
     return (
         <View style={styles.center}>
-            <Text>Step Count: {currentStepCount} </Text>
+            <Text style={styles.text}>Step Count: {currentStepCount} </Text>
             {/* <Text>Total Steps Taken: {stepCount + currentSteps}</Text> */}
             {/* <Button title="Update my steps!" onPress={updateMySteps}/> */}
         </View>
@@ -112,6 +112,11 @@ const styles = StyleSheet.create({
     },
     center: {
         alignSelf: 'center'
+    },
+    text: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+        padding: 2
     }
 });
 
