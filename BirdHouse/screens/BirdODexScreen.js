@@ -115,8 +115,7 @@ const BirdODexScreen = props => {
 }
 
 BirdODexScreen.navigationOptions = navData => {
-    console.log(navData, "birdodex")
-    console.log("-----------------------------")
+   
     return {
         headerTitle: "BirdieDex",
         headerStyle: {

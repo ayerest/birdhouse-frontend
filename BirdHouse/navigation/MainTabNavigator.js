@@ -73,7 +73,7 @@ const FieldEntries = createStackNavigator({
   FieldEntries: {
     screen: FieldEntriesScreen,
     navigationOptions: {
-      title: 'My Field Entries',
+      title: 'My Bird Sightings',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
         fontSize: 18,
@@ -83,7 +83,7 @@ const FieldEntries = createStackNavigator({
   },
   EntryInfo: {screen: FieldEntryDetailsScreen,
   navigationOptions: {
-    title: 'Field Entry',
+    title: 'Bird Sighting',
     headerTitleStyle: {
       fontFamily: 'Fred-Great',
       fontSize: 20,
@@ -94,7 +94,7 @@ const FieldEntries = createStackNavigator({
   FieldEntry: {
     screen: FieldEntryDetailsScreen,
     navigationOptions: {
-      title: 'Field Entry',
+      title: 'Bird Sighting',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
         fontSize: 20,
@@ -138,7 +138,7 @@ const Main = createStackNavigator({
   AddEntry: {
     screen: AddFieldEntryForm,
     navigationOptions: {
-      title: 'Add Field Entry',
+      title: 'Add Bird Sighting',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
         fontSize: 19,
@@ -166,7 +166,7 @@ const Account = createStackNavigator({
 
 const MenuNavigator = createDrawerNavigator({
   Home: Main, 
-  "Field Entries": FieldEntries,
+  "Bird Sightings": FieldEntries,
   BirdieDex: Birds,
   "My Badges": Badges,
   "My Photos": Pictures,

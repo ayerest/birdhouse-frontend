@@ -136,10 +136,9 @@ const FieldEntriesScreen = props => {
 
 FieldEntriesScreen.navigationOptions = navData => {
     const user = navData.navigation.getParam('user')
-    console.log("user in field entries", navData)
 
     return {
-        headerTitle: "My Field Entries",
+        headerTitle: "My Bird Sightings",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"

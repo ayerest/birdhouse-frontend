@@ -95,7 +95,7 @@ const GeoMap = (props) => {
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView showsUserLocation={follow} followsUserLocation={follow} style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {( !!newMarker ?
-                        <Marker {...props} title="New Field Entry" coordinate={newMarker} onPress={() => {
+                        <Marker {...props} title="New Bird Sighting" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 routeName: 'AddEntry', params: {
                                     onHandleModalClose: handleModalClose,

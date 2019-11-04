@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 const AvatarButton = props => {
-    console.log(props, "props in avatar button")
     const user = useSelector(state => {
         return state.user.user
     })
