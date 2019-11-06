@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import Colors from '../constants/Colors';
 
 import Card from './Card'
 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     card: {
-        backgroundColor: "ghostwhite"
+        backgroundColor: Colors.myColor
     }
 });
 

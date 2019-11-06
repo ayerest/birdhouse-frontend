@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '80%',
         width: '90%',
-        backgroundColor: 'ghostwhite'
+        backgroundColor: Colors.myColor
     },
     row: {
         flexDirection: "row",

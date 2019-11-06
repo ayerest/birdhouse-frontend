@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { TextInput, StyleSheet, Text, View, Button, KeyboardAvoidingView, Keyboard } from 'react-native';
 import * as birdActions from '../store/actions/birds'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Colors from '../constants/Colors';
+
 
 const SearchBar = props => {
     const [searchTerm, setSearchTerm] = useState("")
@@ -51,7 +53,7 @@ const SearchBar = props => {
 const styles = StyleSheet.create({
     input: {
         height: 30,
-        backgroundColor: 'ghostwhite',
+        backgroundColor: Colors.myColor,
         borderBottomColor: 'black',
         borderBottomWidth: 1,
         width: '90%',

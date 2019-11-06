@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '90%',
-        backgroundColor: "ghostwhite",
+        backgroundColor: Colors.myColor,
         padding: 10,
         alignSelf: 'center'
     },

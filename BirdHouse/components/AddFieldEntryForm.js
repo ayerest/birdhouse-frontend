@@ -13,6 +13,8 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { Entypo } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
 import { NavigationEvents } from 'react-navigation';
+import Colors from '../constants/Colors';
+
 
 
 
@@ -250,7 +252,7 @@ AddFieldEntryForm.navigationOptions = (navigationData) => {
     // const bird_name = navigationData.navigation.getParam('birdName')
 
     return {
-        headerTitle: "Add Field Entry",
+        headerTitle: "Add Bird Sighting",
     }
 }
 
@@ -271,7 +273,7 @@ const styles = StyleSheet.create({
     textInput: {
         height: 120,
         width: '90%',
-        backgroundColor: "ghostwhite",
+        backgroundColor: Colors.myColor,
         alignSelf: "center",
         borderWidth: 1,
         marginTop: 5
@@ -304,7 +306,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginLeft: 10,
         padding: 5,
-        backgroundColor: "ghostwhite"
+        backgroundColor: Colors.myColor
     },
     share: {
         alignSelf: "center"
