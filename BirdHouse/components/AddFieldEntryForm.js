@@ -128,6 +128,14 @@ const AddFieldEntryForm = props => {
         props.navigation.goBack()
     }
 
+    const handleConfirmBird = async () => {
+        if (audio) {
+          await audio.stopAsync();
+        }
+        setConfirmed(true);
+        setShowSearchResults(false);
+    }
+
     const handleUnsetBird = async () => {
         if (audio) {
         await audio.stopAsync();
@@ -201,10 +209,7 @@ const AddFieldEntryForm = props => {
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
                                         </TouchableOpacity>
                                     <View style={styles.spaceEven}>
-                                        <TouchableOpacity onPress={() => {
-                                            setConfirmed(true);
-                                            setShowSearchResults(false);
-                                        }}>
+                                        <TouchableOpacity onPress={handleConfirmBird}>
                                             <Feather name="check-square" size={25} color={"green"} />
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={handleUnsetBird}>
