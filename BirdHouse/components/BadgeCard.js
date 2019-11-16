@@ -56,7 +56,7 @@ const BadgeCard = props => {
                 return <Image style={styles.badge} source={require("../assets/images/10birdsightings.png")} />
             }
         }
-    }
+    } 
     
     const renderBadgeText = () => {
         if (props.badge.category === "Login") {
@@ -65,6 +65,8 @@ const BadgeCard = props => {
             return <Text style={styles.center}>You've documented {user.field_entries.length} {props.badge.category} of birds!</Text>
         } else if (props.badge.category === "Birds") {
             return <Text style={styles.center}>Nice work! You've seen a total of {user.birds.length} bird species!!</Text>
+        } else if (props.badge.category === "Steps") {
+            return <Text style={styles.center}>Wow! You have taken {user.step_count} steps!</Text> 
         }
     }
 
