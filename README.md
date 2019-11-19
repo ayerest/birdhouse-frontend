@@ -16,17 +16,19 @@ Check out the demo below:
 
 ## Tech/framework used
 
-Built with Ruby on Rails backend and React Native with Expo SDK frontend.
+Built with Ruby on Rails backend and React Native with Expo SDK frontend. 
 
-About the backend...
+### Backend
 
-About the frontend...
+Created Ruby on Rails app for the backend ([BirdHouse backend](https://github.com/ayerest/birdhouse-backend)). Postgresql database with seed data scraped from [Birds of North America](https://birdsna.org/Species-Account/bna/species/) using Mechanize Ruby gem. Authentication using BCrypt and JWT (check out my [blog post on JWT](https://dev.to/iris/jwt-stands-for-4nec)). 
+
+### Frontend
+
+React Native app with Expo SDK frontend. From Expo: Image Picker, Pedometer, MapView, Audio. Image Picker allows users to select an image from their camera library for an avatar on signup and also allows in-app camera use on the bird sighting form. Pedometer for live updating step count during app use - also updates overall step count for a date range upon login. MapView for live updating and static map views. Audio to play bird calls in app. Used React Hooks to manage local state and Redux.js for app-wide state.
 
 ## Installation
-Provide step by step series of examples and explanations about how to get a development env running.
 
 ## How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
 
 ## Credits
 
