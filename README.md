@@ -1,18 +1,16 @@
-# BirdHouse README (Work in progress!)
+# BirdHouse
 
 BirdHouse is a mobile birdwatching companion app aimed at making birdwatching fun and accessible for beginners.
+
+![BirdHouse logo](https://github.com/ayerest/birdhouse-frontend/blob/master/BirdHouse/assets/images/birdhouse_logo_drawn.png)
 
 ## Motivation
 
 Birdwatching can be very intimidating for a burgeoning birder and many reference guides are bulky and can be difficult to use if you don't know exactly what you are looking for. BirdHouse was created as a way for a beginner to quickly look up birds that they see while out walking/hiking.
 
-## Screenshots and Demo
+## Demo
 
-![BirdHouse logo](https://github.com/ayerest/birdhouse-frontend/blob/master/BirdHouse/assets/images/birdhouse_logo_drawn.png)
-
-Check out the demo below:
-[![Link to quick demo video of birdhouse app](https://i9.ytimg.com/vi/o_4FIHM3fbY/mq2.jpg?sqp=CJ_0tu4F&rs=AOn4CLChztTKMu5IrQcB_bm3LLX-iD-SPg)](https://youtu.be/o_4FIHM3fbY)
-
+![Link to quick demo video of birdhouse app](https://youtu.be/o_4FIHM3fbY)
 
 ## Tech/framework used
 
