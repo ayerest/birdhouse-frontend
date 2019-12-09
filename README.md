@@ -18,7 +18,7 @@ Built with Ruby on Rails backend and React Native with Expo SDK frontend.
 
 ### Backend
 
-Created Ruby on Rails app for the backend ([BirdHouse backend](https://github.com/ayerest/birdhouse-backend)). Postgresql database with seed data scraped from [Birds of North America](https://birdsna.org/Species-Account/bna/species/) using Mechanize Ruby gem. Authentication using BCrypt and JWT (check out my [blog post on JWT](https://dev.to/iris/jwt-stands-for-4nec)). 
+Ruby on Rails backend ([BirdHouse backend](https://github.com/ayerest/birdhouse-backend)) with a Postgresql database. Seed data scraped from [Birds of North America](https://birdsna.org/Species-Account/bna/species/) using Mechanize Ruby gem. Authentication using BCrypt and JWT (check out my [blog post on JWT](https://dev.to/iris/jwt-stands-for-4nec)). 
 
 ### Frontend
 
