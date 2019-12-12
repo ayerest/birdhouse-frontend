@@ -1,1 +1,0 @@
-export const base = "10.0.0.57:3000" 

@@ -1,6 +1,5 @@
-import { base } from './base_url'
 import { AsyncStorage } from 'react-native';
-
+import { vars } from '../../env'; 
 
 // export const playAudio = (soundObject) => {
 //     return dispatch({ type: 'PLAY_AUDIO', audio: soundObject })

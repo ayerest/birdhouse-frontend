@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { base } from './base_url'
+import { base1 } from '../../env';
 
 
 export const postNewEntry = (date, bird, notes, image, latitude, longitude, share) => {
@@ -7,7 +7,7 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude, shar
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/field_entries`, {
+            const response = await fetch(`http://${base1}/field_entries`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const getMyEntries = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/entries`, {
+            const response = await fetch(`http://${base1}/entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -75,7 +75,7 @@ export const getSharedEntries = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/shared_entries`, {
+            const response = await fetch(`http://${base1}/shared_entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

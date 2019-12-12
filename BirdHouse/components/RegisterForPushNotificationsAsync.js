@@ -2,9 +2,9 @@ import React from 'react';
 import { Notifications } from 'expo';
 import {useSelector} from 'react-redux'
 import * as Permissions from 'expo-permissions';
-import {base_url} from '../store/actions/base_url'
+import { base1 } from '../env';
 
-const PUSH_ENDPOINT = `${base_url}/push-token`;
+const PUSH_ENDPOINT = `${base1}/push-token`;
 
 const registerForPushNotificationsAsync = async (user) => {
    

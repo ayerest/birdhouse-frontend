@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import {base} from './base_url'
+import { base1 } from '../../env';
 
 
 export const getMyPhotos = () => {
@@ -7,7 +7,7 @@ export const getMyPhotos = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/images`, {
+            const response = await fetch(`http://${base1}/images`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

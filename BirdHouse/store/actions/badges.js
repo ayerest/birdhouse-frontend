@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { base } from './base_url'
+import { base1 } from '../../env';
 
 
 export const getMyBadges = () => {
@@ -7,7 +7,7 @@ export const getMyBadges = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/badges`, {
+            const response = await fetch(`http://${base1}/badges`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

@@ -1,11 +1,11 @@
-import { base } from './base_url'
+import { base1 } from '../../env';
 
 export const getMySteps = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/steps`, {
+            const response = await fetch(`http://${base1}/steps`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -38,7 +38,7 @@ export const updateSteps = (steps) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base}/my_steps`, {
+            const response = await fetch(`http://${base1}/my_steps`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
