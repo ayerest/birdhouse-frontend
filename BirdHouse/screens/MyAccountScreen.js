@@ -1,54 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, Image, StyleSheet, Platform, Alert, ActivityIndicator } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
-import GeoMap from '../components/GeoMap'
 import Colors from '../constants/Colors';
-import Stepometer from '../components/Stepometer';
 import { useSelector, useDispatch } from 'react-redux';
-import * as entriesActions from '../store/actions/entries';
-import SharedEntries from '../components/SharedEntries';
+import { getMyEntries } from '../store/actions/entries';
+import { getMyBirds } from '../store/actions/birds';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
-import StaticMap from '../components/StaticMap';
 import Card from '../components/Card';
-// import { Notifications } from 'expo';
-// import registerForPushNotificationsAsync from '../components/RegisterForPushNotificationsAsync';
-
-
 
 const MyAccountScreen = props => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
     
     const user = useSelector(state => {
         return state.user.user
-    })
+    });
 
     const steps = useSelector(state => {
         return state.steps.myTotalSteps
-    })
+    });
 
-    const sharedEntries = useSelector(state => {
-        return state.entries.sharedEntries
+    const myBirds = useSelector(state => {
+        return state.birds.myBirds;
+    });
+
+    const myEntries = useSelector(state => {
+        return state.entries.entries;
     })
 
     useEffect(() => {
         if (!!user && user.last_login) {
             loadUserSteps();
         }
-    }, [dispatch])
-
-    useEffect(() => {
-        dispatch(entriesActions.getSharedEntries())
-    }, [dispatch])
-
+        loadBirdsAndSightings();
+        setIsLoading(false);
+    }, [dispatch]);
 
     const loadUserSteps = async () => {
-        setIsLoading(true);
         const getPermission = await verifyPedometer();
         if (!getPermission) {
-            setIsLoading(false);
             return;
         }
         try {
@@ -56,7 +48,6 @@ const MyAccountScreen = props => {
         } catch (err) {
             console.log(err.message)
         }
-
     }
 
     const getSteps = async () => {
@@ -68,7 +59,6 @@ const MyAccountScreen = props => {
                 dispatch(stepsActions.updateSteps(result.steps))
             })
         }
-        setIsLoading(false);
     }
 
     const verifyPedometer = async () => {
@@ -80,18 +70,23 @@ const MyAccountScreen = props => {
         return true;
     }
 
+    const loadBirdsAndSightings = async () => {
+        await Promise.all(dispatch(getMyEntries()),
+        dispatch(getMyBirds()));
+    }
+
     return (
         <ScrollView contentContainerStyle={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             
-                {user && !isLoading ? 
-                    <Card style={styles.screen}>
-                        <Text style={styles.label}>{user.username} Account Information</Text>
-                        <Image style={styles.image} source={{uri: user.avatar}}></Image>
-                        <Text style={styles.label}>{steps} Total Steps!</Text>
-                        <Text style={styles.label}>You have documented {user.field_entries.length} bird sightings in the field!</Text>
-                        <Text style={styles.label}>You have seen {user.birds.length} bird species!</Text>
-                    </Card>
-                     : <ActivityIndicator /> }
+            {isLoading ? <ActivityIndicator size="large" />
+                     : 
+                <Card style={styles.screen}>
+                    <Text style={styles.label}>{user.username} Account Information</Text>
+                    <Image style={styles.image} source={{ uri: user.avatar }}></Image>
+                    <Text style={styles.label}>{steps} Total Steps!</Text>
+                    <Text style={styles.label}>You have documented {myEntries.length} bird sightings in the field!</Text>
+                    <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>
+                </Card> }
           
         </ScrollView>
     )
@@ -121,21 +116,6 @@ const styles = StyleSheet.create({
         height: '80%',
         width: '90%',
         backgroundColor: Colors.myColor
-    },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: 'flex-end'
-    },
-    steps: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    mapExtras: {
-        marginTop: 10,
-        padding: 8,
-        flexDirection: 'row',
-        justifyContent: 'space-around'
     },
     image: {
         height: '40%',
