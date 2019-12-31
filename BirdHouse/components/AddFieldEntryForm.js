@@ -50,7 +50,7 @@ const AddFieldEntryForm = props => {
             props.navigation.goBack();
         } catch (err) {
             setError(err.message);
-            Alert.alert("You must select a bird using the search bar to submit your entry.", err.message);
+            Alert.alert("You must select a bird using the search bar to submit your entry and enter notes for your sighting.", err.message);
         }
     }
 
@@ -168,7 +168,7 @@ const AddFieldEntryForm = props => {
                             </View>
 
                             <View style={styles.form}>
-                                <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList}/>
+                                <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList} />
                             </View>
 
                         </View>

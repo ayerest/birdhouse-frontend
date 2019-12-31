@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { TextInput, StyleSheet, Text, View, Button, KeyboardAvoidingView, Keyboard } from 'react-native';
 import * as birdActions from '../store/actions/birds'

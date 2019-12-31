@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import * as photosActions from '../store/actions/photos';
 import uuid from 'uuid';
 import AvatarButton from '../components/AvatarButton';
+import Card from '../components/Card';
 
 const PicturesScreen = props => {
 
@@ -30,18 +31,16 @@ const PicturesScreen = props => {
     const renderPhotoItem = (image) => {
         
         return (
-            <Image style={styles.image} source={{uri: image.item.img_url}}/>
+            <Card>
+                <Image style={styles.image} source={{uri: image.item.img_url}}/>
+            </Card>
         )
     }
-    //note to self: this really should be a carousel with thumbnail images
+
     return (
         <View style={styles.screen}>
-
             {!isLoading && photosList.length == 0 ? <Text style={styles.label}>You haven't taken any photos yet!</Text> : null}
             {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
-
-            {/* <Text>The Photos Screen!</Text>
-            {photosList.length > 0 ? <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} /> : <Text>You haven't taken any photos yet!</Text>} */}
         </View>
     )
 }
@@ -73,12 +72,11 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        // alignItems: 'center'
     },
     image: {
         height: 300,
-        width: 250,
-        marginBottom: 10,
+        width: '100%',
         borderRadius: 15,
         borderWidth: 2,
         borderColor: "black",
