@@ -2,21 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { ScrollView, View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Alert, Dimensions} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TakePicture from './TakePicture';
-import CalendarPicker from 'react-native-calendar-picker';
 import * as entriesActions from '../store/actions/entries';
 import SearchBar from './SearchBar';
 import uuid from 'uuid';
 import { Feather } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import Card from './Card';
-import SafeAreaView from 'react-native-safe-area-view';
 import { Entypo } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
 import { NavigationEvents } from 'react-navigation';
 import Colors from '../constants/Colors';
-
-
-
+import moment from 'moment';
 
 const AddFieldEntryForm = props => {
 
@@ -35,54 +31,44 @@ const AddFieldEntryForm = props => {
 
     const dispatch = useDispatch();
 
-    const fullDate = new Date().toISOString().slice(0, 18).split("T")
-    const date = fullDate[0]
-    let time = fullDate[1].toString()
-    let hour = parseInt(fullDate[1].split(":")[0])
-    if (hour < 12) {
-        time = (hour.toString() + ":" + fullDate[1].split(":")[1] + "AM")
-    } else {
-        time = (hour - 12).toString() + ":" + fullDate[1].split(":")[1] + "PM";
-    }
+    const fullDate = moment().format('MMMM Do YYYY, h:mm:ss a');
 
     const submitHandler = async () => {
     
         let latitude = props.navigation.state.params.coords.latitude
         let longitude = props.navigation.state.params.coords.longitude
         try {
-            await dispatch(entriesActions.postNewEntry(date, bird, notes, image, latitude, longitude, share))
+            await dispatch(entriesActions.postNewEntry(fullDate, bird, notes, image, latitude, longitude, share));
             setImage(false);
             setShare(false);
             setNotes();
             setBird();
             setShowSearchResults(false);
             if (audio) {
-
                 await audio.stopAsync();
             }
             props.navigation.goBack();
         } catch (err) {
-            // An error occurred!
-            setError(err.message)
-            Alert.alert("You must select a bird using the search bar to submit your entry.")
+            setError(err.message);
+            Alert.alert("You must select a bird using the search bar to submit your entry.", err.message);
         }
     }
 
     const imageSelectedHandler = (image) => {
-        setImage(image)
+        setImage(image);
     }
 
     const audio = useSelector(state => {
-        return state.audio.currentSound
+        return state.audio.currentSound;
     })
 
     const filteredBirds = useSelector(state => {
-        return state.birds.filteredBirds
+        return state.birds.filteredBirds;
     })
 
     const displayBirdList = (test=true) => {
         test === false ? setShowSearchResults(false) :
-        setShowSearchResults(true)
+        setShowSearchResults(true);
     }
 
     const selectThatBird = (bird) => {
@@ -171,7 +157,7 @@ const AddFieldEntryForm = props => {
             <View style={{flex: 1}}>
 
                 <View style={styles.space}>
-                    <Text style={styles.label}>{date}</Text>
+                    <Text style={styles.label}>{fullDate}</Text>
                     <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
                 </View>
               
@@ -243,12 +229,11 @@ const AddFieldEntryForm = props => {
                                 </View>
                         </View>
                 <Button title="Submit Entry" onPress={submitHandler} />
-                {/* {error ? <Text>{error}</Text> : null} */}
                 <View style={{flex: 1, paddingBottom: 100}} ></View>
             </View>
         </TouchableWithoutFeedback>
-                    </KeyboardAvoidingView>
-                    </ScrollView>
+    </KeyboardAvoidingView>
+</ScrollView>
     )
 }
 

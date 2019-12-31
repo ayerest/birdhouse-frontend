@@ -4,7 +4,7 @@ export const getFact = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         try {
-            const response = await fetch(`http://${base1}/factoids`, {
+            const response = await fetch(`${base1}/factoids`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }

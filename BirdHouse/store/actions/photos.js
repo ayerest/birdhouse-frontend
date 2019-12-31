@@ -7,7 +7,7 @@ export const getMyPhotos = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base1}/images`, {
+            const response = await fetch(`${base1}/images`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

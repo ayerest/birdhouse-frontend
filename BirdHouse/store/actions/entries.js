@@ -4,10 +4,10 @@ import { base1 } from '../../env';
 
 export const postNewEntry = (date, bird, notes, image, latitude, longitude, share) => {
     return async (dispatch, getState) => {
-        const token = getState().user.token
-        const user = getState().user.user
+        const token = getState().user.token;
+        const user = getState().user.user;
         try {
-            const response = await fetch(`http://${base1}/field_entries`, {
+            const response = await fetch(`${base1}/field_entries`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -27,14 +27,12 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude, shar
 
             if (!response.ok) {
                 const errorData = await response.json();
-                const errorType = errorData.message
-                throw new Error("You must select a bird using the search bar to submit your sighting!")
+                const errorType = errorData.message;
             }
 
             const entryData = await response.json();
 
-
-            dispatch({ type: 'CREATE_FIELD_ENTRY', entry: entryData })
+            dispatch({ type: 'CREATE_FIELD_ENTRY', entry: entryData });
         } catch (err) {
             throw err;
         }
@@ -43,10 +41,10 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude, shar
 
 export const getMyEntries = () => {
     return async (dispatch, getState) => {
-        const token = getState().user.token
-        const user = getState().user.user
+        const token = getState().user.token;
+        const user = getState().user.user;
         try {
-            const response = await fetch(`http://${base1}/entries`, {
+            const response = await fetch(`${base1}/entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -72,10 +70,10 @@ export const getMyEntries = () => {
 
 export const getSharedEntries = () => {
     return async (dispatch, getState) => {
-        const token = getState().user.token
-        const user = getState().user.user
+        const token = getState().user.token;
+        const user = getState().user.user;
         try {
-            const response = await fetch(`http://${base1}/shared_entries`, {
+            const response = await fetch(`${base1}/shared_entries`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

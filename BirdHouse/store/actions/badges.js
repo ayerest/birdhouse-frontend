@@ -7,7 +7,7 @@ export const getMyBadges = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base1}/badges`, {
+            const response = await fetch(`${base1}/badges`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

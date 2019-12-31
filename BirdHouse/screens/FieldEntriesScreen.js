@@ -10,9 +10,6 @@ import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
 
-
-
-
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [showMap, setShowMap] = useState(false);

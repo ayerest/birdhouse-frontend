@@ -5,7 +5,7 @@ export const getMySteps = () => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base1}/steps`, {
+            const response = await fetch(`${base1}/steps`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -38,7 +38,7 @@ export const updateSteps = (steps) => {
         const token = getState().user.token
         const user = getState().user.user
         try {
-            const response = await fetch(`http://${base1}/my_steps`, {
+            const response = await fetch(`${base1}/my_steps`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

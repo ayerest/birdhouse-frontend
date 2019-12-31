@@ -1,9 +1,4 @@
 import { AsyncStorage } from 'react-native';
-import { vars } from '../../env'; 
-
-// export const playAudio = (soundObject) => {
-//     return dispatch({ type: 'PLAY_AUDIO', audio: soundObject })
-// }
 
 export const stopAudio = () => {
     return async (dispatch, getState) => {
@@ -13,7 +8,6 @@ export const stopAudio = () => {
         return dispatch({type: 'STOP_AUDIO'})
     }
 }
- 
 
 export const playAudio = (soundObject) => {
    
