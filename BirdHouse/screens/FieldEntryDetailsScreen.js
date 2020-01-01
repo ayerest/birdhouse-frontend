@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-// import { FlatList } from 'react-native-gesture-handler';
 import uuid from 'uuid';
 import Card from '../components/Card';
-// import { ScrollView } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
 
@@ -22,13 +20,23 @@ const FieldEntryDetailsScreen = props => {
             <ScrollView contentContainerStyle={{paddingBottom: 50}}>
                     <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text> 
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
+                            if (props.navigation.state.routeName === 'FieldEntry') { 
                             props.navigation.navigate({
                                 routeName: 'BirdStuff', params: {
                                     birdId: props.navigation.state.params.entry.bird.id,
                                     birdName: props.navigation.state.params.entry.bird.common_name,
                                     user: props.navigation.state.params.entry.user
                                 }
-                            })}}>
+                            })}
+                            else {
+                                props.navigation.navigate({
+                                    routeName: 'BirdieInfo', params: {
+                                        birdId: props.navigation.state.params.entry.bird.id,
+                                        birdName: props.navigation.state.params.entry.bird.common_name,
+                                        user: props.navigation.state.params.entry.user
+                                    }
+                                }) 
+                            }}}>
 
                             <Text style={styles.text}>{props.navigation.state.params.entry.bird.common_name}</Text>
                             {props.navigation.state.params.entry.images.length > 0 ? 
@@ -49,10 +57,6 @@ const FieldEntryDetailsScreen = props => {
                             <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
                             </Marker>
                         </MapView>
-                        {/* <Image source={{ uri: this.state.mapSnapshot.uri }} /> */}
-                        {/* <TouchableOpacity onPress={this.takeSnapshot}>
-                            Take Snapshot
-                        </TouchableOpacity> */}
                     </View>
                 </ScrollView>
             </Card>
@@ -60,7 +64,6 @@ const FieldEntryDetailsScreen = props => {
 }
 
 FieldEntryDetailsScreen.navigationOptions = navData => {
-    const user = navData.navigation.getParam('user')
 
     return {
         headerRight: (
@@ -99,9 +102,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    // center: {
-    //     alignItems: 'center'
-    // },
     right: {
         alignSelf: 'flex-end',
         fontFamily: 'Roboto-Condensed',

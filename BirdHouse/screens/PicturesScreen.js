@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
-import * as photosActions from '../store/actions/photos';
+import { getMyPhotos } from '../store/actions/photos';
+import { getMyEntries } from '../store/actions/entries';
 import uuid from 'uuid';
 import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
@@ -18,22 +18,46 @@ const PicturesScreen = props => {
     useEffect(() => {
         const loadMyPhotos = async () => {
             setIsLoading(true);
-            await dispatch(photosActions.getMyPhotos());
+            await dispatch(getMyPhotos());
             setIsLoading(false)
         }
         loadMyPhotos();
     }, [dispatch, photosList]);
 
-    const photosList = useSelector(state => {
-        return state.photos.myPhotos
-    })
+    useEffect(() => {
+        const loadMyFieldEntries = async () => {
+            setIsLoading(true);
+            await dispatch(getMyEntries());
+            setIsLoading(false);
+        }
+        loadMyFieldEntries();
+    }, [dispatch, myEntries]);
 
+    const photosList = useSelector(state => {
+        return state.photos.myPhotos;
+    })
+    const myEntries = useSelector(state => {
+        return state.entries.entries;
+    })
     const renderPhotoItem = (image) => {
-        
+        const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);
         return (
-            <Card>
-                <Image style={styles.image} source={{uri: image.item.img_url}}/>
-            </Card>
+            <TouchableOpacity
+                style={styles.gridItem}
+                onPress={() => {
+                    props.navigation.navigate({
+                        routeName: 'FieldEntryInfo', params: {
+                            entryId: thisPhotosEntry.id,
+                            entryName: `${thisPhotosEntry.date}`,
+                            entry: thisPhotosEntry,
+                        }
+                    })
+                }}
+            >
+                <Card>
+                    <Image style={styles.image} source={{uri: image.item.img_url}}/>
+                </Card>
+            </TouchableOpacity>
         )
     }
 

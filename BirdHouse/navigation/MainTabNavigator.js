@@ -63,6 +63,8 @@ const Pictures = createStackNavigator({
       }
     }
   },
+  FieldEntryInfo: FieldEntryDetailsScreen,
+  BirdieInfo: BirdDetailsScreen,
 })
 
 const FieldEntries = createStackNavigator({
@@ -98,7 +100,7 @@ const FieldEntries = createStackNavigator({
       }
     }
   },
-  BirdStuff: BirdDetailsScreen
+  BirdStuff: BirdDetailsScreen,
 })
 
 const Birds = createStackNavigator({
@@ -114,7 +116,7 @@ const Birds = createStackNavigator({
     }
   },
   BirdsList: BirdsList,
-  BirdDetails: BirdDetailsScreen
+  BirdDetails: BirdDetailsScreen,
 })
 
 const Main = createStackNavigator({
@@ -143,7 +145,7 @@ const Main = createStackNavigator({
     }
   },
   BirdInfo: BirdDetailsScreen,
-  BirdStuff: BirdDetailsScreen
+  BirdStuff: BirdDetailsScreen,
 })
 
 const Account = createStackNavigator({
@@ -166,7 +168,7 @@ const MenuNavigator = createDrawerNavigator({
   BirdieDex: Birds,
   "My Badges": Badges,
   "My Photos": Pictures,
-  "My Account": Account
+  "My Account": Account,
 },
 {
   contentComponent: CustomDrawer,
@@ -178,7 +180,6 @@ const MenuNavigator = createDrawerNavigator({
       fontSize: Dimensions.get('window').width > 350 ? 20 : 18,
       fontWeight: 'bold'
     }
-    
   }
 ,}
 )
@@ -200,7 +201,7 @@ const AuthNavigator = createStackNavigator({
 const SwitchMenu = createSwitchNavigator({
   Startup: StartupScreen,
   Auth: AuthNavigator,
-  Menu: MenuNavigator
+  Menu: MenuNavigator,
 })
 
 

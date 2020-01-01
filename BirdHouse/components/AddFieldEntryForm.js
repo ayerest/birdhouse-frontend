@@ -238,9 +238,6 @@ const AddFieldEntryForm = props => {
 }
 
 AddFieldEntryForm.navigationOptions = (navigationData) => {
-    // const bird_id = navigationData.navigation.getParam('birdId')
-    // const bird_name = navigationData.navigation.getParam('birdName')
-
     return {
         headerTitle: "Add Bird Sighting",
     }
@@ -274,7 +271,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: "center",
         marginLeft: '4%'
-        // paddingTop: 60
     },
     birdie: {
         width: Dimensions.get('window').width / 2,
@@ -306,7 +302,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: '4%',
-        // marginVertical: '%',
         flex: 1
     },
     spaceEven: {

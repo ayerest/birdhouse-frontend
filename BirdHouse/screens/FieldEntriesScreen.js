@@ -125,19 +125,6 @@ const FieldEntriesScreen = props => {
                         </MapView>
                 </View>
                 }
-                {/* {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
-                {!isLoading ? !showMap ? 
-                <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} /> :
-                <Button title="Hide Map" onPress={hideMapHandler} />  : null }
-                {showMap && !!mapRegion ? 
-                    <View style={styles.mapContainer}>
-                        <MapView style={styles.map} region={mapRegion}>
-                            {renderMarkers()}
-                        </MapView>
-                    </View>
-                : null}
-                */}
-                {/* {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}  */}
             </View>
     )
 }

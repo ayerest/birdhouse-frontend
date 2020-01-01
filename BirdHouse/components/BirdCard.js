@@ -13,9 +13,6 @@ const BirdCard = props => {
 
     const dispatch = useDispatch();
 
-    const [audioIcon, setAudioIcon] = useState("🔊")
-    // const [birdcall, setBirdcall] = useState(null)
-
     const myBirds = useSelector(state => {
         return state.birds.myBirds
     })
@@ -38,20 +35,19 @@ const BirdCard = props => {
     }
     
     return (
-            <Card style={styles.card}>
-                <View style={styles.center}>
-                    {birdIds.indexOf(props.bird.item.id) >= 0 ? <Image style={styles.image} source={{uri: props.bird.item.img_url}}></Image>:
-                    <Image style={styles.stockimage} source={require("../assets/images/birdicon.png")}></Image>}
-                <TouchableOpacity onPress={handlePlayAudio}>
-                        <Feather style={styles.center} name="volume-2" size={25}  />
-
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.center}>
-                    <Text style={styles.smallFont}>{props.common_name}</Text>
-                    <Text style={styles.smallFont}>{props.scientific_name}</Text>
-                </View>
-            </Card>
+        <Card style={styles.card}>
+            <View style={styles.center}>
+                {birdIds.indexOf(props.bird.item.id) >= 0 ? <Image style={styles.image} source={{uri: props.bird.item.img_url}}></Image>:
+                <Image style={styles.stockimage} source={require("../assets/images/birdicon.png")}></Image>}
+            <TouchableOpacity onPress={handlePlayAudio}>
+                <Feather style={styles.center} name="volume-2" size={25}  />
+            </TouchableOpacity>
+            </View>
+            <View style={styles.center}>
+                <Text style={styles.smallFont}>{props.common_name}</Text>
+                <Text style={styles.smallFont}>{props.scientific_name}</Text>
+            </View>
+        </Card>
     );
 };
 
