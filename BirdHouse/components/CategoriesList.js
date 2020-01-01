@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
@@ -29,20 +29,19 @@ const CategoriesList = (props) => {
     }
     
     const getBirds = async () => {
-            try {
-                setIsLoading(true);
-                await dispatch(birdsActions.fetchBirds(currentCategory));
-                props.onShowBirds("category");
-                setIsLoading(false);
-                setCurrentCategory(null);
-            } catch (err) {
-                setIsLoading(false);
-                setCurrentCategory(null);
-                throw new Error(err);
-            }
+        try {
+            setIsLoading(true);
+            await dispatch(birdsActions.fetchBirds(currentCategory));
+            props.onShowBirds("category");
+            setIsLoading(false);
+            setCurrentCategory(null);
+        } catch (err) {
+            setIsLoading(false);
+            setCurrentCategory(null);
+            throw new Error(err);
+        }
     }
     useEffect(() => {
-
         getBirds();
     }, [currentCategory])
 

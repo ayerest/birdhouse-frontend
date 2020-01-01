@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 
 
 const Stepometer = props => {
-    const [currentStepCount, setCurrentStepCount] = useState(0)
+    const [currentStepCount, setCurrentStepCount] = useState(0);
     const dispatch = useDispatch();
     let everyStepYouTake = false;
 
@@ -17,7 +17,6 @@ const Stepometer = props => {
             return everyStepYouTake.remove();
         };
     }, [initializePedometer])
-
     
     const initializePedometer = async () => {
         const hasPermission = await verifyPedometer();
@@ -27,7 +26,7 @@ const Stepometer = props => {
         try {
             watchSteps();
         } catch (err) {
-            console.log(err.message)
+            throw new Error(err.message);
         }
     }
     
@@ -42,8 +41,8 @@ const Stepometer = props => {
     
     const watchSteps = () => {
         everyStepYouTake = Pedometer.watchStepCount(result => {
-            setCurrentStepCount(result.steps)
-            dispatch(stepsActions.currentSteps(result.steps))
+            setCurrentStepCount(result.steps);
+            dispatch(stepsActions.currentSteps(result.steps));
         });
     }
 

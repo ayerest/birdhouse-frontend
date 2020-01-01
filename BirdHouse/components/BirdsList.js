@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
-import { ScrollView, View, Text, Button, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
-import Colors from '../constants/Colors';
+import React from 'react';
+import { View, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import uuid from 'uuid';
 import BirdCard from './BirdCard';
-import { Audio } from 'expo-av';
 import * as audioActions from '../store/actions/audio';
 
 const BirdsList = (props) => {
 
-    const birdList = props.birdList
+    const birdList = props.birdList;
     
     const renderBirdGridItem = (bird) => {
         return (
-
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() => {
@@ -30,35 +27,28 @@ const BirdsList = (props) => {
     }
 
     const audio = useSelector(state=> {
-        return state.audio.currentSound
+        return state.audio.currentSound;
     })
 
     const handleBackButtonPress = async () => {
         if (audio) {
-
             await audio.stopAsync();
-            dispatch(audioActions.stopAudio)
+            dispatch(audioActions.stopAudio);
         }
-        props.onShowBirds(false)
+        props.onShowBirds(false);
     }
 
     return (
-
-            <View>
-                {/* <Button title="Go Back" onPress={() => { props.navigation.goBack() }} /> */}
+        <View>
             <Button title="Back" onPress={handleBackButtonPress}/>
             <FlatList contentContainerStyle={{paddingBottom: 100}} keyExtractor={(item, index) => uuid()} data={birdList} renderItem={renderBirdGridItem}
                 numColumns={1}
             />
-            </View>
-       
+        </View>
     )
 }
 
 BirdsList.navigationOptions = (navigationData) => {
-    // const bird_id = navigationData.navigation.getParam('birdId')
-    // const bird_name = navigationData.navigation.getParam('birdName')
-
     return {
         headerTitle: "View Birds",
     }

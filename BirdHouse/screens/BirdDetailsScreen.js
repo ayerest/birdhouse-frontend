@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Image, ScrollView, ActivityIndicator, TouchableOpacity, Platform, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import Colors from '../constants/Colors';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
 import { Audio } from 'expo-av';
@@ -11,10 +10,9 @@ import * as audioActions from '../store/actions/audio';
 import {NavigationEvents} from 'react-navigation';
 import AvatarButton from '../components/AvatarButton';
 
-
 const BirdDetailsScreen = props => {
     const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -27,7 +25,7 @@ const BirdDetailsScreen = props => {
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
-        return state.birds.singleBird
+        return state.birds.singleBird;
     })
 
     const handlePlayAudio = async () => {
@@ -44,7 +42,7 @@ const BirdDetailsScreen = props => {
     }
 
     const audio = useSelector(state => {
-        return state.audio.currentSound
+        return state.audio.currentSound;
     })
 
     const handleBackButtonClick = async () => {
@@ -55,17 +53,17 @@ const BirdDetailsScreen = props => {
         }
         if (audio) {
             await audio.stopAsync();
-            dispatch(audioActions.stopAudio)
+            dispatch(audioActions.stopAudio);
         }
-        props.navigation.goBack()
+        props.navigation.goBack();
     }
 
     const handleLeaving = async () => {
         if (audio) {
             await audio.stopAsync();
-            dispatch(audioActions.stopAudio)
+            dispatch(audioActions.stopAudio);
         }
-        props.navigation.goBack()
+        props.navigation.goBack();
     }
     
     const renderDetails = () => {
@@ -111,9 +109,7 @@ const BirdDetailsScreen = props => {
 }
 
 BirdDetailsScreen.navigationOptions = (navigationData) => {
-    const bird_name = navigationData.navigation.getParam('birdName')
-    const user = navigationData.navigation.getParam('user')
-
+    const bird_name = navigationData.navigation.getParam('birdName');
     return {
         headerTitle: bird_name,
         headerTitleStyle: {

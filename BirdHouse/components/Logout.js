@@ -3,15 +3,14 @@ import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../store/actions/auth'
 
-
 const Logout = props => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => {
-        return state.user
+        return state.user;
     })
 
     const logoutHandler = () => {
-        dispatch(authActions.logout(currentUser))
+        dispatch(authActions.logout(currentUser));
     }
     return <Button title="Logout" onPress={logoutHandler} {...props} style={{ ...styles.input, ...props.style }} />;
 };

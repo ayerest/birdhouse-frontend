@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Platform, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
@@ -8,14 +8,12 @@ import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
-// import { useFocusEffect } from 'react-navigation-hooks';
 import AvatarButton from '../components/AvatarButton';
-
 
 const BadgesScreen = props => {
 
     const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const loadMyBadges = async () => {
             setIsLoading(true);
@@ -26,29 +24,29 @@ const BadgesScreen = props => {
     }, [dispatch, badgesList]);
 
     const badgesList = useSelector(state => {
-        return state.badges.myBadges
+        return state.badges.myBadges;
     })
 
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
 
     const newSteps = useSelector(state => {
-        return state.steps.myNewSteps
+        return state.steps.myNewSteps;
     })
 
     const renderBadgeItem = (badge) => {
         return (
-                <TouchableOpacity onPress={() => {
-                    props.navigation.navigate({
-                    routeName: 'BadgeDetails', params: {
-                        entryId: badge.item.id,
-                        entryName: `${badge.item.category}`,
-                        entry: badge.item
-                    }
-                })}}>
-                    <BadgeCard badge={badge.item}  />
-                </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate({
+                routeName: 'BadgeDetails', params: {
+                    entryId: badge.item.id,
+                    entryName: `${badge.item.category}`,
+                    entry: badge.item
+                }
+            })}}>
+                <BadgeCard badge={badge.item}  />
+            </TouchableOpacity>
         )
     }
     //note to self: it would be nice to have an info link here to explain what you can get badges for --- really nice if users could see how close they were to earning a badge

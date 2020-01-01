@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert, Dimensions, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
@@ -12,33 +12,19 @@ import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
 import StaticMap from '../components/StaticMap';
 import AvatarButton from '../components/AvatarButton';
-// import { Notifications } from 'expo';
-// import registerForPushNotificationsAsync from '../components/RegisterForPushNotificationsAsync';
-
-
 
 const MainViewScreen = props => {
-    const [showShares, setShowShares] = useState(false)
+    const [showShares, setShowShares] = useState(false);
     const [liveView, setLiveView] = useState(true);
-    // const [notification, setNotification] = useState({})
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
 
     const dispatch = useDispatch();
 
     const sharedEntries = useSelector(state => {
-        return state.entries.sharedEntries
+        return state.entries.sharedEntries;
     })
-
-    // useEffect(() => {
-    //     registerForPushNotificationsAsync(user);
-    //     _notificationSubscription = Notifications.addListener(_handleNotification);
-    // }, [registerForPushNotificationsAsync, user])
-
-    // const _handleNotification = (notification) => {
-    //     setNotification({ notification: notification });
-    // };
     
     useEffect(() => {
         if (!!user && user.last_login) {
@@ -47,12 +33,11 @@ const MainViewScreen = props => {
     }, [user, dispatch])
 
     useEffect(() => {
-        dispatch(entriesActions.getSharedEntries())
+        dispatch(entriesActions.getSharedEntries());
     }, [dispatch])
 
     
     const loadUserSteps = async () => {
-    
         const getPermission = await verifyPedometer();
         if (!getPermission) {
             return;
@@ -62,7 +47,6 @@ const MainViewScreen = props => {
         } catch (err) {
             console.log(err.message)
         }
-    
     }
 
     const getSteps = async () => {
@@ -74,7 +58,6 @@ const MainViewScreen = props => {
                 dispatch(stepsActions.updateSteps(result.steps))
             })
         }
-        
     }
 
     const verifyPedometer = async () => {
@@ -109,10 +92,6 @@ const MainViewScreen = props => {
         <ScrollView contentContainerStyle={{height: '100%'}}>
                 {sharedEntries.length > 0 ? <SharedEntries hideOnMap={handleHideOnMap} showOnMap={handleShowSharesOnMap} sharedEntries={sharedEntries}/>: null}
             <View style={styles.steps}>
-                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>Origin: {notification.origin}</Text>
-                    <Text>Data: {JSON.stringify(notification.data)}</Text>
-                </View> */}
                 <Stepometer />
                 <View style={styles.row}>
                     <Text style={styles.label}>Toggle Live View</Text>
@@ -133,7 +112,7 @@ const MainViewScreen = props => {
 }
 
 MainViewScreen.navigationOptions = navData => {
-    const user = navData.navigation.getParam('user')
+    const user = navData.navigation.getParam('user');
 
     return {
         headerTitle: "BirdHouse",
@@ -154,18 +133,6 @@ MainViewScreen.navigationOptions = navData => {
                 })
             }}/>
         )
-        // headerRight: (
-        //     <TouchableOpacity onPress={() => {
-        //         navData.navigation.navigate({
-        //             routeName: 'MyAccount', params: {
-        //                 user: user
-        //             }
-        //         })
-        //         }}>  
-        //         {user ? 
-        //             <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'cover', borderRadius: 10 }} source={require('../assets/images/birdicon.png')} /> }
-        //     </TouchableOpacity>
-        // )
     }
 }
 

@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Platform, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import {DrawerItems } from 'react-navigation'
-import MenuButton from '../components/MenuButton';
-import Colors from '../constants/Colors';
-import * as badgesActions from '../store/actions/badges';
-import BadgeCard from '../components/BadgeCard';
-import uuid from 'uuid';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as authActions from '../store/actions/auth'
-// import { useFocusEffect } from 'react-navigation-hooks';
 
 
 const CustomDrawer = props => {
@@ -40,10 +33,6 @@ const CustomDrawer = props => {
         </SafeAreaView>
     </View>
 }
-            {/* <Button style={styles.logout} title="Logout" accessibilityLabel="Logout" onPress={() => {
-                dispatch(authActions.logout());
-                props.navigation.navigate("Auth")
-            }} /> */}
 
 const styles = StyleSheet.create({
     screen: {

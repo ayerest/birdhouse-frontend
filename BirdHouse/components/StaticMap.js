@@ -1,32 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Alert, ActivityIndicator, Button, Image } from 'react-native';
+import { View, StyleSheet, Alert, ActivityIndicator, Image } from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import { useDispatch, useSelector } from 'react-redux';
-import ENV from '../env';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import AddFieldEntryForm from './AddFieldEntryForm';
+import { useSelector } from 'react-redux';
+import MapView, { Marker } from 'react-native-maps';
 import Colors from '../constants/Colors';
-import { NavigationEvents } from 'react-navigation';
-
-
 
 const StaticMap = (props) => {
-    const [activeMarker, setActiveMarker] = useState(null);
     const [newMarker, setNewMarker] = useState(null);
     const [isGettingLocation, setIsGettingLocation] = useState(false);
-    const [currentLocation, setCurrentLocation] = useState(null);
     const [visible, setVisible] = useState(true);
-    const [follow, setFollow] = useState(true);
     const [mapRegion, setMapRegion] = useState(null)
 
-
     const sharedEntries = useSelector(state => {
-        return state.entries.sharedEntries
+        return state.entries.sharedEntries;
     })
 
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
 
     useEffect(() => {
@@ -39,10 +30,6 @@ const StaticMap = (props) => {
         points.length > 0 ?
         getNewMapRegion(points) : displayMapHandler();
     }, [sharedEntries]);
-
-    // useEffect(() => {
-    //     setVisible(true)
-    // }, [newMarker])
 
     const verifyPermissions = async () => {
         const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -61,54 +48,27 @@ const StaticMap = (props) => {
         try {
             setIsGettingLocation(true);
             const location = await Location.getCurrentPositionAsync({ timeout: 10000 });
-            // const location = await
-            // Location.watchPositionAsync({accuracy: 1, timeInterval: 120000}, () => {})
             //at this point I can set the marker state with the same lat long so a marker shows up initially
-            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })   
-            // setCurrentLocation({
-            //     lat: location.coords.latitude,
-            //     lng: location.coords.longitude
-            // })
-
+            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude });
             setMapRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             })   
-
-
         } catch (err) {
-            Alert.alert("Unable to access current location.", "Please try again later.")
+            Alert.alert("Unable to access current location.", "Please try again later.");
         }
        
         setIsGettingLocation(false);
     }
 
-    // let mapRegion = {
-    //     latitude: (!!currentLocation ? currentLocation.lat : 46.6062),
-    //     longitude: (!!currentLocation ? currentLocation.lng : -122.306417),
-    //     latitudeDelta: 0.0,
-    //     longitudeDelta: 0.0
-    // }
-
     const addMarkerHandler = (event) => {
-        let mapTouchEvent = event
-        // props.hideOnMap()
-        // setCurrentLocation({ lat: mapTouchEvent.nativeEvent.coordinate.latitude, lng: mapTouchEvent.nativeEvent.coordinate.longitude})
-        // mapRegion.latitude = mapTouchEvent.nativeEvent.coordinate.latitude;
-        // mapRegion.longitude = mapTouchEvent.nativeEvent.coordinate.longitude;
-        let lat = mapTouchEvent.nativeEvent.coordinate.latitude
-        let lng = mapTouchEvent.nativeEvent.coordinate.longitude
-        setNewMarker({ latitude: lat, longitude: lng })
-
+        let mapTouchEvent = event;
+        let lat = mapTouchEvent.nativeEvent.coordinate.latitude;
+        let lng = mapTouchEvent.nativeEvent.coordinate.longitude;
+        setNewMarker({ latitude: lat, longitude: lng });
     }
-
-
-
-    // handleModalClose = () => {
-    //     setVisible(false)
-    // }
 
     const getNewMapRegion = (points) => {
         // points should be an array of { latitude: X, longitude: Y }
@@ -147,12 +107,6 @@ const StaticMap = (props) => {
 
     const renderMarkers = () => {
 
-        // let points = sharedEntries.map(entry => {
-        //     return { latitude: entry.latitude, longitude: entry.longitude }
-        // })
-        // setFollow(false);
-    
-
         return sharedEntries.map(entry => {
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
@@ -169,10 +123,6 @@ const StaticMap = (props) => {
  
     return (
         <View style={styles.mapContainer}>
-              
-            {/* <NavigationEvents
-                onWillFocus={displayMapHandler}
-            /> */}
             {!!isGettingLocation ? <ActivityIndicator /> :
                 <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {sharedEntries.length > 0 ? 
@@ -197,9 +147,6 @@ const StaticMap = (props) => {
 }
 
 StaticMap.navigationOptions = (navigationData) => {
-    // const bird_id = navigationData.navigation.getParam('birdId')
-    // const bird_name = navigationData.navigation.getParam('birdName')
-
     return {
         headerTitle: "Map View",
     }

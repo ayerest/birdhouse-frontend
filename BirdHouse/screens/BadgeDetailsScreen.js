@@ -6,13 +6,10 @@ import { NavigationEvents } from 'react-navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import * as factoidActions from '../store/actions/factoids'
 
-
-
 const BadgeDetailsScreen = props => {
 
     const dispatch = useDispatch();
     
-
     useEffect(() => {
         getRandomFact();
     }, [dispatch])
@@ -27,9 +24,6 @@ const BadgeDetailsScreen = props => {
 
     return (
         <ScrollView>
-            {/* <NavigationEvents
-                onWillFocus={getRandomFact()}
-            /> */}
             <Card style={styles.screen}>
                     <Text style={styles.label}>Bonus Bird Fact</Text>
                     {fact ? <Text style={styles.label}>{fact.fact}</Text> : null}
@@ -38,16 +32,12 @@ const BadgeDetailsScreen = props => {
     )
 }
 
-
-
-
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'thistle'
-        // height: Dimensions.get('window').height * 0.3
     },
     image: {
         height: 250,

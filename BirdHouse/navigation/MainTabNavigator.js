@@ -1,9 +1,6 @@
-import React from 'react';
-import { Platform, SafeAreaView, Button, View, Image, Dimensions } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
-import {useDispatch, useSelector} from 'react-redux';
-import * as authActions from '../store/actions/auth';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -18,7 +15,6 @@ import PicturesScreen from '../screens/PicturesScreen';
 import GeoMap from '../components/GeoMap';
 import StaticMap from '../components/StaticMap';
 
-import Colors from '../constants/Colors';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
@@ -76,7 +72,7 @@ const FieldEntries = createStackNavigator({
       title: 'My Bird Sightings',
       headerTitleStyle: {
         fontFamily: 'Fred-Great',
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: '400'
       }
     }
@@ -173,20 +169,6 @@ const MenuNavigator = createDrawerNavigator({
   "My Account": Account
 },
 {
-  // contentComponent: props => {
-    
-  //   const dispatch = useDispatch();
-  //   return <View style={{justifyContent: 'center',}}>
-  //     <SafeAreaView forceInset={{flex: 1, top: 'always', horizontal: 'never', justifyContent: 'center', alignItems: 'center'}}>
-  //       <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-  //       <DrawerItems {...props} />
-  //       <Button title="Logout" accessibilityLabel="Logout" onPress={() => {
-  //       dispatch(authActions.logout());
-  //       props.navigation.navigate("Auth")
-  //       }}/>
-  //     </SafeAreaView>
-  //   </View>
-  // }
   contentComponent: CustomDrawer,
   drawerWidth: Dimensions.get('window').width / 1.5,
   contentOptions: {

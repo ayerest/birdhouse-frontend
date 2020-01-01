@@ -1,38 +1,37 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
-import { TextInput, StyleSheet, Text, View, Button, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
 import * as birdActions from '../store/actions/birds'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 
 
 const SearchBar = props => {
-    const [searchTerm, setSearchTerm] = useState("")
-    const [error, setError] = useState()
-    const [isLoading, setIsLoading] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("");
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     dispatch = useDispatch();
 
     const handleSearchInput = (text) => {
-        let searchInput = text
-        setSearchTerm(searchInput)
+        let searchInput = text;
+        setSearchTerm(searchInput);
         if (searchTerm.length >= 1) {
-            sendUpSearch()
+            sendUpSearch();
         }
     }
 
     const handleClearSearch = () => {
-        setSearchTerm("")
-        props.onShowBirds(false)
+        setSearchTerm("");
+        props.onShowBirds(false);
     }
 
     const sendUpSearch = async () => {
         try {
             setIsLoading(true);
-            await dispatch(birdActions.searchBirds(searchTerm))
+            await dispatch(birdActions.searchBirds(searchTerm));
             setIsLoading(false);
-            props.onShowBirds("search")
+            props.onShowBirds("search");
         } catch (err) {
-            setError(err.message)
+            setError(err.message);
         }
     }
 
@@ -46,7 +45,6 @@ const SearchBar = props => {
                     initialValue="" placeholder="Enter bird name or keyword"
                 {...props} style={{ ...styles.input, ...props.style }} />
             </View>
-
     );
 };
 

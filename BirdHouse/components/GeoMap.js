@@ -1,35 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, Alert, ActivityIndicator, Image} from 'react-native';
+import {View, StyleSheet, Alert, ActivityIndicator, Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import { useDispatch, useSelector } from 'react-redux';
-import ENV from '../env';
+import { useSelector } from 'react-redux';
 import MapView, {Marker, Callout} from 'react-native-maps';
-import AddFieldEntryForm from './AddFieldEntryForm';
 import Colors from '../constants/Colors';
-import { NavigationEvents } from 'react-navigation';
 
 
 
 const GeoMap = (props) => {
-    const [activeMarker, setActiveMarker] = useState(null);
     const [newMarker, setNewMarker] = useState(null);
     const [isGettingLocation, setIsGettingLocation] = useState(false);
     const [currentLocation, setCurrentLocation] = useState(null);
     const [visible, setVisible] = useState(true);
     const [follow, setFollow] = useState(!props.showShares);
-
-
-    const sharedEntries = useSelector(state => {
-        return state.entries.sharedEntries
-    })
    
     useEffect(() => {
-        displayMapHandler()
+        displayMapHandler();
     }, [displayMapHandler]);  
 
     useEffect(() => {
-        setVisible(true)
+        setVisible(true);
     }, [newMarker])
 
     const verifyPermissions = async () => {
@@ -49,14 +40,10 @@ const GeoMap = (props) => {
         try {
            setIsGettingLocation(true);
            const location = await Location.getCurrentPositionAsync({timeout: 10000});
-        
-            // setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude })
             setCurrentLocation({
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
             })
-            
-
         } catch (err) {
             Alert.alert("Unable to access current location.", "Please try again later.")
         }
@@ -71,27 +58,18 @@ const GeoMap = (props) => {
     }
 
     const addMarkerHandler = (event) => {
-        let mapTouchEvent = event
-        // setCurrentLocation({ lat: mapTouchEvent.nativeEvent.coordinate.latitude, lng: mapTouchEvent.nativeEvent.coordinate.longitude})
-        // mapRegion.latitude = mapTouchEvent.nativeEvent.coordinate.latitude;
-        // mapRegion.longitude = mapTouchEvent.nativeEvent.coordinate.longitude;
-        let lat = mapTouchEvent.nativeEvent.coordinate.latitude
-        let lng = mapTouchEvent.nativeEvent.coordinate.longitude
-        setNewMarker({latitude: lat, longitude: lng })
-
+        let mapTouchEvent = event;
+        let lat = mapTouchEvent.nativeEvent.coordinate.latitude;
+        let lng = mapTouchEvent.nativeEvent.coordinate.longitude;
+        setNewMarker({latitude: lat, longitude: lng });
     }
 
-   
-
     handleModalClose = () => {
-        setVisible(false)
+        setVisible(false);
     }
 
     return (
         <View style={styles.mapContainer}>
-            {/* <NavigationEvents
-                onWillFocus={displayMapHandler}
-            /> */}
             {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
                 <MapView showsUserLocation={follow} followsUserLocation={follow} style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {( !!newMarker ?
@@ -110,15 +88,6 @@ const GeoMap = (props) => {
             }
         </View>
     )
-}
-
-GeoMap.navigationOptions = (navigationData) => {
-    // const bird_id = navigationData.navigation.getParam('birdId')
-    // const bird_name = navigationData.navigation.getParam('birdName')
-
-    return {
-        
-    }
 }
 
 const styles = StyleSheet.create({

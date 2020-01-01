@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, Image, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as entriesActions from '../store/actions/entries'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,19 +11,17 @@ const SharedEntries = props => {
     const dispatch = useDispatch();
 
     const dismissHandler = async () => {
-        props.hideOnMap()
-        dispatch(entriesActions.dismissSharedEntries())
+        props.hideOnMap();
+        dispatch(entriesActions.dismissSharedEntries());
     }
 
     const mapViewHandler = async () => {
-        props.showOnMap()
-       
+        props.showOnMap();
     }
 
     const sharedEntries = useSelector(state => {
-        return state.entries.sharedEntries
+        return state.entries.sharedEntries;
     })
-
 
     return (
         <View style={styles.notificationBar}>
@@ -39,7 +37,6 @@ const SharedEntries = props => {
             </TouchableOpacity>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -55,7 +52,6 @@ const styles = StyleSheet.create({
         padding: 2,
         alignSelf: 'center'
     }
-   
 })
 
 export default SharedEntries;

@@ -1,17 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, Platform, View, Text, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
-import Card from '../components/Card'
 import {useDispatch, useSelector} from 'react-redux'
 import * as authActions from '../store/actions/auth'
-
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-// import MenuButton from '../components/MenuButton'
 import Colors from '../constants/Colors'
-
-// import MainViewScreen from './MainViewScreen';
-
 import ImageSelector from '../components/ImageSelector';
-
 
 const AuthScreen = (props) => {
     const dispatch = useDispatch();
@@ -20,26 +12,26 @@ const AuthScreen = (props) => {
     const [password, setPassword] = useState("");
     const [avatar, setAvatar] = useState('https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg');
     const [login, setLogin] = useState(false);
-    const [signup, setSignup] = useState(false)
+    const [signup, setSignup] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
 
     useEffect(()=>{
         if (error) {
-            Alert.alert('An error occured!', error)
+            Alert.alert('An error occured!', error);
         }
     }, [error]);
 
     const imageSelectedHandler = (image) => {
-        setAvatar(image)
+        setAvatar(image);
     }
 
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
     
     const signupHandler = async (type) => {
-        setError(null)
+        setError(null);
         setIsLoading(true);
         try {
             await dispatch(authActions.signup(username, password, avatar))
@@ -51,8 +43,8 @@ const AuthScreen = (props) => {
                 }
             });
         } catch (err) {
-            setError(err.message)
-            setAvatar(false)
+            setError(err.message);
+            setAvatar(false);
             setIsLoading(false);
         }
         
@@ -83,8 +75,6 @@ const AuthScreen = (props) => {
                                     }} />
                             </View> : null
                         }
-                            
-
                         {!login && signup ? 
                                 <ScrollView>
                                     <View style={styles.screen}>
@@ -117,7 +107,6 @@ const AuthScreen = (props) => {
                                 </ScrollView>
                         : null
                         }
-
                         {!signup && login ? 
                             <ScrollView>
                                 <View style={styles.screen}>
@@ -160,7 +149,6 @@ AuthScreen.navigationOptions = navData => {
             fontFamily: 'Fred-Great',
             fontSize: 18,
         },
-        // headerRight: (<Image style={{ width: 25, height: 25 }} source={require("../assets/images/birdicon.png")} />)
     }
 };
 
@@ -186,8 +174,6 @@ const styles = StyleSheet.create({
     },
     logo: {
         alignSelf: "center",
-        // width: '50%',
-        // height: '40%',
         flex: 1,
         resizeMode: 'contain'
     },

@@ -7,7 +7,6 @@ import * as Permissions from 'expo-permissions';
 const TakePicture = props => {
     const [selectedImage, setSelectedImage] = useState();
     const verifyPermissions = async () => {
-        //note to self - if I want the user to take a picture in app later on I need askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
         const result = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA);
         if (result.status !== 'granted') {
             Alert.alert("Please grant permissions to provide an image.");
@@ -15,7 +14,6 @@ const TakePicture = props => {
         }
         return true;
     }
-
 
     const takeImageHandler = async () => {
         const hasPermission = await verifyPermissions();
@@ -36,7 +34,6 @@ const TakePicture = props => {
             </View> : null }
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({

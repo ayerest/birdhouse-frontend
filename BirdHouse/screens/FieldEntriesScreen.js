@@ -13,7 +13,7 @@ import AvatarButton from '../components/AvatarButton';
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [showMap, setShowMap] = useState(false);
-    const [mapRegion, setMapRegion] = useState(null)
+    const [mapRegion, setMapRegion] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,7 +31,6 @@ const FieldEntriesScreen = props => {
 
     const renderFieldEntryItem = (fieldentry) => {
         return (
-            
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() => {
@@ -73,6 +72,7 @@ const FieldEntriesScreen = props => {
         const midY = (minY + maxY) / 2;
         const deltaX = (maxX - minX + 0.1);
         const deltaY = (maxY - minY + 0.1);
+
         setMapRegion({
             latitude: midX,
             longitude: midY,
@@ -102,7 +102,6 @@ const FieldEntriesScreen = props => {
         if (points.length == 0) {
             return;
         } else {
-
             getNewMapRegion(points);
             setShowMap(true);
         }
@@ -113,10 +112,21 @@ const FieldEntriesScreen = props => {
     }
 
     return (
+        // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
             <View style={styles.screen}>
-                {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
+                {isLoading ? <ActivityIndicator size="large" /> : 
+                fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
+                    <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
+                    <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />
+                    </View> : <View style={styles.mapContainer}>
+                        <Button title="Hide Map" onPress={hideMapHandler} />
+                        <MapView style={styles.map} region={mapRegion}>
+                            {renderMarkers()}
+                        </MapView>
+                </View>
+                }
+                {/* {!isLoading && fieldEntriesList.length == 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : null}
                 {!isLoading ? !showMap ? 
-                
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} /> :
                 <Button title="Hide Map" onPress={hideMapHandler} />  : null }
                 {showMap && !!mapRegion ? 
@@ -126,13 +136,13 @@ const FieldEntriesScreen = props => {
                         </MapView>
                     </View>
                 : null}
-                {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}
+                */}
+                {/* {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />}  */}
             </View>
     )
 }
 
 FieldEntriesScreen.navigationOptions = navData => {
-    const user = navData.navigation.getParam('user')
 
     return {
         headerTitle: "My Bird Sightings",
@@ -154,16 +164,6 @@ FieldEntriesScreen.navigationOptions = navData => {
         )
     }
 }
-            {/* <TouchableOpacity onPress={() => {
-                navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
-                        user: user
-                    }
-                })
-            }}>
-                {user ?
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
-            </TouchableOpacity> */}
 
 const styles = StyleSheet.create({
     screen: {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     mapContainer: {
-        height: '92%',
+        height: '98%',
         width: '100%',
     },
     map: {
