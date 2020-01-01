@@ -8,8 +8,8 @@ import { Entypo } from '@expo/vector-icons';
 
 
 const CategoriesList = (props) => {
-    const [currentCategory, setCurrentCategory] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const [currentCategory, setCurrentCategory] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -21,31 +21,29 @@ const CategoriesList = (props) => {
 
 
     const categoryList = useSelector(state => {
-        return state.birds.birdCategories
+        return state.birds.birdCategories;
     }) 
 
     const setCategory = async (category) => {
-        await setCurrentCategory(category)
-        // getBirds();
-        // !!currentCategory ? getBirds() : getBirds(category)
+        await setCurrentCategory(category);
     }
     
     const getBirds = async () => {
             try {
-                setIsLoading(true)
+                setIsLoading(true);
                 await dispatch(birdsActions.fetchBirds(currentCategory));
-                props.onShowBirds("category")
-                setIsLoading(false)
-                setCurrentCategory(null)
+                props.onShowBirds("category");
+                setIsLoading(false);
+                setCurrentCategory(null);
             } catch (err) {
-                console.log(err)
-                setIsLoading(false)
-                setCurrentCategory(null)
+                setIsLoading(false);
+                setCurrentCategory(null);
+                throw new Error(err);
             }
     }
     useEffect(() => {
 
-        getBirds()
+        getBirds();
     }, [currentCategory])
 
     const renderCategoryItem = (categoryItem) => {
@@ -59,23 +57,14 @@ const CategoriesList = (props) => {
 
     return (
         <View>
-            {/* <Text>Categories</Text> */}
             {isLoading && !!currentCategory ? <ActivityIndicator /> : null}
             <FlatList keyExtractor={(item, index) => uuid()} data={categoryList} renderItem={renderCategoryItem}
-                numColumns={1} />
+                numColumns={1} contentContainerStyle={{ paddingBottom: 100 }} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    screen: {
-        // flex: 1,
-    },  
-    gridItem: {
-        // flex: 1,
-        // margin: 15,
-        // height: 150
-    },
     text: {
         color: "black",
         alignSelf: "center",
