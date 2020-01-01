@@ -42,7 +42,7 @@ const SharedEntries = props => {
 const styles = StyleSheet.create({
     notificationBar: {
         backgroundColor: "thistle",
-        borderRadius: 10,
+        // borderRadius: 10,
         flexDirection: 'row',
         justifyContent: 'space-between'
     }, 

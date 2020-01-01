@@ -19,19 +19,15 @@ const PicturesScreen = props => {
         const loadMyPhotos = async () => {
             setIsLoading(true);
             await dispatch(getMyPhotos());
-            setIsLoading(false)
         }
-        loadMyPhotos();
-    }, [dispatch, photosList]);
-
-    useEffect(() => {
         const loadMyFieldEntries = async () => {
             setIsLoading(true);
             await dispatch(getMyEntries());
             setIsLoading(false);
         }
+        loadMyPhotos();
         loadMyFieldEntries();
-    }, [dispatch, myEntries]);
+    }, [dispatch, photosList, myEntries]);
 
     const photosList = useSelector(state => {
         return state.photos.myPhotos;
@@ -96,7 +92,6 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
-        // alignItems: 'center'
     },
     image: {
         height: 300,
