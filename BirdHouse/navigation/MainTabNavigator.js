@@ -17,6 +17,7 @@ import StaticMap from '../components/StaticMap';
 
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import BadgeCard from '../components/BadgeCard';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
 import CustomDrawer from './CustomDrawer';
@@ -48,6 +49,15 @@ const Badges = createStackNavigator({
       }
     }
   },
+  Badge: {screen: BadgeCard,
+  navigationOptions: {
+    title: 'My Badge',
+    headerTitleStyle: {
+      fontFamily: 'Fred-Great',
+      fontSize: 19,
+      fontWeight: '400'
+    }
+  }},
   BadgeDetails: BadgeDetailsScreen
 })
 

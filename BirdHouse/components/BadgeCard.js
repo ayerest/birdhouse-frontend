@@ -1,23 +1,37 @@
-import React from 'react';
-import { Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, Image, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
-
-import Card from './Card'
+import { Feather } from '@expo/vector-icons';
+import Card from './Card';
+import { getMyEntries } from '../store/actions/entries';
+import { getMyBirds } from '../store/actions/birds';
 
 const BadgeCard = props => {
-
+    const [isLoading, setIsLoading] = useState(true);
+    const [showInfo, setShowInfo] = useState(false);
+    const dispatch = useDispatch();
     const user = useSelector(state => {
-        return state.user.user
-    })
-
-    const fieldEntries = useSelector(state => {
-        return state.entries.entries
-    })
+        return state.user.user;
+    });
 
     const myBirds = useSelector(state => {
-        return state.birds.myBirds
-    })
+        return state.birds.myBirds;
+    });
+
+    const myEntries = useSelector(state => {
+        return state.entries.entries;
+    });
+
+    useEffect(() => {
+        loadBirdsAndSightings();
+    }, [dispatch, loadBirdsAndSightings]);
+
+    const loadBirdsAndSightings = async () => {
+        await Promise.all(dispatch(getMyEntries()),
+            dispatch(getMyBirds()));
+        setIsLoading(false);
+    }
 
     const renderMedalImage = () => {
         if (props.badge.category === "Login") {
@@ -62,9 +76,9 @@ const BadgeCard = props => {
         if (props.badge.category === "Login") {
             return <Text style={styles.center}>Great job logging in at least once a week!</Text>
         } else if (props.badge.category === "Sightings") {
-            return <Text style={styles.center}>You've documented {user.field_entries.length} {props.badge.category} of birds!</Text>
+            return <Text style={styles.center}>You've documented {myEntries.length} {props.badge.category} of birds!</Text>
         } else if (props.badge.category === "Birds") {
-            return <Text style={styles.center}>Nice work! You've seen a total of {user.birds.length} bird species!!</Text>
+            return <Text style={styles.center}>Nice work! You've seen a total of {myBirds.length} bird species!!</Text>
         } else if (props.badge.category === "Steps") {
             return <Text style={styles.center}>Wow! You have taken {user.step_count} steps!</Text> 
         }
@@ -72,10 +86,27 @@ const BadgeCard = props => {
 
     return (
         <Card style={styles.card}>
-            
-            {renderBadgeText()}
-            {renderMedalImage()}
-            <Text style={styles.center}>Earned on: {props.badge.updated_at.slice(0, 10)}</Text>
+            {!isLoading ?
+            <View>
+                {renderBadgeText()}
+                <TouchableOpacity onPress={() => {
+                    props.navigation.navigate({
+                        routeName: 'BadgeDetails',
+                    })
+                }}>
+                    {renderMedalImage()}
+                </TouchableOpacity>
+                {showInfo ? <Text>Hi there</Text> : null}
+                <Text style={styles.center}>Earned on: {props.badge.updated_at.slice(0, 10)}</Text>
+                <View>
+                    <TouchableOpacity onPress={() => {
+                        setShowInfo(true);
+                    }}>
+                        <Feather style={styles.info} name="info" size={40} color={"cornflowerblue"} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            : <ActivityIndicator size="large" />}
         </Card>
     );
 };
@@ -95,6 +126,9 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: Colors.myColor
+    },
+    info: {
+        alignSelf: 'flex-end',
     }
 });
 
