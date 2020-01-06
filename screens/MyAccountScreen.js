@@ -9,6 +9,7 @@ import { getMyBirds } from '../store/actions/birds';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
 import Card from '../components/Card';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MyAccountScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
@@ -84,8 +85,21 @@ const MyAccountScreen = props => {
                     <Text style={styles.label}>{user.username} Account Information</Text>
                     <Image style={styles.image} source={{ uri: user.avatar }}></Image>
                     <Text style={styles.label}>{steps} Total Steps!</Text>
-                    <Text style={styles.label}>You have documented {myEntries.length} bird sightings in the field!</Text>
-                    <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.navigate({
+                            routeName: 'BirdieSightings', params: {
+                            }
+                        })
+                        }}>
+                        <Text style={styles.label}>You have documented {myEntries.length} bird sightings in the field!</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.navigate({
+                            routeName: 'BirdODex',
+                        })}}>
+
+                        <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>
+                    </TouchableOpacity>
                 </Card> }
           
         </ScrollView>
@@ -93,7 +107,6 @@ const MyAccountScreen = props => {
 }
 
 MyAccountScreen.navigationOptions = navData => {
-    const user = navData.navigation.getParam('user')
 
     return {
         headerTitle: "My Account",

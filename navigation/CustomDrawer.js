@@ -14,10 +14,9 @@ const CustomDrawer = props => {
     }, [user]);
 
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
 
-    //note to self: it would be nice to have an info link here to explain what you can get badges for --- really nice if users could see how close they were to earning a badge
     return <View >
         <SafeAreaView forceInset={{  top: 'always', horizontal: 'never', alignContent: 'flex-start', alignItems: 'flex-start' }}>
             <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />

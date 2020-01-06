@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, Switch, Platform, Alert } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Switch, Platform, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
 import Colors from '../constants/Colors';
 import Stepometer from '../components/Stepometer';
 import { useSelector, useDispatch } from 'react-redux';
-import * as entriesActions from '../store/actions/entries';
+import { getMyEntries, getSharedEntries} from '../store/actions/entries';
+import { getMyBirds } from '../store/actions/birds';
 import SharedEntries from '../components/SharedEntries';
 import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
@@ -33,7 +34,9 @@ const MainViewScreen = props => {
     }, [user, dispatch])
 
     useEffect(() => {
-        dispatch(entriesActions.getSharedEntries());
+        dispatch(getSharedEntries());
+        dispatch(getMyEntries());
+        dispatch(getMyBirds());
     }, [dispatch])
 
     

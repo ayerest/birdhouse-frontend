@@ -64,7 +64,6 @@ const FieldEntryDetailsScreen = props => {
 }
 
 FieldEntryDetailsScreen.navigationOptions = navData => {
-
     return {
         headerRight: (
             <AvatarButton handleClick={() => {

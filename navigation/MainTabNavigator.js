@@ -2,8 +2,6 @@ import { Platform, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer,
 createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
-
-import HomeScreen from '../screens/HomeScreen';
 import FieldEntriesScreen from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen from '../screens/FieldEntryDetailsScreen';
 import BirdODexScreen from '../screens/BirdODexScreen';
@@ -14,7 +12,6 @@ import BadgesScreen from '../screens/BadgesScreen';
 import PicturesScreen from '../screens/PicturesScreen';
 import GeoMap from '../components/GeoMap';
 import StaticMap from '../components/StaticMap';
-
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import BadgeCard from '../components/BadgeCard';
@@ -24,18 +21,18 @@ import CustomDrawer from './CustomDrawer';
 
 
 
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
-});
+// const config = Platform.select({
+//   web: { headerMode: 'screen' },
+//   default: {},
+// });
 
 
-const HomeStack = createStackNavigator(
-    {
-    Home: HomeScreen,
-  },
-  config
-);
+// const HomeStack = createStackNavigator(
+//     {
+//     Home: HomeScreen,
+//   },
+//   config
+// );
 
 const Badges = createStackNavigator({
   MyBadges: {
@@ -170,6 +167,8 @@ const Account = createStackNavigator({
       }
     }
   },
+  BirdieSightings: FieldEntriesScreen,
+  BirdODex: BirdODexScreen,
 })
 
 const MenuNavigator = createDrawerNavigator({

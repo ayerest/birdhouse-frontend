@@ -130,25 +130,42 @@ const FieldEntriesScreen = props => {
 }
 
 FieldEntriesScreen.navigationOptions = navData => {
-
-    return {
+    let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
+        <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+            onPress={() => { navData.navigation.toggleDrawer() }} />
+    </HeaderButtons>)
+    if (navData.navigation.state.routeName === 'BirdieSightings') {
+        return {
         headerTitle: "My Bird Sightings",
-        headerStyle: {
+            headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
+                color: "black"
         },
-        headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
-            <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-                onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>,
         headerRight: (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {
                     }
                 })
-            }} />
-        )
+            }} />)
+        }
+    } 
+    else {
+        return {
+            headerTitle: "My Bird Sightings",
+            headerStyle: {
+                backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
+                color: "black"
+            },
+            headerLeft: leftOption,
+            headerRight: (
+                <AvatarButton handleClick={() => {
+                    navData.navigation.navigate({
+                        routeName: 'MyAccount', params: {
+                        }
+                    })
+            }} />)
+        }
     }
 }
 
