@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, Platform, View, Text, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux'
-import * as authActions from '../store/actions/auth'
-import Colors from '../constants/Colors'
+import {useDispatch, useSelector} from 'react-redux';
+import { createAccount, userLogin } from '../store/actions/auth';
+import Colors from '../constants/Colors';
 import ImageSelector from '../components/ImageSelector';
 
 const AuthScreen = (props) => {
@@ -30,11 +30,11 @@ const AuthScreen = (props) => {
         return state.user.user;
     })
     
-    const signupHandler = async (type) => {
+    const signupHandler = async () => {
         setError(null);
         setIsLoading(true);
         try {
-            await dispatch(authActions.signup(username, password, avatar))
+            await dispatch(createAccount(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
             props.navigation.navigate({
@@ -47,8 +47,28 @@ const AuthScreen = (props) => {
             setAvatar(false);
             setIsLoading(false);
         }
-        
     }
+
+    const loginHandler = async () => {
+        setError(null);
+        setIsLoading(true);
+        try {
+            await dispatch(userLogin(username, password));
+            setAvatar(false);
+            setIsLoading(false);
+            props.navigation.navigate({
+              routeName: "Main",
+              params: {
+                user: user
+              }
+            });
+        } catch (err) {
+            setError(err.message);
+            setAvatar(false);
+            setIsLoading(false);
+        }
+    }
+
     return (
         
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={15} 
@@ -71,7 +91,6 @@ const AuthScreen = (props) => {
                                 <Button title="Already have an account?" onPress={() => {
                                     setLogin(true);
                                     setSignup(false);
-                                    setAvatar(false);
                                     }} />
                             </View> : null
                         }
@@ -99,8 +118,8 @@ const AuthScreen = (props) => {
                                         <View>
                                             <Button title="Sign Up" onPress={signupHandler} />
                                             <Button title="Already have an account?" onPress={() => {
-                                                setLogin(true);
                                                 setSignup(false);
+                                                setLogin(true);
                                                 }} />
                                         </View>
                                     }
@@ -123,10 +142,10 @@ const AuthScreen = (props) => {
                                 </View>
                                 {isLoading ? <ActivityIndicator /> :
                                     <View>
-                                    <Button title="Login" onPress={signupHandler}/>
+                                    <Button title="Login" onPress={loginHandler}/>
                                     <Button title="Create a new account?" onPress={() => {
-                                        setLogin(false);
                                         setSignup(true);
+                                        setLogin(false);
                                         }}/>
                                     </View>
                                 }
