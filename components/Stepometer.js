@@ -13,7 +13,7 @@ const Stepometer = props => {
 
     useEffect(() => {
         initializePedometer();
-        if (everyStepYouTake) {
+        if (!!everyStepYouTake) {
             return everyStepYouTake.remove();
         };
     }, [initializePedometer])
@@ -50,7 +50,7 @@ const Stepometer = props => {
         <View style={styles.center}>
             <Text style={styles.text}>Current Step Count: {currentStepCount} </Text>
         </View>
-    );
+    ); 
 };
 
 const styles = StyleSheet.create({
