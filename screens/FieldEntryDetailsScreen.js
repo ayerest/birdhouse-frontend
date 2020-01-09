@@ -4,9 +4,12 @@ import uuid from 'uuid';
 import Card from '../components/Card';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
-
+import moment from 'moment';
+import Colors from '../constants/Colors';
 
 const FieldEntryDetailsScreen = props => {
+
+    const entryDate = moment(props.navigation.state.params.entry.date).format('MMMM Do YYYY, h:mm:ss a');
 
     const renderFieldEntryImage = (image) => {
         return <View>
@@ -17,8 +20,8 @@ const FieldEntryDetailsScreen = props => {
     return (
 
         <Card style={styles.screen}>
-            <ScrollView contentContainerStyle={{paddingBottom: 50}}>
-                    <Text style={styles.right}>{props.navigation.state.params.entry.date.slice(0, 10)}</Text> 
+            <ScrollView contentContainerStyle={{paddingBottom: 300}}>
+                    <Text style={styles.right}>{entryDate}</Text> 
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
                             if (props.navigation.state.routeName === 'FieldEntry') { 
                             props.navigation.navigate({
@@ -37,14 +40,13 @@ const FieldEntryDetailsScreen = props => {
                                     }
                                 }) 
                             }}}>
-
-                            <Text style={styles.text}>{props.navigation.state.params.entry.bird.common_name}</Text>
+                            <Text style={styles.birdDetails}>{props.navigation.state.params.entry.bird.common_name}</Text>
                             {props.navigation.state.params.entry.images.length > 0 ? 
                                 <FlatList keyExtractor={(item, index) => uuid()} data={props.navigation.state.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')}></Image>
                             }
                         </TouchableOpacity>
                     <View style={styles.flex}>
-                        <Text style={styles.text}>Notes:</Text>
+                        <Text style={styles.notes}>Notes:</Text>
                         <Text style={styles.text}>{props.navigation.state.params.entry.notes}</Text>
                     </View>
                     <View style={styles.mapContainer}>
@@ -83,46 +85,56 @@ const styles = StyleSheet.create({
         flex: 1
     },
     image: {
-        width: Dimensions.get('window').width * 0.7,
-        height: Dimensions.get('window').height * 0.3,
-        resizeMode: 'contain',
-        borderRadius: 10,
+        width: Dimensions.get('window').width * 0.85,
+        height: Dimensions.get('window').height * 0.4,
+        resizeMode: 'cover',
+        borderRadius: 20,
         justifyContent: 'center',
         marginTop: 0
     }, 
     map: {
         height: '100%',
         width: '100%',
-        flex: 1
+        flex: 1,
+        borderRadius: 20,
     },
     mapContainer: {
         height: '80%',
-        width: '95%',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center'
     },
     right: {
-        alignSelf: 'flex-end',
         fontFamily: 'Roboto-Condensed',
         fontSize: 18,
         padding: 2,
+        alignSelf: 'center'
     },
     imageContainer: {
-        width: '90%',
-        height: '90%',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     text:{
         fontFamily: 'Roboto-Condensed',
         fontSize: 18,
     },
+    notes: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 20,
+        padding: 10,
+    },
+    birdDetails: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 20,
+        color: Colors.linkColor,
+        padding: 10,
+    },
     flex: {
         flex: 1,
         height: '15%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })
 

@@ -1,9 +1,11 @@
 const tintColor = '#2f95dc';
-const myColor = "ghostwhite"
+const myColor = 'ghostwhite';
+const linkColor = 'cornflowerblue';
 
 export default {
   tintColor,
   myColor,
+  linkColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',
