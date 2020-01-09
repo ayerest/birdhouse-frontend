@@ -1,19 +1,22 @@
 import React from 'react';
 import { Text, StyleSheet, Image, Dimensions } from 'react-native';
-import Card from './Card'
+import Card from './Card';
+import moment from 'moment';
 
 const EntryCard = props => {
+    const { fieldentry, notes } = props;
+    const entryDate = moment(fieldentry.date).format('MMMM Do YYYY, h:mm:ss a');
   
     return (
         <Card style={styles.entry}>
-            <Text style={styles.label}>{props.fieldentry.date.slice(0, 10)}</Text>
-            {!!props.fieldentry.bird ? 
-            <Text style={styles.label}>{props.fieldentry.bird.common_name}</Text> : null
+            <Text style={styles.label}>{entryDate}</Text>
+            {!!fieldentry.bird ? 
+            <Text style={styles.label}>{fieldentry.bird.common_name}</Text> : null
             }
-            { props.fieldentry.images.length > 0 ?
-                <Image style={styles.picture} source={{ uri: props.fieldentry.images[0].img_url }}></Image> : <Image style={styles.picture} source={require('../assets/images/birdicon.png')}></Image>
+            {fieldentry.images.length > 0 ?
+                <Image style={styles.picture} source={{ uri: fieldentry.images[0].img_url }}></Image> : <Image style={styles.picture} source={require('../assets/images/birdicon.png')}></Image>
             }
-            <Text style={styles.label}>{props.notes}</Text>
+            <Text style={styles.label}>{notes}</Text>
         </Card>
     );
 };

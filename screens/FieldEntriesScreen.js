@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Platform, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Platform, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
@@ -9,6 +9,7 @@ import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
+import { NavigationEvents } from 'react-navigation';
 
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
@@ -23,11 +24,13 @@ const FieldEntriesScreen = props => {
             setIsLoading(false);
         }
         loadMyFieldEntries();
-    }, [dispatch, fieldEntriesList]);
+    }, [dispatch, fieldEntriesList, displayedEntries]);
 
     const fieldEntriesList = useSelector(state => {
-        return state.entries.entries
+        return state.entries.entries;
     })
+    const [displayIndex, setDisplayIndex] = useState(0);
+    const [displayedEntries, setDisplayedEntries] = useState(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList.slice(displayIndex) : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(displayIndex, 20) : []);
 
     const renderFieldEntryItem = (fieldentry) => {
         return (
@@ -111,13 +114,44 @@ const FieldEntriesScreen = props => {
         setShowMap(false);
     }
 
+    const loadMoreEntries = async () => {
+        const indexDiff = fieldEntriesList.length - (displayIndex + 20);
+        if (fieldEntriesList.length < 20 || indexDiff === 0) {
+            Alert.alert("You do have any older bird sightings")
+        } else if (indexDiff < 20) {
+            setDisplayedEntries(fieldEntriesList.slice(displayIndex + indexDiff));
+            setDisplayIndex(displayIndex + indexDiff);
+        } else {
+            const temp = displayIndex;
+            setDisplayIndex(displayIndex + 20);
+            setDisplayedEntries(fieldEntriesList.slice(temp + 20, temp + 40));
+        }
+    }
+
+    const loadRecentEntries = () => {
+        setDisplayIndex(0);
+        setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
+    }
+
+    const handleLeaving = () => {
+        setDisplayIndex(0);
+        setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
+    }
+
     return (
         // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
             <View style={styles.screen}>
+                <NavigationEvents
+                    onWillBlur={handleLeaving}
+                />
                 {isLoading ? <ActivityIndicator size="large" /> : 
                 fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                     <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
-                    <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList} renderItem={renderFieldEntryItem} numColumns={1} />
+                    <FlatList keyExtractor={(item, index) => uuid()} data={displayedEntries} renderItem={renderFieldEntryItem} numColumns={1} />
+                    <View style={styles.row}>
+                        <Button style={styles.older} title="Older" onPress={loadMoreEntries} />
+                        {displayIndex > 0 ? <Button  title="Recent" onPress={loadRecentEntries} /> : null }
+                    </View>
                     </View> : <View style={styles.mapContainer}>
                         <Button title="Hide Map" onPress={hideMapHandler} />
                         <MapView style={styles.map} region={mapRegion}>
@@ -188,6 +222,14 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignSelf: "center",
         fontFamily: 'Roboto-Condensed',
+    },
+    row: {
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+    },
+    older: {
+        // justifyContent: 'center',
     }
 })
 
