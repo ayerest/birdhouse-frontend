@@ -128,6 +128,11 @@ const FieldEntriesScreen = props => {
         }
     }
 
+    const loadRecentEntries = () => {
+        setDisplayIndex(0);
+        setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
+    }
+
     const handleLeaving = () => {
         setDisplayIndex(0);
         setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
@@ -143,7 +148,10 @@ const FieldEntriesScreen = props => {
                 fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                     <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
                     <FlatList keyExtractor={(item, index) => uuid()} data={displayedEntries} renderItem={renderFieldEntryItem} numColumns={1} />
-                    <Button style={styles.loadMore} title="Load older sightings" onPress={loadMoreEntries} />
+                    <View style={styles.row}>
+                        <Button style={styles.older} title="Older" onPress={loadMoreEntries} />
+                        {displayIndex > 0 ? <Button  title="Recent" onPress={loadRecentEntries} /> : null }
+                    </View>
                     </View> : <View style={styles.mapContainer}>
                         <Button title="Hide Map" onPress={hideMapHandler} />
                         <MapView style={styles.map} region={mapRegion}>
@@ -215,9 +223,13 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontFamily: 'Roboto-Condensed',
     },
-    loadMore: {
-        paddingBottom: 12,
-        paddingTop: 12
+    row: {
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+    },
+    older: {
+        // justifyContent: 'center',
     }
 })
 
