@@ -60,7 +60,7 @@ const PicturesScreen = props => {
     return (
         <View style={styles.screen}>
             {!isLoading && photosList.length == 0 ? <Text style={styles.label}>You haven't taken any photos yet!</Text> : null}
-            {isLoading ? <ActivityIndicator size="large" /> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
         </View>
     )
 }

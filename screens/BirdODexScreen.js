@@ -15,7 +15,6 @@ import AvatarButton from '../components/AvatarButton'
 const BirdODexScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [showBirds, setShowBirds] = useState(false);
-    const [showMyBirdCount, setShowMyBirdCount] = useState(false);
     const [currentBirds, setCurrentBirds] = useState([]);
     const dispatch = useDispatch();
     
@@ -40,7 +39,6 @@ const BirdODexScreen = props => {
             case false:
                 setCurrentBirds([]);
                 setShowBirds(false);
-                setShowMyBirdCount(false);
                 setIsLoading(false);
                 return;
             case "mine":
@@ -50,7 +48,6 @@ const BirdODexScreen = props => {
                 }
                 setCurrentBirds(myBirds);
                 setShowBirds(true);
-                setShowMyBirdCount(true);
                 setIsLoading(false);
                 return;
             case "search":
@@ -68,10 +65,6 @@ const BirdODexScreen = props => {
         }
     }
 
-    const handleGoBack = () => {
-        setCurrentBirds([]);
-        setShowBirds(false);
-    } 
     const audio = useSelector(state => {
         return state.audio.currentSound;
     })
@@ -88,7 +81,7 @@ const BirdODexScreen = props => {
             <SearchBar onShowBirds={handleOnShowBirds}/>
             <BirdCount onShowBirds={handleOnShowBirds}/>
 
-            {isLoading ? <ActivityIndicator /> : null}
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
             <NavigationEvents
@@ -124,16 +117,6 @@ BirdODexScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-    },
-    gridItem: {
-        // flex: 1,
-        // margin: 15,
-        // height: 150
-    },
-    test: {
-        // color: "black",
-        // width: 100,
-        // height: 100
     },
     category: {
         borderBottomColor: "black",

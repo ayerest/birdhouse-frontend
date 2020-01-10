@@ -114,7 +114,7 @@ const AuthScreen = (props) => {
                                             }}
                                             initialValue="" />
                                     </View>
-                                    {isLoading ? <ActivityIndicator /> :
+                                    {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> :
                                         <View>
                                             <Button title="Sign Up" onPress={signupHandler} />
                                             <Button title="Already have an account?" onPress={() => {
@@ -140,7 +140,7 @@ const AuthScreen = (props) => {
                                     errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
                                         initialValue="" />
                                 </View>
-                                {isLoading ? <ActivityIndicator /> :
+                                {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
                                     <View>
                                     <Button title="Login" onPress={loginHandler}/>
                                     <Button title="Create a new account?" onPress={() => {

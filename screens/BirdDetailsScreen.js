@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
@@ -9,6 +9,7 @@ import Card from '../components/Card';
 import * as audioActions from '../store/actions/audio';
 import {NavigationEvents} from 'react-navigation';
 import AvatarButton from '../components/AvatarButton';
+import Colors from '../constants/Colors';
 
 const BirdDetailsScreen = props => {
     const dispatch = useDispatch();
@@ -45,18 +46,18 @@ const BirdDetailsScreen = props => {
         return state.audio.currentSound;
     })
 
-    const handleBackButtonClick = async () => {
+    // const handleBackButtonClick = async () => {
         
-        if (props.navigation.getParam('onComingBack')) {
-            const goBack = props.navigation.getParam('onComingBack');
-            goBack();
-        }
-        if (audio) {
-            await audio.stopAsync();
-            dispatch(audioActions.stopAudio);
-        }
-        props.navigation.goBack();
-    }
+    //     if (props.navigation.getParam('onComingBack')) {
+    //         const goBack = props.navigation.getParam('onComingBack');
+    //         goBack();
+    //     }
+    //     if (audio) {
+    //         await audio.stopAsync();
+    //         dispatch(audioActions.stopAudio);
+    //     }
+    //     props.navigation.goBack();
+    // }
 
     const handleLeaving = async () => {
         if (audio) {
@@ -79,8 +80,8 @@ const BirdDetailsScreen = props => {
             <NavigationEvents
                 onWillBlur={handleLeaving}
             />
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} /> : 
             <ScrollView>
-                { isLoading ? <ActivityIndicator size="large" color="blue" style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}/> : 
                 <Card>
                     <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
                     <View>
@@ -92,18 +93,16 @@ const BirdDetailsScreen = props => {
                     : null}
                 </ScrollView>          
                 <TouchableOpacity>
-                    <Feather style={styles.center} name="volume-2" size={25} onPress={handlePlayAudio} />
+                    <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
                 </TouchableOpacity>
                     {renderDetails()}
                     <View style={styles.citation}>
+                        <Text style={styles.heading}>Citation</Text>
                         <Text style={styles.italic}>{singleBird.citation}</Text>
                     </View>
-                </Card> }
-                 
-                       
-                <Button title="Go Back" onPress={handleBackButtonClick} />
-                
-            </ScrollView>
+                </Card>
+            </ScrollView> }
+                {/* <Button title="Go Back" onPress={handleBackButtonClick} /> */}
         </View>
     )
 }
@@ -114,7 +113,7 @@ BirdDetailsScreen.navigationOptions = (navigationData) => {
         headerTitle: bird_name,
         headerTitleStyle: {
             fontFamily: 'Fred-Great',
-            fontSize: 21,
+            fontSize: 19,
             fontWeight: '400'
         },
         headerRight: (
@@ -151,20 +150,29 @@ const styles = StyleSheet.create({
         flexWrap: "wrap"
     },
     center: {
-        alignSelf: "center"
+        alignSelf: "center",
+        margin: 10,
     }, 
     citation: {
         backgroundColor: "thistle",
-        padding: 5,
+        padding: 10,
         borderRadius: 10,
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 16,
+    },
+    heading: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: 18,
+        textAlign: 'center',
+        marginBottom: 5,
     },
     italic: {
         fontStyle: 'italic',
     },
     paragraph: {
-        margin: 2,
+        marginBottom: 20,
         fontFamily: 'Roboto-Condensed',
-        fontSize: 16
+        fontSize: 16,
     },
     label: {
         fontSize: 16,

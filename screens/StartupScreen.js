@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {View, ActivityIndicator, StyleSheet, AsyncStorage} from 'react-native';
 import {useDispatch} from 'react-redux';
 import * as authActions from '../store/actions/auth'
+import Colors from '../constants/Colors';
 
 const StartupScreen = props => {
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const StartupScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <ActivityIndicator size='large'/>
+            <ActivityIndicator size='large' color={Colors.linkColor}/>
         </View>
     )
 }

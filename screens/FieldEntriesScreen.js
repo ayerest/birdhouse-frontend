@@ -144,7 +144,7 @@ const FieldEntriesScreen = props => {
                 <NavigationEvents
                     onWillBlur={handleLeaving}
                 />
-                {isLoading ? <ActivityIndicator size="large" /> : 
+                {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
                 fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                     <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
                     <FlatList keyExtractor={(item, index) => uuid()} data={displayedEntries} renderItem={renderFieldEntryItem} numColumns={1} />
