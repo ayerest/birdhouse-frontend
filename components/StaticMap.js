@@ -123,7 +123,7 @@ const StaticMap = (props) => {
  
     return (
         <View style={styles.mapContainer}>
-            {!!isGettingLocation ? <ActivityIndicator /> :
+            {!!isGettingLocation ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
                 <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {sharedEntries.length > 0 ? 
                     renderMarkers() : null }

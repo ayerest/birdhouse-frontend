@@ -88,7 +88,6 @@ const BadgeCard = props => {
 
     return (
         <Card style={styles.card}>
-            {!isLoading ?
             <View>
                 {renderBadgeText()}
                 <TouchableOpacity onPress={() => {
@@ -108,7 +107,6 @@ const BadgeCard = props => {
                     </TouchableOpacity>
                 </View>
             </View>
-            : <ActivityIndicator size="large" />}
         </Card>
     );
 };

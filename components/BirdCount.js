@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as birdsActions from '../store/actions/birds'
+import Colors from '../constants/Colors';
 
 const BirdCount = (props) => {
 
-    const [showMyBirds, setShowMyBirds] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     
@@ -19,20 +19,17 @@ const BirdCount = (props) => {
     }, [dispatch]);
 
     const myBirds = useSelector(state => {
-        return state.birds.myBirds
+        return state.birds.myBirds;
     })
     
     const handleShowMyBirds = () => {
-        setShowMyBirds(true);
         props.onShowBirds("mine");
     }
 
     return (
         <View>
-            {isLoading ? <ActivityIndicator color="blue" /> :
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
                 <View style={styles.row}>
-                    {/* <TouchableOpacity onPress={handleShowMyBirds}> */}
-
                         <Button onPress={handleShowMyBirds} title="My Birds"/>
                         <Text style={styles.label}>Count: {myBirds.length}</Text>
                 </View>

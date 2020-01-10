@@ -181,7 +181,7 @@ const AddFieldEntryForm = props => {
                                 { confirmed ? 
                                 <View style={styles.row}>
                                 <Text style={styles.label}>{bird.common_name}</Text>
-                                    <Feather name="x-square" color={"red"} size={25} onPress={() => {
+                                    <Feather name="x-square" color={"red"} size={30} onPress={() => {
                                         setBird()
                                         setConfirmed(false)
                                         }} />
@@ -189,17 +189,17 @@ const AddFieldEntryForm = props => {
                                 <Card>
                                     <View style={styles.row}>
                                         <Text style={styles.label}>{bird.common_name}</Text>
-                                        <Feather name="volume-2" size={25} onPress={handlePlayAudio} />
+                                        <Feather style={styles.audioIcon} name="volume-2" size={30} onPress={handlePlayAudio} color={Colors.linkColor}/>
                                     </View>
                                     <TouchableOpacity onPress={handleLeaveForBirdDetails}>
                                         <Image style={styles.birdie} source={{uri: bird.img_url}} />
                                         </TouchableOpacity>
                                     <View style={styles.spaceEven}>
                                         <TouchableOpacity onPress={handleConfirmBird}>
-                                            <Feather name="check-square" size={25} color={"green"} />
+                                            <Feather name="check-square" size={30} color={"green"} />
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={handleUnsetBird}>
-                                            <Feather name="x-square" size={25} color={"red"} />
+                                            <Feather name="x-square" size={30} color={"red"} />
                                         </TouchableOpacity>
                                     </View>
                                 </Card> }
@@ -216,7 +216,7 @@ const AddFieldEntryForm = props => {
 
                         <View style={styles.row}>
                             <Text style={styles.label}>Notes</Text>
-                            <Entypo name="feather" color={"green"} size={25} />
+                            <Entypo name="feather" color={"green"} size={30} />
                         </View>
                                 <View>
                                     <TextInput multiline={true}
@@ -313,6 +313,9 @@ const styles = StyleSheet.create({
     },
     inner: {
         justifyContent: 'flex-end'
+    },
+    audioIcon: {
+        paddingBottom: 10,
     }
 })
 

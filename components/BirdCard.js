@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Dimensions } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from './Card';
 import { Audio } from 'expo-av';
 import { Feather } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import Colors from '../constants/Colors';
 
 
 const BirdCard = props => {
@@ -14,16 +13,15 @@ const BirdCard = props => {
     const dispatch = useDispatch();
 
     const myBirds = useSelector(state => {
-        return state.birds.myBirds
+        return state.birds.myBirds;
     })
 
     const birdIds = myBirds.map(bird => {
-        return bird.id
+        return bird.id;
     })
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
-        
             try {
                 await soundObject.loadAsync({ uri: props.bird.item.birdcall })
                 await dispatch(audioActions.playAudio(soundObject))
@@ -31,7 +29,6 @@ const BirdCard = props => {
             } catch (error) {
                 // An error occurred!
             }
-        
     }
     
     return (
@@ -40,7 +37,7 @@ const BirdCard = props => {
                 {birdIds.indexOf(props.bird.item.id) >= 0 ? <Image style={styles.image} source={{uri: props.bird.item.img_url}}></Image>:
                 <Image style={styles.stockimage} source={require("../assets/images/birdicon.png")}></Image>}
             <TouchableOpacity onPress={handlePlayAudio}>
-                <Feather style={styles.center} name="volume-2" size={25}  />
+                <Feather style={styles.center} name="volume-2" size={30} color={Colors.linkColor}  />
             </TouchableOpacity>
             </View>
             <View style={styles.center}>

@@ -49,14 +49,14 @@ const CategoriesList = (props) => {
         return (
             <TouchableOpacity style={styles.category} onPress={() => setCategory(categoryItem.item)}>
                 <Text style={styles.text}>{categoryItem.item}</Text>
-                <Entypo name="plus" color={"green"} size={20} />
+                <Entypo name="plus" color={Colors.linkColor} size={20} />
             </TouchableOpacity>
         )
     }
 
     return (
         <View>
-            {isLoading && !!currentCategory ? <ActivityIndicator /> : null}
+            {isLoading && !!currentCategory ? <ActivityIndicator size="large" color={Colors.linkColor}/> : null}
             <FlatList keyExtractor={(item, index) => uuid()} data={categoryList} renderItem={renderCategoryItem}
                 numColumns={1} contentContainerStyle={{ paddingBottom: 100 }} />
         </View>

@@ -79,7 +79,7 @@ const MyAccountScreen = props => {
     return (
         <ScrollView contentContainerStyle={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             
-            {isLoading ? <ActivityIndicator size="large" />
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/>
                      : 
                 <Card style={styles.screen}>
                     <Text style={styles.label}>{user.username} Account Information</Text>

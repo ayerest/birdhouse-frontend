@@ -1,14 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Platform, FlatList, ActivityIndicator } from 'react-native';
-
-import { Ionicons } from '@expo/vector-icons';
-
-import Colors from '../constants/Colors';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const AvatarButton = props => {
     const user = useSelector(state => {
-        return state.user.user
+        return state.user.user;
     })
 
     return (

@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import uuid from 'uuid';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import AvatarButton from '../components/AvatarButton';
 
 const BadgesScreen = props => {
@@ -35,10 +35,12 @@ const BadgesScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <ScrollView>
-                {!isLoading && badgesList.length == 0 ? <Text style={styles.label}>You haven't earned any badges yet!</Text> : null}
-                {isLoading ? <ActivityIndicator size="large"/> : <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />}
-            </ScrollView>
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
+                <ScrollView>
+                    <FlatList keyExtractor={(item, index) => uuid()} data={badgesList} renderItem={renderBadgeItem} numColumns={1} />
+                    {!isLoading && badgesList.length == 0 ? <Text style={styles.label}>You haven't earned any badges yet!</Text> : null}
+                </ScrollView>
+            }
         </View>
     )
 }

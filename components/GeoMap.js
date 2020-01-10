@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Alert, ActivityIndicator, Image} from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import { useSelector } from 'react-redux';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import Colors from '../constants/Colors';
 
@@ -70,7 +69,7 @@ const GeoMap = (props) => {
 
     return (
         <View style={styles.mapContainer}>
-            {isGettingLocation && !currentLocation ? <ActivityIndicator /> : 
+            {isGettingLocation && !currentLocation ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
                 <MapView showsUserLocation={follow} followsUserLocation={follow} style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {( !!newMarker ?
                         <Marker {...props} title="New Bird Sighting" coordinate={newMarker} onPress={() => {
