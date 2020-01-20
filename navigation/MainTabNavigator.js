@@ -112,7 +112,7 @@ const Birds = createStackNavigator({
   },
   BirdsList: BirdsList,
   BirdDetails: BirdDetailsScreen,
-  AddSighting: {
+  AddEntry: {
     screen: AddFieldEntryForm,
     navigationOptions: {
     title: 'Add Bird Sighting',

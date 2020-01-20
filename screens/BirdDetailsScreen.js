@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
@@ -79,10 +79,8 @@ const BirdDetailsScreen = props => {
     }
 
     const navToBirdForm = () => {
-        console.log(singleBird);
-        console.log("--------------")
         props.navigation.navigate({
-            routeName: 'AddSighting', params: {
+            routeName: 'AddEntry', params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,
@@ -90,43 +88,70 @@ const BirdDetailsScreen = props => {
     }
 
     return (
-        <View style={styles.screen}>
-            <NavigationEvents
-                onWillBlur={handleLeaving}
-            />
-            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} /> : 
-            <ScrollView>
-                <Card>
-                    <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
-                    <View>
-                        <View style={styles.screen}>
-                            <TouchableOpacity onPress={navToBirdForm}>
-                                <FontAwesomeIcon icon={faBinoculars} color={Colors.linkColor} size={30} style={styles.center}/>
-                                <Text style={styles.buttonLike}>
-                                    I saw this bird!
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
-                        {!!singleBird.range_map ? <Text style={styles.label}>Scroll right to view geographic range map</Text> : null}
-                    </View>
-                    {!!singleBird.range_map ?
-                    <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> 
-                    : null}
-                </ScrollView>          
-                <TouchableOpacity>
-                    <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
+      <View style={styles.screen}>
+        <NavigationEvents onWillBlur={handleLeaving} />
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            color={Colors.linkColor}
+            style={{ flex: 1, justifyContent: "center", alignSelf: "center" }}
+          />
+        ) : (
+          <ScrollView>
+            <Card>
+              <ScrollView
+                maximumZoomScale={2}
+                horizontal={true}
+                contentContainerStyle={{
+                  paddingRight: Dimensions.get("window").width * 0.2
+                }}
+              >
+                <View>
+                  <Image
+                    style={styles.birdImage}
+                    source={{ uri: singleBird.img_url }}
+                  ></Image>
+                  {!!singleBird.range_map ? (
+                    <Text style={styles.label}>
+                      Scroll right to view geographic range map
+                    </Text>
+                  ) : null}
+                </View>
+                {!!singleBird.range_map ? (
+                  <Image
+                    style={styles.image}
+                    source={{ uri: singleBird.range_map }}
+                  ></Image>
+                ) : null}
+              </ScrollView>
+              <View style={styles.iconLayout}>
+                <TouchableOpacity onPress={navToBirdForm}>
+                  <FontAwesomeIcon
+                    icon={faBinoculars}
+                    color={Colors.linkColor}
+                    size={30}
+                  />
                 </TouchableOpacity>
-                    {renderDetails()}
-                    <View style={styles.citation}>
-                        <Text style={styles.heading}>Citation</Text>
-                        <Text style={styles.italic}>{singleBird.citation}</Text>
-                    </View>
-                </Card>
-            </ScrollView> }
-                {/* <Button title="Go Back" onPress={handleBackButtonClick} /> */}
-        </View>
-    )
+                <TouchableOpacity>
+                  <Feather
+                    style={styles.center}
+                    name="volume-2"
+                    size={35}
+                    onPress={handlePlayAudio}
+                    color={Colors.linkColor}
+                  />
+                </TouchableOpacity>
+              </View>
+              {renderDetails()}
+              <View style={styles.citation}>
+                <Text style={styles.heading}>Citation</Text>
+                <Text style={styles.italic}>{singleBird.citation}</Text>
+              </View>
+            </Card>
+          </ScrollView>
+        )}
+      </View>
+    );
 }
 
 BirdDetailsScreen.navigationOptions = (navigationData) => {
@@ -203,10 +228,10 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontFamily: 'Roboto-Condensed',
     },
-    buttonLike: {
-        color: Colors.linkColor,
-        fontSize: 18,
-        marginBottom: 5,
+    iconLayout: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
     }
 })
 
