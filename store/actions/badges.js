@@ -1,8 +1,8 @@
-import { AsyncStorage } from 'react-native';
 import { base1 } from '../../env';
 
+const MY_BADGES = 'MY_BADGES'
 
-export const getMyBadges = () => {
+const getMyBadges = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -24,9 +24,14 @@ export const getMyBadges = () => {
 
             const badgesData = await response.json();
 
-            dispatch({ type: 'MY_BADGES', myBadges: badgesData })
+            dispatch({ type: MY_BADGES, myBadges: badgesData })
         } catch (err) {
             throw err;
         }
     }
+}
+
+export {
+    getMyBadges,
+    MY_BADGES,
 }

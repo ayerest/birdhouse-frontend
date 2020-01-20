@@ -1,8 +1,8 @@
-import { AsyncStorage } from 'react-native';
 import { base1 } from '../../env';
 
+const MY_PHOTOS = 'MY_PHOTOS';
 
-export const getMyPhotos = () => {
+const getMyPhotos = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -24,9 +24,14 @@ export const getMyPhotos = () => {
 
             const photosData = await response.json();
 
-            dispatch({ type: 'MY_PHOTOS', myPhotos: photosData })
+            dispatch({ type: MY_PHOTOS, myPhotos: photosData })
         } catch (err) {
             throw err;
         }
     }
+}
+
+export {
+    MY_PHOTOS,
+    getMyPhotos,
 }

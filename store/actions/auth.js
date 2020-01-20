@@ -1,7 +1,12 @@
 import {AsyncStorage} from 'react-native';
 import { base1 } from '../../env'; 
 
-export const createAccount = (username, password, avatar) => {
+const SIGNUP = 'SIGNUP';
+const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
+const AUTHENTICATE = 'AUTHENTICATE';
+
+const createAccount = (username, password, avatar) => {
     return async dispatch => {
         const response = await fetch(`${base1}/users`, {
             method: "POST",
@@ -23,13 +28,13 @@ export const createAccount = (username, password, avatar) => {
         }
 
         const signupData = await response.json();
-        dispatch({ type: "SIGNUP", payload: signupData});
+        dispatch({ type: SIGNUP, payload: signupData});
         const expirationDate = new Date(new Date().getTime() + 1200000);
         persistDataToStorage(signupData.jwt, signupData.user, expirationDate);
     }
 }
     
-export const userLogin = (username, password) => {
+const userLogin = (username, password) => {
     return async dispatch => {
         const response = await fetch(`${base1}/login`, {
             method: "POST",
@@ -50,20 +55,20 @@ export const userLogin = (username, password) => {
         }
 
         const loginData = await response.json();
-        dispatch({ type: "LOGIN", payload: loginData });
+        dispatch({ type: LOGIN, payload: loginData });
         const expirationDate = new Date(new Date().getTime() + 12000000);
         persistDataToStorage(loginData.jwt, loginData.user, expirationDate);
     }
 }
 
-export const logout = () => {
+const logout = () => {
     //should I add logic to update steps at this point??
     removeDataFromStorage()
-    return {type: "LOGOUT"}
+    return {type: LOGOUT}
 }
 
-export const authenticate = (userId, token) => {
-    return {type: "AUTHENTICATE", payload: {user: userId, token: token}}
+const authenticate = (userId, token) => {
+    return {type: AUTHENTICATE, payload: {user: userId, token: token}}
 }
 
 const persistDataToStorage = (token, userId, expirationDate) => {
@@ -77,3 +82,14 @@ const persistDataToStorage = (token, userId, expirationDate) => {
 const removeDataFromStorage = () => {
     AsyncStorage.clear();
 }  
+
+export {
+    LOGIN,
+    LOGOUT,
+    AUTHENTICATE,
+    SIGNUP,
+    createAccount,
+    userLogin,
+    logout,
+    authenticate,
+}

@@ -1,3 +1,5 @@
+import { LOGIN, LOGOUT, AUTHENTICATE, SIGNUP } from '../actions/auth';
+
 const initialState = {
     user: null,
     token: null
@@ -5,22 +7,22 @@ const initialState = {
 
 const authReducer = (state=initialState, action) => {
     switch(action.type) {
-        case 'SIGNUP':
+        case SIGNUP:
             return {
                 user: action.payload.user,
                 token: action.payload.jwt
             }
-        case 'LOGIN':
+        case LOGIN:
             return {
                 user: action.payload.user,
                 token: action.payload.jwt
             }
-        case "AUTHENTICATE":
+        case AUTHENTICATE:
             return {
                 user: action.payload.user,
                 token: action.payload.token
             }
-        case 'LOGOUT':
+        case LOGOUT:
             return initialState;
         default:
             return state;

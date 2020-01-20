@@ -1,6 +1,8 @@
 import { base1 } from '../../env';
 
-export const getFact = () => {
+const GET_FACT = 'GET_FACT';
+
+const getFact = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         try {
@@ -21,4 +23,9 @@ export const getFact = () => {
             throw err;
         }
     }
+}
+
+export {
+    GET_FACT,
+    getFact,
 }
