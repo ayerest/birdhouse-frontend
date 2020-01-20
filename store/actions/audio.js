@@ -1,6 +1,9 @@
 import { AsyncStorage } from 'react-native';
 
-export const stopAudio = () => {
+const STOP_AUDIO = 'STOP_AUDIO';
+const PLAY_AUDIO = 'PLAY_AUDIO';
+
+const stopAudio = () => {
     return async (dispatch, getState) => {
         const currentSound = getState().audio.currentSound
         const playingAudio = getState().audio.playingAudio
@@ -9,7 +12,7 @@ export const stopAudio = () => {
     }
 }
 
-export const playAudio = (soundObject) => {
+const playAudio = (soundObject) => {
    
     return async (dispatch, getState) => {
         const currentSound = getState().audio.currentSound
@@ -71,5 +74,13 @@ const _onPlaybackStatusUpdate = (playbackStatus) => {
 
     }
 }
+}
+
+
+export {
+    STOP_AUDIO,
+    stopAudio,
+    PLAY_AUDIO,
+    playAudio,
 }
 

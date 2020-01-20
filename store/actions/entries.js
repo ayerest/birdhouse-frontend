@@ -1,8 +1,11 @@
-import { AsyncStorage } from 'react-native';
 import { base1 } from '../../env';
 
+const CREATE_FIELD_ENTRY = 'CREATE_FIELD_ENTRY';
+const MY_ENTRIES = 'MY_ENTRIES';
+const DISMISS = 'DISMISS';
+const SHARED_ENTRIES = 'SHARED_ENTRIES';
 
-export const postNewEntry = (date, bird, notes, image, latitude, longitude, share) => {
+const postNewEntry = (date, bird, notes, image, latitude, longitude, share) => {
     return async (dispatch, getState) => {
         const token = getState().user.token;
         const user = getState().user.user;
@@ -32,14 +35,14 @@ export const postNewEntry = (date, bird, notes, image, latitude, longitude, shar
 
             const entryData = await response.json();
 
-            dispatch({ type: 'CREATE_FIELD_ENTRY', entry: entryData });
+            dispatch({ type: CREATE_FIELD_ENTRY, entry: entryData });
         } catch (err) {
             throw err;
         }
     }
 }
 
-export const getMyEntries = () => {
+const getMyEntries = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token;
         const user = getState().user.user;
@@ -61,14 +64,14 @@ export const getMyEntries = () => {
 
             const entriesData = await response.json();
 
-            dispatch({ type: 'MY_ENTRIES', entries: entriesData })
+            dispatch({ type: MY_ENTRIES, entries: entriesData })
         } catch (err) {
             throw err;
         }
     }
 }
 
-export const getSharedEntries = () => {
+const getSharedEntries = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token;
         const user = getState().user.user;
@@ -89,7 +92,7 @@ export const getSharedEntries = () => {
             }
 
             const entriesData = await response.json();
-            dispatch({ type: 'SHARED_ENTRIES', entries: entriesData })
+            dispatch({ type: SHARED_ENTRIES, entries: entriesData })
         } catch (err) {
             throw err;
         }
@@ -97,6 +100,17 @@ export const getSharedEntries = () => {
 }
 
 
-export const dismissSharedEntries = () => {
+const dismissSharedEntries = () => {
     return { type: "DISMISS" }
+}
+
+export {
+    CREATE_FIELD_ENTRY,
+    postNewEntry,
+    MY_ENTRIES,
+    getMyEntries,
+    SHARED_ENTRIES,
+    getSharedEntries,
+    dismissSharedEntries,
+    DISMISS,
 }

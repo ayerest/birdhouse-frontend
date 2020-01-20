@@ -1,3 +1,4 @@
+import { MY_BADGES } from '../actions/badges';
 
 const initialState = {
     myBadges: []
@@ -5,7 +6,7 @@ const initialState = {
 
 const badgesReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'MY_BADGES':
+        case MY_BADGES:
             return {
                 ...state,
                 myBadges: action.myBadges

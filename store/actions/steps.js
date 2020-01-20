@@ -1,6 +1,10 @@
 import { base1 } from '../../env';
 
-export const getMySteps = () => {
+const GET_STEPS = 'GET_STEPS';
+const NEW_STEPS = 'NEW_STEPS';
+const UPDATE_STEPS = 'UPDATE_STEPS';
+
+const getMySteps = () => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -22,18 +26,18 @@ export const getMySteps = () => {
 
             const stepsData = await response.json();
 
-            dispatch({ type: 'GET_STEPS', mySteps: stepsData })
+            dispatch({ type: GET_STEPS, mySteps: stepsData })
         } catch (err) {
             throw err;
         }
     }
 }
 
-export const currentSteps = (steps) => {
-    return { type: 'NEW_STEPS', newSteps: steps }
+const currentSteps = (steps) => {
+    return { type: NEW_STEPS, newSteps: steps }
 }
 
-export const updateSteps = (steps) => {
+const updateSteps = (steps) => {
     return async (dispatch, getState) => {
         const token = getState().user.token
         const user = getState().user.user
@@ -55,9 +59,18 @@ export const updateSteps = (steps) => {
             }
 
             const stepsData = await response.json();
-            dispatch({ type: 'UPDATE_STEPS', steps: stepsData })
+            dispatch({ type: UPDATE_STEPS, steps: stepsData })
         } catch (err) {
             throw err;
         }
     }
+}
+
+export {
+    GET_STEPS,
+    getMySteps,
+    NEW_STEPS,
+    currentSteps,
+    UPDATE_STEPS,
+    updateSteps,
 }
