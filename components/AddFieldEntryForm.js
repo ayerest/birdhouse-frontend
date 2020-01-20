@@ -15,16 +15,16 @@ import Colors from '../constants/Colors';
 import moment from 'moment';
 
 const AddFieldEntryForm = props => {
-
-    useEffect(() => {
+    // useEffect(() => {
         
-    }, [modalVisible]);
+    // }, [bird]);
+    // console.log(props.navigation.state.params.coords);
 
     const [image, setImage] = useState(false);
     const [notes, setNotes] = useState();
     const [showSearchResults, setShowSearchResults] = useState(false);
-    const [bird, setBird] = useState();
-    const [modalVisible, setModalVisible] = useState(props.visible);
+    const [bird, setBird] = useState(props.navigation.state.params.bird ? props.navigation.state.params.bird : null);
+    // const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
     const [error, setError] = useState()
     const [confirmed, setConfirmed] = useState(false)
@@ -35,8 +35,8 @@ const AddFieldEntryForm = props => {
 
     const submitHandler = async () => {
     
-        let latitude = props.navigation.state.params.coords.latitude
-        let longitude = props.navigation.state.params.coords.longitude
+        let latitude = props.navigation.state.params.coords.latitude ? props.navigation.state.params.coords.latitude : props.navigation.state.params.coords.lat;
+        let longitude = props.navigation.state.params.coords.longitude ?props.navigation.state.params.coords.longitude : props.navigation.state.params.coords.lng;
         try {
             await dispatch(entriesActions.postNewEntry(fullDate, bird, notes, image, latitude, longitude, share));
             setImage(false);
@@ -102,9 +102,9 @@ const AddFieldEntryForm = props => {
         setShare(!share)
     }
 
-    const handleComingBack = () => {
-        setModalVisible(true);
-    }
+    // const handleComingBack = () => {
+    //     setModalVisible(true);
+    // }
 
     const handleBackButtonClick = async () => {
         if (audio) {

@@ -8,7 +8,7 @@ const MenuButton = props => {
         <HeaderButton
             {...props}
             IconComponent={Ionicons}
-            iconSize={22}
+            iconSize={25}
             color={Platform.OS === 'android' ? 'white' : "black"}
         />
     );
