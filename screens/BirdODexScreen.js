@@ -2,8 +2,8 @@ import React, { useState} from 'react';
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
 import {useSelector, useDispatch} from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { MenuButton } from '../components/MenuButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';
@@ -92,17 +92,17 @@ const BirdODexScreen = props => {
 }
 
 BirdODexScreen.navigationOptions = navData => {
-   
+    let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
+        <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+            onPress={() => { navData.navigation.toggleDrawer() }} />
+    </HeaderButtons>)
     return {
         headerTitle: "BirdieDex",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
             color: "black"
         },
-        headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
-            <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-                onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>,
+        headerLeft: leftOption,
         headerRight: (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({

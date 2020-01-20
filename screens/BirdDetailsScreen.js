@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
@@ -10,10 +10,13 @@ import * as audioActions from '../store/actions/audio';
 import {NavigationEvents} from 'react-navigation';
 import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faBinoculars } from "@fortawesome/free-solid-svg-icons";
 
 const BirdDetailsScreen = props => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
+    const myLocation = useSelector((state) => state.location.myLocation); 
 
     useEffect(() => {
         setIsLoading(true);
@@ -75,6 +78,17 @@ const BirdDetailsScreen = props => {
         }
     }
 
+    const navToBirdForm = () => {
+        console.log(singleBird);
+        console.log("--------------")
+        props.navigation.navigate({
+            routeName: 'AddSighting', params: {
+                visible: true,
+                coords: myLocation,
+                bird: singleBird,
+            }});
+    }
+
     return (
         <View style={styles.screen}>
             <NavigationEvents
@@ -85,8 +99,16 @@ const BirdDetailsScreen = props => {
                 <Card>
                     <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
                     <View>
-                    <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
-                    {!!singleBird.range_map ? <Text style={styles.label}>Scroll right to view geographic range map</Text> : null}
+                        <View style={styles.screen}>
+                            <TouchableOpacity onPress={navToBirdForm}>
+                                <FontAwesomeIcon icon={faBinoculars} color={Colors.linkColor} size={30} style={styles.center}/>
+                                <Text style={styles.buttonLike}>
+                                    I saw this bird!
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
+                        {!!singleBird.range_map ? <Text style={styles.label}>Scroll right to view geographic range map</Text> : null}
                     </View>
                     {!!singleBird.range_map ?
                     <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> 
@@ -180,6 +202,11 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignSelf: "center",
         fontFamily: 'Roboto-Condensed',
+    },
+    buttonLike: {
+        color: Colors.linkColor,
+        fontSize: 18,
+        marginBottom: 5,
     }
 })
 

@@ -1,59 +1,30 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Alert, ActivityIndicator, Image} from 'react-native';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import MapView, {Marker, Callout} from 'react-native-maps';
+import { useSelector } from 'react-redux';
+import { View, StyleSheet, ActivityIndicator, Image } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import Colors from '../constants/Colors';
-
-
+import LocationLogic from './LocationLogic';
 
 const GeoMap = (props) => {
     const [newMarker, setNewMarker] = useState(null);
-    const [isGettingLocation, setIsGettingLocation] = useState(false);
-    const [currentLocation, setCurrentLocation] = useState(null);
+    const [isGettingLocation, setIsGettingLocation] = useState(true);
     const [visible, setVisible] = useState(true);
     const [follow, setFollow] = useState(!props.showShares);
-   
-    useEffect(() => {
-        displayMapHandler();
-    }, [displayMapHandler]);  
+    const myLocation = useSelector((state) => state.location.myLocation); 
 
     useEffect(() => {
         setVisible(true);
     }, [newMarker])
 
-    const verifyPermissions = async () => {
-        const result = await Permissions.askAsync(Permissions.LOCATION);
-        if (result.status !== 'granted') {
-            Alert.alert("Please grant location permissions to use the map feature.");
-            return false;
-        }
-        return true;
-    }
-
-    const displayMapHandler = async () => {
-        const hasPermission = await verifyPermissions();
-        if (!hasPermission) {
-            return;
-        }
-        try {
-           setIsGettingLocation(true);
-           const location = await Location.getCurrentPositionAsync({timeout: 10000});
-            setCurrentLocation({
-                lat: location.coords.latitude,
-                lng: location.coords.longitude
-            })
-        } catch (err) {
-            Alert.alert("Unable to access current location.", "Please try again later.")
-        }
-        setIsGettingLocation(false);
-    }
-
     let mapRegion = {
-        latitude: (!!currentLocation ? currentLocation.lat : 46.6062),
-        longitude: (!!currentLocation ? currentLocation.lng :-122.306417),
+        latitude: (!!myLocation ? myLocation.lat : 46.6062),
+        longitude: (!!myLocation ? myLocation.lng :-122.306417),
         latitudeDelta: 0.01,
         longitudeDelta: 0.01
+    }
+
+    const loadingLocation = () => {
+        setIsGettingLocation(false);
     }
 
     const addMarkerHandler = (event) => {
@@ -69,7 +40,8 @@ const GeoMap = (props) => {
 
     return (
         <View style={styles.mapContainer}>
-            {isGettingLocation && !currentLocation ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
+            <LocationLogic stillLoading={loadingLocation} />
+            {isGettingLocation && !myLocation ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
                 <MapView showsUserLocation={follow} followsUserLocation={follow} style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {( !!newMarker ?
                         <Marker {...props} title="New Bird Sighting" coordinate={newMarker} onPress={() => {

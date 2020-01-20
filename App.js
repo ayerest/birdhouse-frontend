@@ -17,6 +17,7 @@ import photosReducer from './store/reducers/photos';
 import stepsReducer from './store/reducers/steps';
 import audioReducer from './store/reducers/audio';
 import factoidsReducer from './store/reducers/factoids';
+import locationReducer from './store/reducers/location';
 
 useScreens();
 
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   photos: photosReducer,
   steps: stepsReducer,
   audio: audioReducer,
-  factoids: factoidsReducer
+  factoids: factoidsReducer,
+  location: locationReducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -1,6 +1,7 @@
-import { Platform, Dimensions } from 'react-native';
-import { createStackNavigator, createAppContainer,
-createSwitchNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
+import React from 'react';
+import { Dimensions, StyleSheet, Image } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, createAppContainer,
+createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 import FieldEntriesScreen from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen from '../screens/FieldEntryDetailsScreen';
@@ -18,21 +19,8 @@ import BadgeCard from '../components/BadgeCard';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
 import CustomDrawer from './CustomDrawer';
-
-
-
-// const config = Platform.select({
-//   web: { headerMode: 'screen' },
-//   default: {},
-// });
-
-
-// const HomeStack = createStackNavigator(
-//     {
-//     Home: HomeScreen,
-//   },
-//   config
-// );
+import Colors from '../constants/Colors';
+import { Feather } from '@expo/vector-icons';
 
 const Badges = createStackNavigator({
   MyBadges: {
@@ -119,12 +107,22 @@ const Birds = createStackNavigator({
         fontFamily: 'Fred-Great',
         fontSize: 21,
         fontWeight: '400'
-      }
+      },
     }
   },
   BirdsList: BirdsList,
   BirdDetails: BirdDetailsScreen,
-})
+  AddSighting: {
+    screen: AddFieldEntryForm,
+    navigationOptions: {
+    title: 'Add Bird Sighting',
+    headerTitleStyle: {
+      fontFamily: 'Fred-Great',
+      fontSize: 19,
+      fontWeight: '400'
+    }
+  },
+}})
 
 const Main = createStackNavigator({
   Main: {
@@ -193,6 +191,29 @@ const MenuNavigator = createDrawerNavigator({
 ,}
 )
 
+const BirdsNavigator = createBottomTabNavigator({
+  Map: {
+    screen: MenuNavigator,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return <Feather name="map-pin" size={25} color={Colors.linkColor} />
+      }
+    }
+  },
+  Birdiedex: {
+    screen: Birds,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return <Feather name="search" size={25} color={Colors.linkColor}/>
+      }
+    }
+  },
+}, {
+  tabBarOptions: {
+    activeTintColor: Colors.linkColor,
+  }
+})
+
 const AuthNavigator = createStackNavigator({
   Auth: {
     screen: AuthScreen,
@@ -210,8 +231,14 @@ const AuthNavigator = createStackNavigator({
 const SwitchMenu = createSwitchNavigator({
   Startup: StartupScreen,
   Auth: AuthNavigator,
-  Menu: MenuNavigator,
+  Birdsy: BirdsNavigator
 })
 
+const styles = StyleSheet.create({
+  stockimage: {
+    width: Dimensions.get('window').width * 0.2,
+    height: Dimensions.get('window').height * 0.05
+  },
+});
 
 export default createAppContainer(SwitchMenu);

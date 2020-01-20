@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, ActivityIndicator, Image } from 'react-native';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
 import { useSelector } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
 import Colors from '../constants/Colors';
+import LocationLogic from './LocationLogic';
 
 const StaticMap = (props) => {
     const [newMarker, setNewMarker] = useState(null);
-    const [isGettingLocation, setIsGettingLocation] = useState(false);
+    const [isGettingLocation, setIsGettingLocation] = useState(true);
     const [visible, setVisible] = useState(true);
-    const [mapRegion, setMapRegion] = useState(null)
-
+    const [mapRegion, setMapRegion] = useState(null);
+    const myLocation = useSelector((state) => state.location.myLocation); 
     const sharedEntries = useSelector(state => {
         return state.entries.sharedEntries;
     })
 
-    const user = useSelector(state => {
-        return state.user.user;
-    })
+    handleModalClose = () => {
+        setVisible(false);
+    }
 
     useEffect(() => {
         let points = [];
@@ -31,36 +30,20 @@ const StaticMap = (props) => {
         getNewMapRegion(points) : displayMapHandler();
     }, [sharedEntries]);
 
-    const verifyPermissions = async () => {
-        const result = await Permissions.askAsync(Permissions.LOCATION);
-        if (result.status !== 'granted') {
-            Alert.alert("Please grant location permissions to use the map feature.");
-            return false;
-        }
-        return true;
-    }
 
     const displayMapHandler = async () => {
-        const hasPermission = await verifyPermissions();
-        if (!hasPermission) {
-            return;
-        }
         try {
-            setIsGettingLocation(true);
-            const location = await Location.getCurrentPositionAsync({ timeout: 10000 });
             //at this point I can set the marker state with the same lat long so a marker shows up initially
-            setNewMarker({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+            setNewMarker({ latitude: myLocation.lat, longitude: myLocation.lng });
             setMapRegion({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
+                latitude: myLocation.lat,
+                longitude: myLocation.lng,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             })   
         } catch (err) {
             Alert.alert("Unable to access current location.", "Please try again later.");
-        }
-       
-        setIsGettingLocation(false);
+        }       
     }
 
     const addMarkerHandler = (event) => {
@@ -104,9 +87,7 @@ const StaticMap = (props) => {
         setIsGettingLocation(false);
     }
 
-
     const renderMarkers = () => {
-
         return sharedEntries.map(entry => {
             return (<Marker key={entry.id} {...props} title="Bird Alert" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
@@ -120,9 +101,14 @@ const StaticMap = (props) => {
             </Marker>)
         })
     }
+
+    const loadingLocation = () => {
+        setIsGettingLocation(false);
+    }
  
     return (
         <View style={styles.mapContainer}>
+            <LocationLogic stillLoading={loadingLocation}/>
             {!!isGettingLocation ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
                 <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
                     {sharedEntries.length > 0 ? 
@@ -131,7 +117,6 @@ const StaticMap = (props) => {
                         <Marker {...props}   title="New Bird Sighting" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 routeName: 'AddEntry', params: {
-                                    onHandleModalClose: handleModalClose,
                                     visible: visible,
                                     coords: newMarker
                                 }
