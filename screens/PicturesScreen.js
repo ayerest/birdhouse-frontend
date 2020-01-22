@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Platform, FlatList, Image, ActivityIndicator, TouchableOpacity, Button, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
@@ -12,29 +12,36 @@ import Card from '../components/Card';
 
 const PicturesScreen = props => {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        const loadMyPhotos = async () => {
-            setIsLoading(true);
-            await dispatch(getMyPhotos());
-        }
-        const loadMyFieldEntries = async () => {
-            setIsLoading(true);
-            await dispatch(getMyEntries());
-            setIsLoading(false);
-        }
-        loadMyPhotos();
-        loadMyFieldEntries();
-    }, [dispatch, photosList, myEntries]);
-
     const photosList = useSelector(state => {
-        return state.photos.myPhotos;
+        return state.photos.myPhotos.length > 0 ? state.photos.myPhotos : false;
     })
     const myEntries = useSelector(state => {
         return state.entries.entries;
     })
+
+    const [photosLoading, setPhotosLoading] = useState(false);
+    const [entriesLoading, setEntriesLoading] = useState(false);
+    const [displayIndex, setDisplayIndex] = useState(0);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const loadMyPhotos = async () => {
+            setPhotosLoading(true);
+            await dispatch(getMyPhotos());
+            setPhotosLoading(false);
+        }
+        loadMyPhotos();
+    }, [dispatch]);
+
+    useEffect(() => {
+        const loadMyFieldEntries = async () => {
+            setEntriesLoading(true);
+            await dispatch(getMyEntries());
+            setEntriesLoading(false);
+        }
+        loadMyFieldEntries();
+    }, [dispatch])
+
     const renderPhotoItem = (image) => {
         const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);
         return (
@@ -57,11 +64,35 @@ const PicturesScreen = props => {
         )
     }
 
+    const loadMorePhotos = async () => {
+        const indexDiff = photosList.length - (displayIndex + 10);
+        if (photosList.length < 10 || indexDiff === 0) {
+            Alert.alert("You do not have any older photos.")
+        } else if (indexDiff < 10) {
+            setDisplayIndex(displayIndex + indexDiff);
+        } else {
+            const temp = displayIndex;
+            setDisplayIndex(displayIndex + 10);
+        }
+    }
+
+    const loadRecentPhotos = () => {
+        setDisplayIndex(0);
+    }
+
     return (
         <View style={styles.screen}>
-            {!isLoading && photosList.length == 0 ? <Text style={styles.label}>You haven't taken any photos yet!</Text> : null}
-            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : <FlatList keyExtractor={(item, index) => uuid()} data={photosList} renderItem={renderPhotoItem} numColumns={1} />}
-        </View>
+            {photosLoading && entriesLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : 
+            !photosList ? <Text style={styles.label}>You haven't taken any photos yet!</Text> :
+            <View>
+                <View style={styles.row}>
+                    <Button title="Older" onPress={loadMorePhotos} />
+                    {displayIndex > 0 ? <Button title="Recent" onPress={loadRecentPhotos} /> : null}
+                </View>
+                <FlatList keyExtractor={(item, index) => uuid()} data={photosList.slice(displayIndex, displayIndex + 10)} renderItem={renderPhotoItem} numColumns={1} />
+            </View>
+            }
+        </View> 
     )
 }
 
@@ -92,6 +123,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: 'center',
+        paddingTop: 15,
     },
     image: {
         height: 300,
@@ -107,7 +139,12 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignSelf: "center",
         fontFamily: 'Roboto-Condensed',
-    }
+    },
+    row: {
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+    },
 })
 
 export default PicturesScreen;

@@ -15,7 +15,11 @@ const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [showMap, setShowMap] = useState(false);
     const [mapRegion, setMapRegion] = useState(null);
+    const [displayIndex, setDisplayIndex] = useState(0);
     const dispatch = useDispatch();
+    const fieldEntriesList = useSelector(state => {
+        return state.entries.entries;
+    })
 
     useEffect(() => {
         const loadMyFieldEntries = async () => {
@@ -24,13 +28,7 @@ const FieldEntriesScreen = props => {
             setIsLoading(false);
         }
         loadMyFieldEntries();
-    }, [dispatch, fieldEntriesList, displayedEntries]);
-
-    const fieldEntriesList = useSelector(state => {
-        return state.entries.entries;
-    })
-    const [displayIndex, setDisplayIndex] = useState(0);
-    const [displayedEntries, setDisplayedEntries] = useState(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList.slice(displayIndex) : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(displayIndex, 20) : []);
+    }, [dispatch, fieldEntriesList]);
 
     const renderFieldEntryItem = (fieldentry) => {
         return (
@@ -115,51 +113,46 @@ const FieldEntriesScreen = props => {
     }
 
     const loadMoreEntries = async () => {
-        const indexDiff = fieldEntriesList.length - (displayIndex + 20);
-        if (fieldEntriesList.length < 20 || indexDiff === 0) {
+        const indexDiff = fieldEntriesList.length - (displayIndex + 10);
+        if (fieldEntriesList.length < 10 || indexDiff === 0) {
             Alert.alert("You do have any older bird sightings")
-        } else if (indexDiff < 20) {
-            setDisplayedEntries(fieldEntriesList.slice(displayIndex + indexDiff));
+        } else if (indexDiff < 10) {
             setDisplayIndex(displayIndex + indexDiff);
         } else {
-            const temp = displayIndex;
-            setDisplayIndex(displayIndex + 20);
-            setDisplayedEntries(fieldEntriesList.slice(temp + 20, temp + 40));
+            setDisplayIndex(displayIndex + 10);
         }
     }
 
     const loadRecentEntries = () => {
         setDisplayIndex(0);
-        setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
     }
 
     const handleLeaving = () => {
         setDisplayIndex(0);
-        setDisplayedEntries(fieldEntriesList.length > 0 && fieldEntriesList.length < 20 ? fieldEntriesList : fieldEntriesList.length >= 20 ? fieldEntriesList.slice(0, 20) : []);
     }
 
     return (
         // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
-            <View style={styles.screen}>
-                <NavigationEvents
-                    onWillBlur={handleLeaving}
-                />
-                {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
-                fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
-                    <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
-                    <FlatList keyExtractor={(item, index) => uuid()} data={displayedEntries} renderItem={renderFieldEntryItem} numColumns={1} />
-                    <View style={styles.row}>
-                        <Button style={styles.older} title="Older" onPress={loadMoreEntries} />
-                        {displayIndex > 0 ? <Button  title="Recent" onPress={loadRecentEntries} /> : null }
-                    </View>
-                    </View> : <View style={styles.mapContainer}>
-                        <Button title="Hide Map" onPress={hideMapHandler} />
-                        <MapView style={styles.map} region={mapRegion}>
-                            {renderMarkers()}
-                        </MapView>
+        <View style={styles.screen}>
+            <NavigationEvents
+                onWillBlur={handleLeaving}
+            />
+            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
+            fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
+                <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
+                <View style={styles.row}>
+                    <Button style={styles.older} title="Older" onPress={loadMoreEntries} />
+                    {displayIndex > 0 ? <Button  title="Recent" onPress={loadRecentEntries} /> : null }
                 </View>
-                }
+                <FlatList keyExtractor={(item, index) => uuid()} data={fieldEntriesList.slice(displayIndex, displayIndex + 10)} renderItem={renderFieldEntryItem} numColumns={1} />
+                </View> : <View style={styles.mapContainer}>
+                    <Button title="Hide Map" onPress={hideMapHandler} />
+                    <MapView style={styles.map} region={mapRegion}>
+                        {renderMarkers()}
+                    </MapView>
             </View>
+            }
+        </View>
     )
 }
 

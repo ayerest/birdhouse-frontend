@@ -122,6 +122,8 @@ const Birds = createStackNavigator({
       fontWeight: '400'
     }
   },
+  BirdInfo: BirdDetailsScreen,
+  BirdStuff: BirdDetailsScreen,
 }})
 
 const Main = createStackNavigator({
