@@ -22,13 +22,18 @@ const FieldEntriesScreen = props => {
     })
 
     useEffect(() => {
-        const loadMyFieldEntries = async () => {
-            setIsLoading(true);
-            await dispatch(entriesActions.getMyEntries());
-            setIsLoading(false);
-        }
+        setIsLoading(true);
         loadMyFieldEntries();
-    }, [dispatch, fieldEntriesList]);
+    }, [dispatch]);
+
+    const loadMyFieldEntries = async () => {
+        await dispatch(entriesActions.getMyEntries());
+        setIsLoading(false);
+    }
+
+    const handlePageLoad = () => {
+        loadMyFieldEntries();
+    }
 
     const renderFieldEntryItem = (fieldentry) => {
         return (
@@ -136,6 +141,7 @@ const FieldEntriesScreen = props => {
         <View style={styles.screen}>
             <NavigationEvents
                 onWillBlur={handleLeaving}
+                onWillFocus={handlePageLoad}
             />
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
             fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>

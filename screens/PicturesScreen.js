@@ -9,6 +9,7 @@ import { getMyEntries } from '../store/actions/entries';
 import uuid from 'uuid';
 import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
+import { NavigationEvents } from 'react-navigation';
 
 const PicturesScreen = props => {
 
@@ -25,13 +26,18 @@ const PicturesScreen = props => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const loadMyPhotos = async () => {
-            setPhotosLoading(true);
-            await dispatch(getMyPhotos());
-            setPhotosLoading(false);
-        }
+        setPhotosLoading(true);
         loadMyPhotos();
     }, [dispatch]);
+
+    const loadMyPhotos = async () => {
+        await dispatch(getMyPhotos());
+        setPhotosLoading(false);
+    }
+
+    const handlePageLoad = () => {
+        loadMyPhotos();
+    }
 
     useEffect(() => {
         const loadMyFieldEntries = async () => {
@@ -80,8 +86,16 @@ const PicturesScreen = props => {
         setDisplayIndex(0);
     }
 
+    const handleLeaving = () => {
+        setDisplayIndex(0);
+    }
+
     return (
         <View style={styles.screen}>
+            <NavigationEvents
+                onWillBlur={handleLeaving}
+                onWillFocus={handlePageLoad}
+            />
             {photosLoading && entriesLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : 
             !photosList ? <Text style={styles.label}>You haven't taken any photos yet!</Text> :
             <View>
