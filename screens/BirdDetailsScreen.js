@@ -79,14 +79,14 @@ const BirdDetailsScreen = props => {
     }
 
     const navToBirdForm = () => {
-        console.log(singleBird);
-        console.log("--------------")
+        console.log(myLocation, "location in bird details");
         props.navigation.navigate({
             routeName: 'AddSighting', params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,
-            }});
+            }
+        });
     }
 
     return (
@@ -99,14 +99,6 @@ const BirdDetailsScreen = props => {
                 <Card>
                     <ScrollView  maximumZoomScale={2} horizontal={true} contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
                     <View>
-                        <View style={styles.screen}>
-                            <TouchableOpacity onPress={navToBirdForm}>
-                                <FontAwesomeIcon icon={faBinoculars} color={Colors.linkColor} size={30} style={styles.center}/>
-                                <Text style={styles.buttonLike}>
-                                    I saw this bird!
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
                         <Image style={styles.birdImage} source={{uri: singleBird.img_url}}></Image>
                         {!!singleBird.range_map ? <Text style={styles.label}>Scroll right to view geographic range map</Text> : null}
                     </View>
@@ -114,9 +106,14 @@ const BirdDetailsScreen = props => {
                     <Image style={styles.image} source={{ uri: singleBird.range_map}}></Image> 
                     : null}
                 </ScrollView>          
-                <TouchableOpacity>
-                    <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
-                </TouchableOpacity>
+                <View style={styles.row}>
+                    <TouchableOpacity onPress={navToBirdForm}>
+                        <FontAwesomeIcon icon={faBinoculars} color={Colors.linkColor} size={30} style={styles.center} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
+                    </TouchableOpacity>
+                </View>
                     {renderDetails()}
                     <View style={styles.citation}>
                         <Text style={styles.heading}>Citation</Text>
@@ -124,7 +121,6 @@ const BirdDetailsScreen = props => {
                     </View>
                 </Card>
             </ScrollView> }
-                {/* <Button title="Go Back" onPress={handleBackButtonClick} /> */}
         </View>
     )
 }
@@ -169,7 +165,8 @@ const styles = StyleSheet.create({
     }, 
     row: {
         flexDirection: "row",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        justifyContent: 'space-between',
     },
     center: {
         alignSelf: "center",
