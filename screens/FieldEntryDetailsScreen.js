@@ -65,9 +65,9 @@ const FieldEntryDetailsScreen = props => {
     )
 }
 
-FieldEntryDetailsScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     return {
-        headerRight: (
+        headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {

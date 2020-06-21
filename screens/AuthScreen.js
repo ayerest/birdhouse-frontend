@@ -159,7 +159,7 @@ const AuthScreen = (props) => {
     )
 }
 
-AuthScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     return {
         headerTitle: "BirdHouse",
         headerStyle: {

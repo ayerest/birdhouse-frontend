@@ -125,7 +125,7 @@ const BirdDetailsScreen = props => {
     )
 }
 
-BirdDetailsScreen.navigationOptions = (navigationData) => {
+export const screenOptions = (navigationData) => {
     const bird_name = navigationData.navigation.getParam('birdName');
     return {
         headerTitle: bird_name,
@@ -134,7 +134,7 @@ BirdDetailsScreen.navigationOptions = (navigationData) => {
             fontSize: 19,
             fontWeight: '400'
         },
-        headerRight: (
+        headerRight: () => (
             <AvatarButton handleClick={() => {
                 navigationData.navigation.navigate({
                     routeName: 'MyAccount', params: {

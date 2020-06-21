@@ -162,7 +162,7 @@ const FieldEntriesScreen = props => {
     )
 }
 
-FieldEntriesScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
@@ -174,7 +174,7 @@ FieldEntriesScreen.navigationOptions = navData => {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
                 color: "black"
         },
-        headerRight: (
+        headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
                     routeName: 'MyAccount', params: {
@@ -190,8 +190,8 @@ FieldEntriesScreen.navigationOptions = navData => {
                 backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
                 color: "black"
             },
-            headerLeft: leftOption,
-            headerRight: (
+            headerLeft: () => leftOption,
+            headerRight: () => (
                 <AvatarButton handleClick={() => {
                     navData.navigation.navigate({
                         routeName: 'MyAccount', params: {

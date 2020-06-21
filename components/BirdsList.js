@@ -48,11 +48,11 @@ const BirdsList = (props) => {
     )
 }
 
-BirdsList.navigationOptions = (navigationData) => {
-    return {
-        headerTitle: "View Birds",
-    }
-}
+// BirdsList.navigationOptions = (navigationData) => {
+//     return {
+//         headerTitle: "View Birds",
+//     }
+// }
 
 const styles = StyleSheet.create({
     flex: {

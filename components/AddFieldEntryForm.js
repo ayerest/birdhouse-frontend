@@ -237,11 +237,11 @@ const AddFieldEntryForm = props => {
     )
 }
 
-AddFieldEntryForm.navigationOptions = (navigationData) => {
-    return {
-        headerTitle: "Add Bird Sighting",
-    }
-}
+// AddFieldEntryForm.navigationOptions = (navigationData) => {
+//     return {
+//         headerTitle: "Add Bird Sighting",
+//     }
+// }
 
 const styles = StyleSheet.create({
     form: {
