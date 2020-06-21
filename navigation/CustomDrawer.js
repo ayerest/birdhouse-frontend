@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import {DrawerItems } from 'react-navigation'
+import { DrawerItems } from 'react-navigation'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import * as authActions from '../store/actions/auth'
+import * as authActions from '../store/actions/auth';
 
 
 const CustomDrawer = props => {

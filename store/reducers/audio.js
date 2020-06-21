@@ -8,11 +8,11 @@ const initialState = {
 const audioReducer = (state = initialState, action) => {
     switch (action.type) {
         case PLAY_AUDIO:
-                return {
-                    ...state,
-                    currentSound: action.audio,
-                    playingAudio: true
-                };
+            return {
+                ...state,
+                currentSound: action.audio,
+                playingAudio: true
+            };
         case STOP_AUDIO:
             return {
                 ...state,

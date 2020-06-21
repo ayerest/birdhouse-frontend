@@ -22,13 +22,13 @@ const BirdCard = props => {
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
-            try {
-                await soundObject.loadAsync({ uri: props.bird.item.birdcall })
-                await dispatch(audioActions.playAudio(soundObject))
-                // props.onHandlePlayAudio(soundObject);
-            } catch (error) {
-                // An error occurred!
-            }
+        try {
+            await soundObject.loadAsync({ uri: props.bird.item.birdcall })
+            await dispatch(audioActions.playAudio(soundObject))
+            // props.onHandlePlayAudio(soundObject);
+        } catch (error) {
+            // An error occurred!
+        }
     }
     
     return (
