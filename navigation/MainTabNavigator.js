@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Dimensions, StyleSheet, Image } from 'react-native';
 // import { createStackNavigator, createBottomTabNavigator, createAppContainer,
 // createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
@@ -12,7 +13,9 @@ import FieldEntryDetailsScreen, {
 import BirdODexScreen, { screenOptions as birdODexScreenOptions } from '../screens/BirdODexScreen';
 import BirdsList from '../components/BirdsList';
 import BirdDetailsScreen, { screenOptions as birdDetailsScreenOptions } from '../screens/BirdDetailsScreen';
-import MainViewScreen from '../screens/MainViewScreen';
+import MainViewScreen, {
+  screenOptions as mainViewScreenOptions
+} from "../screens/MainViewScreen";
 import BadgesScreen, { screenOptions as badgesScreenOptions } from '../screens/BadgesScreen';
 import PicturesScreen, { screenOptions as picturesScreenOptions } from '../screens/PicturesScreen';
 import GeoMap from '../components/GeoMap';
@@ -24,7 +27,8 @@ import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen, { screenOptions as myAccountScreenOptions } from '../screens/MyAccountScreen';
 import CustomDrawer from './CustomDrawer';
 import Colors from '../constants/Colors';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+
 
 const BadgesStackNavigator = createStackNavigator();
 
@@ -34,7 +38,6 @@ export const BadgesNavigator = () => {
       <BadgesStackNavigator.Screen
         name="My Badges"
         component={BadgesScreen}
-        options={badgesScreenOptions}
       />
       <BadgesStackNavigator.Screen
         name="My Badge"
@@ -80,17 +83,17 @@ export const PicturesNavigator = () => {
       <PicturesStackNavigator.Screen
         name="My Photos"
         screen={PicturesScreen}
-        options={picturesScreenOptions}
+        
       />
       <PicturesStackNavigator.Screen
         name="My Entry"
         screen={FieldEntryDetailsScreen}
-        options={fieldEntryDetailsScreenOptions}
+        
       />
       <PicturesStackNavigator.Screen
         name="Bird Details"
         screen={BirdDetailsScreen}
-        options={birdDetailsScreenOptions}
+        
       />
     </PicturesStackNavigator.Navigator>
   );
@@ -120,17 +123,14 @@ export const FieldEntriesNavigator = () => {
       <FieldEntriesStackNavigator.Screen
         name="My Bird Sightings"
         component={FieldEntriesScreen}
-        options={fieldEntriesScreenOptions}
       />
       <FieldEntriesStackNavigator.Screen
         name="Bird Sighting"
         component={FieldEntryDetailsScreen}
-        options={fieldEntryDetailsScreenOptions}
       />
       <FieldEntriesStackNavigator.Screen
         name="Bird Details"
         component={BirdDetailsScreen}
-        options={birdDetailsScreenOptions}
       />
     </FieldEntriesStackNavigator.Navigator>
   );
@@ -180,13 +180,11 @@ export const BirdsNavigator = () => {
       <BirdsStackNavigator.Screen
         name="BirdieDex"
         component={BirdODexScreen}
-        options={birdODexScreenOptions}
       />
       <BirdsStackNavigator.Screen name="View Birds" component={BirdsList} />
       <BirdsStackNavigator.Screen
         name="Bird Details"
         component={BirdDetailsScreen}
-        options={birdDetailsScreenOptions}
       />
       <BirdsStackNavigator.Screen
         name="Add Bird Sighting"
@@ -195,7 +193,6 @@ export const BirdsNavigator = () => {
       <BirdsStackNavigator.Screen
         name="Bird Details"
         component={BirdDetailsScreen}
-        options={birdDetailsScreenOptions}
       />
     </BirdsStackNavigator.Navigator>
   );
@@ -228,6 +225,30 @@ export const BirdsNavigator = () => {
 //   BirdInfo: BirdDetailsScreen,
 //   BirdStuff: BirdDetailsScreen,
 // }})
+
+const MainStackNavigator = createStackNavigator();
+
+export const MainNavigator = () => {
+  return (
+    <MainStackNavigator.Navigator>
+      <MainStackNavigator.Screen
+        name="BirdHouse"
+        component={MainViewScreen}
+      />
+      <MainStackNavigator.Screen name="Live Map" component={GeoMap} />
+      <MainStackNavigator.Screen name="Map View" component={StaticMap} />
+      <MainStackNavigator.Screen
+        name="Field Sighting Details"
+        component={FieldEntryDetailsScreen}
+      />
+      <MainStackNavigator.Screen name="Add Entry" component={AddFieldEntryForm} />
+      <MainStackNavigator.Screen 
+        name="Bird Details" 
+        component={BirdDetailsScreen} 
+      />
+    </MainStackNavigator.Navigator>
+  );
+};
 
 // const Main = createStackNavigator({
 //   Main: {
@@ -266,17 +287,14 @@ export const AccountNavigator = () => {
       <AccountStackNavigator.Screen
         name="My Account"
         component={MyAccountScreen}
-        options={myAccountScreenOptions}
       />
       <AccountStackNavigator.Screen
         name="Bird Sightings"
         component={FieldEntriesScreen}
-        options={fieldEntriesScreenOptions}
       />
       <AccountStackNavigator.Screen
         name="BirdieDex"
         component={BirdODexScreen}
-        options={birdODexScreenOptions}
       />
     </AccountStackNavigator.Navigator>
   );
@@ -297,6 +315,31 @@ export const AccountNavigator = () => {
 //   BirdieSightings: FieldEntriesScreen,
 //   BirdODex: BirdODexScreen,
 // })
+
+const MenuDrawerNavigator = createDrawerNavigator();
+
+export const MenuNavigator = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {}, [user]);
+
+  const user = useSelector((state) => {
+    return state.user.user;
+  });
+  return (
+    <MenuDrawerNavigator.Navigator
+      drawerContentOptions={{
+        activeBackgroundColor: 'thistle',
+        labelStyle: {
+        fontFamily: 'Roboto-Condensed',
+        fontSize: Dimensions.get('window').width > 350 ? 20 : 18,
+        fontWeight: 'bold'
+        }
+      }}
+    >
+      <MenuDrawerNavigator.Screen name="Home" component={MainNavigator} />
+    </MenuDrawerNavigator.Navigator>
+  );
+};
 
 // const MenuNavigator = createDrawerNavigator({
 //   Home: Main, 
@@ -348,7 +391,7 @@ const AuthStackNavigator = createStackNavigator();
 export const AuthNavigator = () => {
   return (
     <AuthStackNavigator.Navigator>
-      <AuthStackNavigator.Screen name="Authenticate" component={AuthScreen} options={authScreenOptions}/>
+      <AuthStackNavigator.Screen name="Auth" component={AuthScreen} />
     </AuthStackNavigator.Navigator>
   )
 }

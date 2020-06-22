@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, ActivityIndicator, StyleSheet, AsyncStorage} from 'react-native';
 import {useDispatch} from 'react-redux';
-import * as authActions from '../store/actions/auth'
+import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
 
 const StartupScreen = props => {
@@ -10,7 +10,8 @@ const StartupScreen = props => {
         const tryLogin = async () => {
             const userData = await AsyncStorage.getItem("userData")
             if (!userData) {
-                props.navigation.navigate("Auth")
+                // props.navigation.navigate("Auth")
+                dispatch(authActions.SET_AUTOLOGIN());
                 return;
             } 
             const transformedData = JSON.parse(userData);
@@ -19,15 +20,16 @@ const StartupScreen = props => {
             
         
             if (expirationDate <= new Date() || !token || !userId ) {
-                props.navigation.navigate("Auth")
+                // props.navigation.navigate("Auth")
+                dispatch(authActions.setAutologin());
                 return;
             }
 
-            props.navigation.navigate({
-                routeName: 'Main', params: {
-                    user: userId
-                }
-            });
+            // props.navigation.navigate({
+            //     routeName: 'Main', params: {
+            //         user: userId
+            //     }
+            // });
             dispatch(authActions.authenticate(userId, token))
 
         };

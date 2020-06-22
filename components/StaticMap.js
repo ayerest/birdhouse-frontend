@@ -131,11 +131,11 @@ const StaticMap = (props) => {
     )
 }
 
-StaticMap.navigationOptions = (navigationData) => {
-    return {
-        headerTitle: "Map View",
-    }
-}
+// StaticMap.navigationOptions = (navigationData) => {
+//     return {
+//         headerTitle: "Map View",
+//     }
+// }
 
 const styles = StyleSheet.create({
     mapContainer: {

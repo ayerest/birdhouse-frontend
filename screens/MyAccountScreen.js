@@ -106,7 +106,7 @@ const MyAccountScreen = props => {
     )
 }
 
-export const screenOption = navData => {
+export const screenOptions = navData => {
     return {
         headerTitle: "My Account",
         headerStyle: {

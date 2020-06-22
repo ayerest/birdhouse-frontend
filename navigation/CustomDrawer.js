@@ -1,26 +1,19 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { DrawerItems } from 'react-navigation'
+// import { DrawerItems } from 'react-navigation'
+import { DrawerItemList } from "@react-navigation/drawer";
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as authActions from '../store/actions/auth';
 
 
 const CustomDrawer = props => {
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        
-    }, [user]);
-
-    const user = useSelector(state => {
-        return state.user.user;
-    })
-
     return <View >
         <SafeAreaView forceInset={{  top: 'always', horizontal: 'never', alignContent: 'flex-start', alignItems: 'flex-start' }}>
             <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-            <DrawerItems {...props} user={user} style={{ flex: 1, width: '100%' }} />
+            <DrawerItemList {...props} user={user} style={{ flex: 1, width: '100%' }} />
             <TouchableOpacity onPress={() => {
                 dispatch(authActions.logout());
                 props.navigation.navigate("Auth")
