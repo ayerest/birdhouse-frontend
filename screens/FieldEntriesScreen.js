@@ -41,7 +41,7 @@ const FieldEntriesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        routeName: 'FieldEntry', params: {
+                        name: 'FieldEntry', params: {
                             entryId: fieldentry.item.id,
                             entryName: `${fieldentry.item.date}`,
                             entry: fieldentry.item
@@ -91,7 +91,7 @@ const FieldEntriesScreen = props => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
-                    routeName: 'EntryInfo', params: {
+                    name: 'EntryInfo', params: {
                         entry: entry
                     }
                 })
@@ -139,10 +139,10 @@ const FieldEntriesScreen = props => {
     return (
         // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
         <View style={styles.screen}>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
                 onWillFocus={handlePageLoad}
-            />
+            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
             fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
@@ -162,22 +162,22 @@ const FieldEntriesScreen = props => {
     )
 }
 
-FieldEntriesScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
     </HeaderButtons>)
-    if (navData.navigation.state.routeName === 'BirdieSightings') {
+    if (navData.navigation.state.name === 'BirdieSightings') {
         return {
         headerTitle: "My Bird Sightings",
             headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
                 color: "black"
         },
-        headerRight: (
+        headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'MyAccount', params: {
                     }
                 })
             }} />)
@@ -190,11 +190,11 @@ FieldEntriesScreen.navigationOptions = navData => {
                 backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
                 color: "black"
             },
-            headerLeft: leftOption,
-            headerRight: (
+            headerLeft: () => leftOption,
+            headerRight: () => (
                 <AvatarButton handleClick={() => {
                     navData.navigation.navigate({
-                        routeName: 'MyAccount', params: {
+                        name: 'MyAccount', params: {
                         }
                     })
             }} />)

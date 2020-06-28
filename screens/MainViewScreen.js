@@ -114,23 +114,22 @@ const MainViewScreen = props => {
     )
 }
 
-MainViewScreen.navigationOptions = navData => {
-    const user = navData.navigation.getParam('user');
+export const screenOptions = navData => {
+    const user = navData.route.params ? navData.route.params.user : {};
 
     return {
         headerTitle: "BirdHouse",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black",
         },
-        headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
+        headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName= {Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => {navData.navigation.toggleDrawer()}} />
-        </HeaderButtons>,
-        headerRight: (
+        </HeaderButtons>),
+        headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'My Account', params: {
                         user: user
                     }
                 })

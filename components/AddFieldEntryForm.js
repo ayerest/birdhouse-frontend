@@ -18,12 +18,11 @@ const AddFieldEntryForm = props => {
     // useEffect(() => {
         
     // }, [bird]);
-    // console.log(props.navigation.state.params.coords);
 
     const [image, setImage] = useState(false);
     const [notes, setNotes] = useState();
     const [showSearchResults, setShowSearchResults] = useState(false);
-    const [bird, setBird] = useState(props.navigation.state.params.bird ? props.navigation.state.params.bird : null);
+    const [bird, setBird] = useState(props.route.params.bird ? props.route.params.bird : null);
     // const [modalVisible, setModalVisible] = useState(props.visible);
     const [share, setShare] = useState(false);
     const [error, setError] = useState()
@@ -35,8 +34,8 @@ const AddFieldEntryForm = props => {
 
     const submitHandler = async () => {
     
-        let latitude = props.navigation.state.params.coords.latitude ? props.navigation.state.params.coords.latitude : props.navigation.state.params.coords.lat;
-        let longitude = props.navigation.state.params.coords.longitude ?props.navigation.state.params.coords.longitude : props.navigation.state.params.coords.lng;
+        let latitude = props.route.params.coords.latitude ? props.route.params.coords.latitude : props.route.params.coords.lat;
+        let longitude = props.route.params.coords.longitude ?props.route.params.coords.longitude : props.route.params.coords.lng;
         try {
             await dispatch(entriesActions.postNewEntry(fullDate, bird, notes, image, latitude, longitude, share));
             setImage(false);
@@ -135,7 +134,7 @@ const AddFieldEntryForm = props => {
         await audio.stopAsync();
         }
         props.navigation.navigate({
-            routeName: 'BirdInfo', params: {
+            name: 'BirdInfo', params: {
                 birdId: bird.id,
                 birdName: bird.common_name,
                 onComingBack: handleComingBack
@@ -149,9 +148,9 @@ const AddFieldEntryForm = props => {
     // use position with keyboardvertical offset to move field up
     return (
         <ScrollView>
-                <NavigationEvents
+                {/* <NavigationEvents
                     onWillBlur={handleUnsetBird}
-                />
+                /> */}
         <KeyboardAvoidingView behavior="positon" style={{flex: 1}} keyboardVerticalOffset={50}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{flex: 1}}>
@@ -237,11 +236,11 @@ const AddFieldEntryForm = props => {
     )
 }
 
-AddFieldEntryForm.navigationOptions = (navigationData) => {
-    return {
-        headerTitle: "Add Bird Sighting",
-    }
-}
+// AddFieldEntryForm.navigationOptions = (navigationData) => {
+//     return {
+//         headerTitle: "Add Bird Sighting",
+//     }
+// }
 
 const styles = StyleSheet.create({
     form: {

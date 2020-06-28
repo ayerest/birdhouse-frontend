@@ -3,15 +3,24 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 // import { createStackNavigator } from '@react-navigation/stack';
 // import MainViewScreen from "../screens/MainViewScreen";
+import { useSelector } from "react-redux";
 
-import { BadgesNavigator } from './MainTabNavigator';
+import { MenuNavigator, AuthNavigator } from './MainTabNavigator';
+import StartupScreen from '../screens/StartupScreen';
 
 // const BirdHouseStack = createStackNavigator();
 
 const AppNavigator = (props) => {
-  return <NavigationContainer>
-    <BadgesNavigator />
-  </NavigationContainer>;
+  const isAuth = useSelector(state => !!state.user.token);
+  const didTryAutoLogin = useSelector(state => !!state.user.didTryAutoLogin);
+
+  return (
+    <NavigationContainer>
+      {isAuth && <MenuNavigator />}
+      {!isAuth && didTryAutoLogin && <AuthNavigator />}
+      {!isAuth && !didTryAutoLogin && <StartupScreen />}
+    </NavigationContainer>
+  );
 };
 
 // export default createAppContainer(

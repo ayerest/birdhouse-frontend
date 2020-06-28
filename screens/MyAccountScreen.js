@@ -87,7 +87,7 @@ const MyAccountScreen = props => {
                     <Text style={styles.label}>{steps} Total Steps!</Text>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            routeName: 'BirdieSightings', params: {
+                            name: 'BirdieSightings', params: {
                             }
                         })
                         }}>
@@ -95,7 +95,7 @@ const MyAccountScreen = props => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            routeName: 'BirdODex',
+                            name: 'BirdODex',
                         })}}>
 
                         <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>
@@ -106,18 +106,16 @@ const MyAccountScreen = props => {
     )
 }
 
-MyAccountScreen.navigationOptions = navData => {
-
+export const screenOptions = navData => {
     return {
         headerTitle: "My Account",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
         },
-        headerLeft: <HeaderButtons HeaderButtonComponent={MenuButton}>
+        headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
-        </HeaderButtons>,
+        </HeaderButtons>),
     }
 }
 

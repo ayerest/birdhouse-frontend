@@ -38,7 +38,7 @@ const AuthScreen = (props) => {
             setAvatar(false)
             setIsLoading(false);
             props.navigation.navigate({
-                routeName:'Main', params: {
+                name:'Main', params: {
                     user: user
                 }
             });
@@ -57,7 +57,7 @@ const AuthScreen = (props) => {
             setAvatar(false);
             setIsLoading(false);
             props.navigation.navigate({
-              routeName: "Main",
+              name: "Main",
               params: {
                 user: user
               }
@@ -159,7 +159,7 @@ const AuthScreen = (props) => {
     )
 }
 
-AuthScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
     return {
         headerTitle: "BirdHouse",
         headerStyle: {

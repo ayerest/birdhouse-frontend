@@ -46,7 +46,7 @@ const GeoMap = (props) => {
                     {( !!newMarker ?
                         <Marker {...props} title="New Bird Sighting" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
-                                routeName: 'AddEntry', params: {
+                                name: 'Add Entry', params: {
                                     onHandleModalClose: handleModalClose,
                                     visible: visible,
                                     coords: newMarker

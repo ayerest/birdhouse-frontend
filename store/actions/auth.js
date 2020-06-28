@@ -5,6 +5,11 @@ const SIGNUP = 'SIGNUP';
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const AUTHENTICATE = 'AUTHENTICATE';
+const SET_AUTOLOGIN = 'SET_AUTOLOGIN';
+
+const setAutologin = () => {
+    return { type: SET_AUTOLOGIN }
+};
 
 const createAccount = (username, password, avatar) => {
     return async dispatch => {
@@ -88,8 +93,10 @@ export {
     LOGOUT,
     AUTHENTICATE,
     SIGNUP,
+    SET_AUTOLOGIN,
     createAccount,
     userLogin,
     logout,
     authenticate,
+    setAutologin
 }

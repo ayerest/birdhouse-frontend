@@ -92,7 +92,7 @@ const BadgeCard = props => {
                 {renderBadgeText()}
                 <TouchableOpacity onPress={() => {
                     props.navigation.navigate({
-                        routeName: 'BadgeDetails',
+                        name: 'BadgeDetails',
                     })
                 }}>
                     {renderMedalImage()}

@@ -21,7 +21,7 @@ const BirdDetailsScreen = props => {
     useEffect(() => {
         setIsLoading(true);
         const loadBird = async () => {
-            const birdId = props.navigation.getParam('birdId')
+            const birdId = props.route.params.birdId;
             await dispatch(birdsActions.getBird(birdId));
             setIsLoading(false);
         }
@@ -81,7 +81,7 @@ const BirdDetailsScreen = props => {
     const navToBirdForm = () => {
         console.log(myLocation, "location in bird details");
         props.navigation.navigate({
-            routeName: 'AddSighting', params: {
+            name: 'AddSighting', params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,
@@ -91,9 +91,9 @@ const BirdDetailsScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
-            />
+            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} /> : 
             <ScrollView>
                 <Card>
@@ -125,8 +125,8 @@ const BirdDetailsScreen = props => {
     )
 }
 
-BirdDetailsScreen.navigationOptions = (navigationData) => {
-    const bird_name = navigationData.navigation.getParam('birdName');
+export const screenOptions = (navData) => {
+    const bird_name = navData.route.params.birdName;
     return {
         headerTitle: bird_name,
         headerTitleStyle: {
@@ -134,10 +134,10 @@ BirdDetailsScreen.navigationOptions = (navigationData) => {
             fontSize: 19,
             fontWeight: '400'
         },
-        headerRight: (
+        headerRight: () => (
             <AvatarButton handleClick={() => {
-                navigationData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                navData.navigation.navigate({
+                    name: 'My Account', params: {
                     }
                 })
             }} />
