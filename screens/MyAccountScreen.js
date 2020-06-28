@@ -87,7 +87,7 @@ const MyAccountScreen = props => {
                     <Text style={styles.label}>{steps} Total Steps!</Text>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            routeName: 'BirdieSightings', params: {
+                            name: 'BirdieSightings', params: {
                             }
                         })
                         }}>
@@ -95,7 +95,7 @@ const MyAccountScreen = props => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            routeName: 'BirdODex',
+                            name: 'BirdODex',
                         })}}>
 
                         <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>

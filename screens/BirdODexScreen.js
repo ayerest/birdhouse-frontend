@@ -106,7 +106,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'MyAccount', params: {
                     }
                 })
             }} />

@@ -55,7 +55,7 @@ const PicturesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        routeName: 'FieldEntryInfo', params: {
+                        name: 'FieldEntryInfo', params: {
                             entryId: thisPhotosEntry.id,
                             entryName: `${thisPhotosEntry.date}`,
                             entry: thisPhotosEntry,
@@ -92,10 +92,10 @@ const PicturesScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
                 onWillFocus={handlePageLoad}
-            />
+            /> */}
             {photosLoading && entriesLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : 
             !photosList ? <Text style={styles.label}>You haven't taken any photos yet!</Text> :
             <View>
@@ -125,7 +125,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'MyAccount', params: {
                     }
                 })
             }}/>

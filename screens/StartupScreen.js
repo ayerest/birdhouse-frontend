@@ -26,7 +26,7 @@ const StartupScreen = props => {
             }
 
             // props.navigation.navigate({
-            //     routeName: 'Main', params: {
+            //     name: 'Main', params: {
             //         user: userId
             //     }
             // });

@@ -41,7 +41,7 @@ const FieldEntriesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        routeName: 'FieldEntry', params: {
+                        name: 'FieldEntry', params: {
                             entryId: fieldentry.item.id,
                             entryName: `${fieldentry.item.date}`,
                             entry: fieldentry.item
@@ -91,7 +91,7 @@ const FieldEntriesScreen = props => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
-                    routeName: 'EntryInfo', params: {
+                    name: 'EntryInfo', params: {
                         entry: entry
                     }
                 })
@@ -167,7 +167,7 @@ export const screenOptions = navData => {
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
     </HeaderButtons>)
-    if (navData.navigation.state.routeName === 'BirdieSightings') {
+    if (navData.navigation.state.name === 'BirdieSightings') {
         return {
         headerTitle: "My Bird Sightings",
             headerStyle: {
@@ -177,7 +177,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'MyAccount', params: {
                     }
                 })
             }} />)
@@ -194,7 +194,7 @@ export const screenOptions = navData => {
             headerRight: () => (
                 <AvatarButton handleClick={() => {
                     navData.navigation.navigate({
-                        routeName: 'MyAccount', params: {
+                        name: 'MyAccount', params: {
                         }
                     })
             }} />)

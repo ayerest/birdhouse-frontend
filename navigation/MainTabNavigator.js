@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
-// import { createStackNavigator, createBottomTabNavigator, createAppContainer,
-// createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -25,18 +23,15 @@ import StartupScreen from '../screens/StartupScreen';
 import BadgeCard from '../components/BadgeCard';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen, { screenOptions as myAccountScreenOptions } from '../screens/MyAccountScreen';
-import CustomDrawer from './CustomDrawer';
 import Colors from '../constants/Colors';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import * as authActions from '../store/actions/auth';
-
-
 
 const BadgesStackNavigator = createStackNavigator();
 
 export const BadgesNavigator = () => {
   return (
-    <BadgesStackNavigator.Navigator>
+    <BadgesStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <BadgesStackNavigator.Screen
         name="My Badges"
         component={BadgesScreen}
@@ -81,7 +76,7 @@ const PicturesStackNavigator = createStackNavigator();
 
 export const PicturesNavigator = () => {
   return (
-    <PicturesStackNavigator.Navigator>
+    <PicturesStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <PicturesStackNavigator.Screen
         name="My Photos"
         screen={PicturesScreen}
@@ -121,7 +116,7 @@ const FieldEntriesStackNavigator = createStackNavigator();
 
 export const FieldEntriesNavigator = () => {
   return (
-    <FieldEntriesStackNavigator.Navigator>
+    <FieldEntriesStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <FieldEntriesStackNavigator.Screen
         name="My Bird Sightings"
         component={FieldEntriesScreen}
@@ -178,7 +173,7 @@ const BirdsStackNavigator = createStackNavigator();
 
 export const BirdsNavigator = () => {
   return (
-    <BirdsStackNavigator.Navigator>
+    <BirdsStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <BirdsStackNavigator.Screen
         name="BirdieDex"
         component={BirdODexScreen}
@@ -232,7 +227,7 @@ const MainStackNavigator = createStackNavigator();
 
 export const MainNavigator = () => {
   return (
-    <MainStackNavigator.Navigator>
+    <MainStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <MainStackNavigator.Screen
         name="BirdHouse"
         component={MainViewScreen}
@@ -286,7 +281,7 @@ const AccountStackNavigator = createStackNavigator();
 
 export const AccountNavigator = () => {
   return (
-    <AccountStackNavigator.Navigator>
+    <AccountStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <AccountStackNavigator.Screen
         name="My Account"
         component={MyAccountScreen}
@@ -469,3 +464,13 @@ const styles = StyleSheet.create({
 // NOTE TO SELF:  try just map and birdiedex for bottom tab navigation and see what happens?
 
 // export default createAppContainer(SwitchMenu);
+
+
+const defaultNavOptions = {
+  headerStyle: {
+    backgroundColor: 'cornflowerblue'
+  },
+  headerTitleStyle: {
+    fontFamily: 'Fred-Great',
+  }
+}

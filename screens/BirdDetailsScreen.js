@@ -81,7 +81,7 @@ const BirdDetailsScreen = props => {
     const navToBirdForm = () => {
         console.log(myLocation, "location in bird details");
         props.navigation.navigate({
-            routeName: 'AddSighting', params: {
+            name: 'AddSighting', params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,
@@ -137,7 +137,7 @@ export const screenOptions = (navigationData) => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navigationData.navigation.navigate({
-                    routeName: 'MyAccount', params: {
+                    name: 'MyAccount', params: {
                     }
                 })
             }} />
