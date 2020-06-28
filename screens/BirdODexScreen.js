@@ -8,7 +8,7 @@ import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';
 import CategoriesList from '../components/CategoriesList';
-import { NavigationEvents } from 'react-navigation';
+// import { NavigationEvents } from 'react-navigation';
 import * as audioActions from '../store/actions/audio';
 import AvatarButton from '../components/AvatarButton'
 
@@ -25,7 +25,6 @@ const BirdODexScreen = props => {
     const myBirds = useSelector(state => {
         return state.birds.myBirds;
     })
-    
     
     const categoryBirds = useSelector(state => {
         return state.birds.categoryBirds;
@@ -84,9 +83,9 @@ const BirdODexScreen = props => {
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
-            />
+            /> */}
         </View>
     )
 }
@@ -100,13 +99,12 @@ export const screenOptions = navData => {
         headerTitle: "BirdieDex",
         headerStyle: {
             backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
         },
         headerLeft: () => leftOption,
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }} />

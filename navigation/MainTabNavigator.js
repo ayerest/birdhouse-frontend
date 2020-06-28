@@ -177,20 +177,21 @@ export const BirdsNavigator = () => {
       <BirdsStackNavigator.Screen
         name="BirdieDex"
         component={BirdODexScreen}
+        options={birdODexScreenOptions}
       />
       <BirdsStackNavigator.Screen name="View Birds" component={BirdsList} />
       <BirdsStackNavigator.Screen
-        name="Bird Details - via Birds"
+        name="BirdDetails"
         component={BirdDetailsScreen}
       />
       <BirdsStackNavigator.Screen
-        name="Add Bird Sighting - via Birds"
+        name="AddSighting"
         component={AddFieldEntryForm}
       />
-      <BirdsStackNavigator.Screen
+      {/* <BirdsStackNavigator.Screen
         name="Bird Details"
         component={BirdDetailsScreen}
-      />
+      /> */}
     </BirdsStackNavigator.Navigator>
   );
 }

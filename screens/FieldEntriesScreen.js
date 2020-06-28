@@ -139,10 +139,10 @@ const FieldEntriesScreen = props => {
     return (
         // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
         <View style={styles.screen}>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
                 onWillFocus={handlePageLoad}
-            />
+            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
             fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />

@@ -21,7 +21,7 @@ const BirdDetailsScreen = props => {
     useEffect(() => {
         setIsLoading(true);
         const loadBird = async () => {
-            const birdId = props.navigation.getParam('birdId')
+            const birdId = props.route.params.birdId;
             await dispatch(birdsActions.getBird(birdId));
             setIsLoading(false);
         }
@@ -91,9 +91,9 @@ const BirdDetailsScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <NavigationEvents
+            {/* <NavigationEvents
                 onWillBlur={handleLeaving}
-            />
+            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} /> : 
             <ScrollView>
                 <Card>
@@ -125,8 +125,8 @@ const BirdDetailsScreen = props => {
     )
 }
 
-export const screenOptions = (navigationData) => {
-    const bird_name = navigationData.navigation.getParam('birdName');
+export const screenOptions = (navData) => {
+    const bird_name = navData.route.params.birdName;
     return {
         headerTitle: bird_name,
         headerTitleStyle: {
@@ -136,8 +136,8 @@ export const screenOptions = (navigationData) => {
         },
         headerRight: () => (
             <AvatarButton handleClick={() => {
-                navigationData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                navData.navigation.navigate({
+                    name: 'My Account', params: {
                     }
                 })
             }} />
