@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 // import { DrawerItems } from 'react-navigation'
 import { DrawerItemList } from "@react-navigation/drawer";
 
@@ -13,10 +13,10 @@ const CustomDrawer = props => {
     return <View >
         <SafeAreaView forceInset={{  top: 'always', horizontal: 'never', alignContent: 'flex-start', alignItems: 'flex-start' }}>
             <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
-            <DrawerItemList {...props} user={user} style={{ flex: 1, width: '100%' }} />
+            <DrawerItemList {...props} user={props.user} style={{ flex: 1, width: '100%' }} />
             <TouchableOpacity onPress={() => {
                 dispatch(authActions.logout());
-                props.navigation.navigate("Auth")
+                {/* props.navigation.navigate("Auth") */}
             }} >
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>Logout</Text>

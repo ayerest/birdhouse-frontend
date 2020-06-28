@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Dimensions, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 // import { createStackNavigator, createBottomTabNavigator, createAppContainer,
 // createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen, {
@@ -28,6 +28,8 @@ import MyAccountScreen, { screenOptions as myAccountScreenOptions } from '../scr
 import CustomDrawer from './CustomDrawer';
 import Colors from '../constants/Colors';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import * as authActions from '../store/actions/auth';
+
 
 
 const BadgesStackNavigator = createStackNavigator();
@@ -86,12 +88,12 @@ export const PicturesNavigator = () => {
         
       />
       <PicturesStackNavigator.Screen
-        name="My Entry"
+        name="My Entry - via Pictures"
         screen={FieldEntryDetailsScreen}
         
       />
       <PicturesStackNavigator.Screen
-        name="Bird Details"
+        name="Bird Details - via Pictures"
         screen={BirdDetailsScreen}
         
       />
@@ -129,7 +131,7 @@ export const FieldEntriesNavigator = () => {
         component={FieldEntryDetailsScreen}
       />
       <FieldEntriesStackNavigator.Screen
-        name="Bird Details"
+        name="Bird Details - via Field Entries"
         component={BirdDetailsScreen}
       />
     </FieldEntriesStackNavigator.Navigator>
@@ -183,11 +185,11 @@ export const BirdsNavigator = () => {
       />
       <BirdsStackNavigator.Screen name="View Birds" component={BirdsList} />
       <BirdsStackNavigator.Screen
-        name="Bird Details"
+        name="Bird Details - via Birds"
         component={BirdDetailsScreen}
       />
       <BirdsStackNavigator.Screen
-        name="Add Bird Sighting"
+        name="Add Bird Sighting - via Birds"
         component={AddFieldEntryForm}
       />
       <BirdsStackNavigator.Screen
@@ -243,7 +245,7 @@ export const MainNavigator = () => {
       />
       <MainStackNavigator.Screen name="Add Entry" component={AddFieldEntryForm} />
       <MainStackNavigator.Screen 
-        name="Bird Details" 
+        name="Bird Details - via Main" 
         component={BirdDetailsScreen} 
       />
     </MainStackNavigator.Navigator>
@@ -289,11 +291,11 @@ export const AccountNavigator = () => {
         component={MyAccountScreen}
       />
       <AccountStackNavigator.Screen
-        name="Bird Sightings"
+        name="Bird Sightings - via Account"
         component={FieldEntriesScreen}
       />
       <AccountStackNavigator.Screen
-        name="BirdieDex"
+        name="BirdieDex - via Account"
         component={BirdODexScreen}
       />
     </AccountStackNavigator.Navigator>
@@ -327,6 +329,19 @@ export const MenuNavigator = () => {
   });
   return (
     <MenuDrawerNavigator.Navigator
+      drawerContent={props => {return <View >
+        <SafeAreaView forceInset={{ top: 'always', horizontal: 'never', alignContent: 'flex-start', alignItems: 'flex-start' }}>
+          <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
+          <DrawerItemList {...props} user={user} style={{ flex: 1, width: '100%' }} />
+          <TouchableOpacity onPress={() => {
+            dispatch(authActions.logout());
+          }} >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>}}
       drawerContentOptions={{
         activeBackgroundColor: 'thistle',
         labelStyle: {
@@ -337,6 +352,11 @@ export const MenuNavigator = () => {
       }}
     >
       <MenuDrawerNavigator.Screen name="Home" component={MainNavigator} />
+      <MenuDrawerNavigator.Screen name="BirdieDex" component={BirdsNavigator} />
+      <MenuDrawerNavigator.Screen name="My Sightings" component={FieldEntriesNavigator} />
+      <MenuDrawerNavigator.Screen name="My Badges" component={BadgesNavigator} />
+      <MenuDrawerNavigator.Screen name="My Photos" component={PicturesNavigator} />
+      <MenuDrawerNavigator.Screen name="My Account" component={AccountNavigator} />
     </MenuDrawerNavigator.Navigator>
   );
 };
@@ -421,6 +441,27 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.2,
     height: Dimensions.get('window').height * 0.05
   },
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    marginRight: 10,
+    alignSelf: "center",
+    fontFamily: 'Roboto-Condensed',
+  },
+  button: {
+    padding: 10,
+  },
+  buttonText: {
+    fontFamily: 'Roboto-Condensed',
+    fontSize: Dimensions.get('window').width > 350 ? 20 : 18,
+    paddingLeft: 8,
+    opacity: 0.8
+  }
 });
 
 // NOTE TO SELF:  try just map and birdiedex for bottom tab navigation and see what happens?

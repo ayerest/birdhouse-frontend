@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 // import { createStackNavigator } from '@react-navigation/stack';
 // import MainViewScreen from "../screens/MainViewScreen";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { MenuNavigator, AuthNavigator } from './MainTabNavigator';
 import StartupScreen from '../screens/StartupScreen';
