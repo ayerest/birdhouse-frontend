@@ -236,6 +236,7 @@ export const MainNavigator = () => {
       <MainStackNavigator.Screen
         name="BirdHouse"
         component={MainViewScreen}
+        options={mainViewScreenOptions}
       />
       <MainStackNavigator.Screen name="Live Map" component={GeoMap} />
       <MainStackNavigator.Screen name="Map View" component={StaticMap} />
@@ -289,6 +290,7 @@ export const AccountNavigator = () => {
       <AccountStackNavigator.Screen
         name="My Account"
         component={MyAccountScreen}
+        options={myAccountScreenOptions}
       />
       <AccountStackNavigator.Screen
         name="Bird Sightings - via Account"
