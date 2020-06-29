@@ -97,9 +97,9 @@ export const screenOptions = navData => {
     </HeaderButtons>)
     return {
         headerTitle: "BirdieDex",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-        },
+        // headerStyle: {
+        //     backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
+        // },
         headerLeft: () => leftOption,
         headerRight: () => (
             <AvatarButton handleClick={() => {

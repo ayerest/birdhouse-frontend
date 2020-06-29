@@ -114,10 +114,6 @@ const PicturesScreen = props => {
 export const screenOptions = navData => {
     return {
         headerTitle: "My Photos",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
-        },
         headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />

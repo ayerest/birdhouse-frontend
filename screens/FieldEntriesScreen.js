@@ -41,14 +41,15 @@ const FieldEntriesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'FieldEntry', params: {
+                        name: 'FieldEntry', 
+                        params: {
                             entryId: fieldentry.item.id,
                             entryName: `${fieldentry.item.date}`,
                             entry: fieldentry.item
                         }
                     })
                 }}
-                >
+            >
                 <EntryCard notes={fieldentry.item.notes} fieldentry={fieldentry.item}/>
             </TouchableOpacity> 
         )
@@ -170,10 +171,6 @@ export const screenOptions = navData => {
     if (navData.navigation.state.name === 'BirdieSightings') {
         return {
         headerTitle: "My Bird Sightings",
-            headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-                color: "black"
-        },
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
@@ -186,10 +183,6 @@ export const screenOptions = navData => {
     else {
         return {
             headerTitle: "My Bird Sightings",
-            headerStyle: {
-                backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-                color: "black"
-            },
             headerLeft: () => leftOption,
             headerRight: () => (
                 <AvatarButton handleClick={() => {

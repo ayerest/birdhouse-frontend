@@ -119,9 +119,6 @@ export const screenOptions = navData => {
 
     return {
         headerTitle: "BirdHouse",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-        },
         headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName= {Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => {navData.navigation.toggleDrawer()}} />

@@ -134,10 +134,10 @@ const AddFieldEntryForm = props => {
         await audio.stopAsync();
         }
         props.navigation.navigate({
-            name: 'BirdInfo', params: {
+            name: 'BirdDetails', params: {
                 birdId: bird.id,
                 birdName: bird.common_name,
-                onComingBack: handleComingBack
+                // onComingBack: handleComingBack
             }
         })
     }

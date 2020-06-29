@@ -408,7 +408,7 @@ const AuthStackNavigator = createStackNavigator();
 
 export const AuthNavigator = () => {
   return (
-    <AuthStackNavigator.Navigator>
+    <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <AuthStackNavigator.Screen name="Auth" component={AuthScreen} />
     </AuthStackNavigator.Navigator>
   )
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
 
 const defaultNavOptions = {
   headerStyle: {
-    backgroundColor: 'cornflowerblue'
+    backgroundColor: 'thistle'
   },
   headerTitleStyle: {
     fontFamily: 'Fred-Great',
