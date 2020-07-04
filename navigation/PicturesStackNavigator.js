@@ -5,6 +5,7 @@ import FieldEntryDetailsScreen, { screenOptions as fieldEntryDetailsScreenOption
 import BirdDetailsScreen, { screenOptions as birdDetailsScreenOptions } from '../screens/BirdDetailsScreen';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
 import defaultNavOptions from './DefaultNavOptions';
+import { screenOptions } from './ScreenOptions';
 
 const PicturesStackNavigator = createStackNavigator();
 
@@ -14,12 +15,12 @@ export const PicturesNavigator = () => {
             <PicturesStackNavigator.Screen
                 name="My Photos"
                 component={PicturesScreen}
-                options={picturesScreenOptions}
+                options={screenOptions}
             />
             <PicturesStackNavigator.Screen
                 name="Bird Sighting"
                 component={FieldEntryDetailsScreen}
-                options={fieldEntryDetailsScreenOptions}
+                options={screenOptions}
             />
             <PicturesStackNavigator.Screen
                 name="Bird Details"
@@ -27,7 +28,7 @@ export const PicturesNavigator = () => {
                 options={birdDetailsScreenOptions}
             />
             <PicturesStackNavigator.Screen
-                name="AddSighting"
+                name="Add Sighting"
                 component={AddFieldEntryForm}
             />
         </PicturesStackNavigator.Navigator>

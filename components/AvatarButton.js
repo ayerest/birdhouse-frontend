@@ -11,7 +11,7 @@ const AvatarButton = props => {
         <TouchableOpacity onPress={props.handleClick}>
             <View style={styles.avatar}>
                 {user ?
-                    <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
+                    <Image style={{ width: 50, height: 50, resizeMode: 'contain' }} source={{ uri: user.avatar }} /> : <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('../assets/images/birdicon.png')} />}
             </View>
         </TouchableOpacity>
     );
@@ -21,11 +21,7 @@ const AvatarButton = props => {
 const styles = StyleSheet.create({
     avatar: {
         flex: 1,
-    },
-    mapContainer: {
-        height: '92%',
-        width: '100%',
-    },
+    }
 })
 
 export default AvatarButton;

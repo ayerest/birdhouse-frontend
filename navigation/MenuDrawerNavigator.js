@@ -58,22 +58,6 @@ export const MenuNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  stockimage: {
-    width: Dimensions.get('window').width * 0.2,
-    height: Dimensions.get('window').height * 0.05
-  },
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-    marginRight: 10,
-    alignSelf: "center",
-    fontFamily: 'Roboto-Condensed',
-  },
   button: {
     padding: 10,
   },

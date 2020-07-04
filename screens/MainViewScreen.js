@@ -3,7 +3,7 @@ import { View, ScrollView, Text, StyleSheet, Switch, Platform, Alert } from 'rea
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap'
-import Colors from '../constants/Colors';
+// import Colors from '../constants/Colors';
 import Stepometer from '../components/Stepometer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMyEntries, getSharedEntries} from '../store/actions/entries';

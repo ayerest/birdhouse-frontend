@@ -18,12 +18,12 @@ export const BirdsNavigator = () => {
             />
             <BirdsStackNavigator.Screen name="View Birds" component={BirdsList} />
             <BirdsStackNavigator.Screen
-                name="BirdDetails"
+                name="Bird Details"
                 component={BirdDetailsScreen}
                 options={birdDetailsScreenOptions}
             />
             <BirdsStackNavigator.Screen
-                name="AddSighting"
+                name="Add Sighting"
                 component={AddFieldEntryForm}
             />
         </BirdsStackNavigator.Navigator>

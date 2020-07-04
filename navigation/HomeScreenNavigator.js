@@ -12,6 +12,7 @@ import BirdDetailsScreen, {
   screenOptions as birdDetailsScreenOptions,
 } from "../screens/BirdDetailsScreen";
 import AddFieldEntryForm from "../components/AddFieldEntryForm";
+import { screenOptions } from './ScreenOptions';
 import defaultNavOptions from "./DefaultNavOptions";
 
 const HomeScreenStackNavigator = createStackNavigator();
@@ -22,13 +23,13 @@ export const HomeScreenNavigator = () => {
       <HomeScreenStackNavigator.Screen
         name="BirdHouse"
         component={MainViewScreen}
-        options={mainViewScreenOptions}
+        options={screenOptions}
       />
       <HomeScreenStackNavigator.Screen name="Live Map" component={GeoMap} />
       <HomeScreenStackNavigator.Screen name="Map View" component={StaticMap} />
       <HomeScreenStackNavigator.Screen
         name="Field Sighting Details"
-        component={FieldEntryDetailsScreen}
+        component={screenOptions}
       />
       <HomeScreenStackNavigator.Screen
         name="Add Entry"

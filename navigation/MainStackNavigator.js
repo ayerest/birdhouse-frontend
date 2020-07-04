@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
-import { screenOptions as mainViewScreenOptions } from "../screens/MainViewScreen";
+import { screenOptions } from "./ScreenOptions";
 import { BirdHouseBottomTabs } from './BottomTabNavigator'
 import defaultNavOptions from './DefaultNavOptions';
 
@@ -12,7 +12,7 @@ export const MainNavigator = () => {
         <MainStackNavigator.Screen
           name="BirdHouse"
           component={BirdHouseBottomTabs}
-          options={mainViewScreenOptions}
+          options={screenOptions}
         />
       </MainStackNavigator.Navigator>
     );

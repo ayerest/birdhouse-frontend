@@ -25,7 +25,7 @@ export const FieldEntriesNavigator = () => {
                 component={BirdDetailsScreen}
             />
             <FieldEntriesStackNavigator.Screen
-                name="AddSighting"
+                name="Add Sighting"
                 component={AddFieldEntryForm}
             />
         </FieldEntriesStackNavigator.Navigator>

@@ -9,11 +9,36 @@ const BirdHouseBottomTabsNavigator = createBottomTabNavigator();
 
 export const BirdHouseBottomTabs = props => {
     return (
-        <BirdHouseBottomTabsNavigator.Navigator>
-            <BirdHouseBottomTabsNavigator.Screen name="Map" component={HomeScreenNavigator}/>
-            <BirdHouseBottomTabsNavigator.Screen name="BirdieDex" component={BirdsNavigator} />
-        </BirdHouseBottomTabsNavigator.Navigator>
-    )
+      <BirdHouseBottomTabsNavigator.Navigator
+        tabBarOptions={{
+          activeTintColor: Colors.linkColor,
+          inactiveTintColor: "gray",
+        }}
+      >
+        <BirdHouseBottomTabsNavigator.Screen
+          name="Map"
+          component={HomeScreenNavigator}
+          options={{
+            tabBarLabel: "Map",
+            tabBarIcon: ({ focused, color, size }) => {
+              return (
+                <Feather name="map-pin" color={focused ? Colors.linkColor : "grey"} size={25} />
+              )
+            },
+          }}
+        />
+        <BirdHouseBottomTabsNavigator.Screen
+          name="BirdieDex"
+          component={BirdsNavigator}
+          options={{
+            tabBarLabel: "BirdieDex",
+            tabBarIcon: ({ focused, color, size }) => (
+              <Feather name="search" color={focused ? Colors.linkColor : "grey"} size={25} />
+            ),
+          }}
+        />
+      </BirdHouseBottomTabsNavigator.Navigator>
+    );
 }
 
 // const BirdsNavigator = createBottomTabNavigator({
