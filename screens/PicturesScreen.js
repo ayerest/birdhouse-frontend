@@ -55,7 +55,7 @@ const PicturesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'FieldEntryInfo', params: {
+                        name: 'Bird Sighting', params: {
                             entryId: thisPhotosEntry.id,
                             entryName: `${thisPhotosEntry.date}`,
                             entry: thisPhotosEntry,
@@ -121,7 +121,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }}/>

@@ -9,7 +9,7 @@ import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
-import { NavigationEvents } from 'react-navigation';
+// import { NavigationEvents } from 'react-navigation';
 
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +92,7 @@ const FieldEntriesScreen = props => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
-                    name: 'EntryInfo', params: {
+                    name: 'Bird Sighting', params: {
                         entry: entry
                     }
                 })

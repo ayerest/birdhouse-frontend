@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PicturesScreen, { screenOptions as picturesScreenOptions } from '../screens/PicturesScreen';
 import FieldEntryDetailsScreen, { screenOptions as fieldEntryDetailsScreenOptions } from "../screens/FieldEntryDetailsScreen";
 import BirdDetailsScreen, { screenOptions as birdDetailsScreenOptions } from '../screens/BirdDetailsScreen';
+import AddFieldEntryForm from '../components/AddFieldEntryForm';
 import defaultNavOptions from './DefaultNavOptions';
 
 const PicturesStackNavigator = createStackNavigator();
@@ -16,14 +17,18 @@ export const PicturesNavigator = () => {
                 options={picturesScreenOptions}
             />
             <PicturesStackNavigator.Screen
-                name="My Entry - via Pictures"
+                name="Bird Sighting"
                 component={FieldEntryDetailsScreen}
                 options={fieldEntryDetailsScreenOptions}
             />
             <PicturesStackNavigator.Screen
-                name="Bird Details - via Pictures"
+                name="Bird Details"
                 component={BirdDetailsScreen}
                 options={birdDetailsScreenOptions}
+            />
+            <PicturesStackNavigator.Screen
+                name="AddSighting"
+                component={AddFieldEntryForm}
             />
         </PicturesStackNavigator.Navigator>
     );

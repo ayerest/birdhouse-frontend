@@ -31,3 +31,42 @@ export const FieldEntriesNavigator = () => {
         </FieldEntriesStackNavigator.Navigator>
     );
 };
+
+
+// Old set up:
+
+// const FieldEntries = createStackNavigator({
+//   FieldEntries: {
+//     screen: FieldEntriesScreen,
+//     navigationOptions: {
+//       title: 'My Bird Sightings',
+//       headerTitleStyle: {
+//         fontFamily: 'Fred-Great',
+//         fontSize: 17,
+//         fontWeight: '400'
+//       }
+//     }
+//   },
+//   EntryInfo: {screen: FieldEntryDetailsScreen,
+//   navigationOptions: {
+//     title: 'Bird Sighting',
+//     headerTitleStyle: {
+//       fontFamily: 'Fred-Great',
+//       fontSize: 20,
+//       fontWeight: '400'
+//     }
+//   }
+// },
+//   FieldEntry: {
+//     screen: FieldEntryDetailsScreen,
+//     navigationOptions: {
+//       title: 'Bird Sighting',
+//       headerTitleStyle: {
+//         fontFamily: 'Fred-Great',
+//         fontSize: 20,
+//         fontWeight: '400'
+//       }
+//     }
+//   },
+//   BirdStuff: BirdDetailsScreen,
+// })

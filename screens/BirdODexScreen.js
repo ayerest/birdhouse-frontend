@@ -92,14 +92,11 @@ const BirdODexScreen = props => {
 
 export const screenOptions = navData => {
     let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
-        <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-            onPress={() => { navData.navigation.toggleDrawer() }} />
+        <Item iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+            onPress={() => { navData.navigation.toggleDrawer() }} title="Menu" />
     </HeaderButtons>)
     return {
         headerTitle: "BirdieDex",
-        // headerStyle: {
-        //     backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-        // },
         headerLeft: () => leftOption,
         headerRight: () => (
             <AvatarButton handleClick={() => {

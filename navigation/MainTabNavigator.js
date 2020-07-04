@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
-// import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
+import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen, {
   screenOptions as fieldEntryDetailsScreenOptions } from "../screens/FieldEntryDetailsScreen";
 import BirdODexScreen, { screenOptions as birdODexScreenOptions } from '../screens/BirdODexScreen';
@@ -29,97 +29,8 @@ import * as authActions from '../store/actions/auth';
 import { BadgesNavigator } from './BadgesStackNavigator';
 import { PicturesNavigator } from './PicturesStackNavigator';
 import { FieldEntriesNavigator } from './FieldEntriesNavigator';
+import { BirdsNavigator } from './BirdsStackNavigator';
 
-// const FieldEntries = createStackNavigator({
-//   FieldEntries: {
-//     screen: FieldEntriesScreen,
-//     navigationOptions: {
-//       title: 'My Bird Sightings',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 17,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   EntryInfo: {screen: FieldEntryDetailsScreen,
-//   navigationOptions: {
-//     title: 'Bird Sighting',
-//     headerTitleStyle: {
-//       fontFamily: 'Fred-Great',
-//       fontSize: 20,
-//       fontWeight: '400'
-//     }
-//   }
-// },
-//   FieldEntry: {
-//     screen: FieldEntryDetailsScreen,
-//     navigationOptions: {
-//       title: 'Bird Sighting',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 20,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   BirdStuff: BirdDetailsScreen,
-// })
-
-const BirdsStackNavigator = createStackNavigator();
-
-export const BirdsNavigator = () => {
-  return (
-    <BirdsStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <BirdsStackNavigator.Screen
-        name="BirdieDex"
-        component={BirdODexScreen}
-        options={birdODexScreenOptions}
-      />
-      <BirdsStackNavigator.Screen name="View Birds" component={BirdsList} />
-      <BirdsStackNavigator.Screen
-        name="BirdDetails"
-        component={BirdDetailsScreen}
-      />
-      <BirdsStackNavigator.Screen
-        name="AddSighting"
-        component={AddFieldEntryForm}
-      />
-      {/* <BirdsStackNavigator.Screen
-        name="Bird Details"
-        component={BirdDetailsScreen}
-      /> */}
-    </BirdsStackNavigator.Navigator>
-  );
-}
-
-// const Birds = createStackNavigator({
-//   BirdieDex: {
-//     screen: BirdODexScreen,
-//     navigationOptions: {
-//       title: 'BirdieDex',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 21,
-//         fontWeight: '400'
-//       },
-//     }
-//   },
-//   BirdsList: BirdsList,
-//   BirdDetails: BirdDetailsScreen,
-//   AddSighting: {
-//     screen: AddFieldEntryForm,
-//     navigationOptions: {
-//     title: 'Add Bird Sighting',
-//     headerTitleStyle: {
-//       fontFamily: 'Fred-Great',
-//       fontSize: 19,
-//       fontWeight: '400'
-//     }
-//   },
-//   BirdInfo: BirdDetailsScreen,
-//   BirdStuff: BirdDetailsScreen,
-// }})
 
 const MainStackNavigator = createStackNavigator();
 

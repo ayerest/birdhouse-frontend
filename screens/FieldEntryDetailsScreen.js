@@ -8,7 +8,6 @@ import moment from 'moment';
 import Colors from '../constants/Colors';
 
 const FieldEntryDetailsScreen = props => {
-    console.log(props);
     const entryDate = moment(props.route.params.entry.date).format('MMMM Do YYYY, h:mm:ss a');
 
     const renderFieldEntryImage = (image) => {
@@ -71,7 +70,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }} />
