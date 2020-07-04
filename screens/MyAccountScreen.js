@@ -79,29 +79,31 @@ const MyAccountScreen = props => {
     return (
         <ScrollView contentContainerStyle={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             
-            {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/>
-                     : 
+            {isLoading ? 
+                <ActivityIndicator size="large" color={Colors.linkColor}/>
+                    : 
                 <Card style={styles.screen}>
                     <Text style={styles.label}>{user.username} Account Information</Text>
                     <Image style={styles.image} source={{ uri: user.avatar }}></Image>
                     <Text style={styles.label}>{steps} Total Steps!</Text>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            name: 'BirdieSightings', params: {
+                            name: 'My Sightings', params: {
                             }
                         })
-                        }}>
+                        }}
+                    >
                         <Text style={styles.label}>You have documented {myEntries.length} bird sightings in the field!</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate({
-                            name: 'BirdODex',
-                        })}}>
-
+                            name: 'BirdieDex',
+                        })}}
+                    >
                         <Text style={styles.label}>You have seen {myBirds.length} bird species!</Text>
                     </TouchableOpacity>
-                </Card> }
-          
+                </Card> 
+            }
         </ScrollView>
     )
 }
@@ -109,9 +111,6 @@ const MyAccountScreen = props => {
 export const screenOptions = navData => {
     return {
         headerTitle: "My Account",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-        },
         headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />

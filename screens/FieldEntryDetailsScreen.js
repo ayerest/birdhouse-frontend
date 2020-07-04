@@ -8,8 +8,7 @@ import moment from 'moment';
 import Colors from '../constants/Colors';
 
 const FieldEntryDetailsScreen = props => {
-
-    const entryDate = moment(props.route.entry.date).format('MMMM Do YYYY, h:mm:ss a');
+    const entryDate = moment(props.route.params.entry.date).format('MMMM Do YYYY, h:mm:ss a');
 
     const renderFieldEntryImage = (image) => {
         return <View>
@@ -23,39 +22,40 @@ const FieldEntryDetailsScreen = props => {
             <ScrollView contentContainerStyle={{paddingBottom: 300}}>
                     <Text style={styles.right}>{entryDate}</Text> 
                         <TouchableOpacity style={styles.imageContainer} onPress={() => {
-                            if (props.navigation.state.name === 'FieldEntry') { 
+                            {/* if (props.navigation.state.name === 'FieldEntry') { 
                             props.navigation.navigate({
                                 name: 'BirdStuff', params: {
-                                    birdId: props.route.entry.bird.id,
-                                    birdName: props.route.entry.bird.common_name,
-                                    user: props.route.entry.user
+                                    birdId: props.route.params.entry.bird.id,
+                                    birdName: props.route.params.entry.bird.common_name,
+                                    user: props.route.params.entry.user
                                 }
                             })}
-                            else {
+                            else { */}
                                 props.navigation.navigate({
-                                    name: 'BirdieInfo', params: {
-                                        birdId: props.route.entry.bird.id,
-                                        birdName: props.route.entry.bird.common_name,
-                                        user: props.route.entry.user
+                                    name: 'Bird Details', params: {
+                                        birdId: props.route.params.entry.bird.id,
+                                        birdName: props.route.params.entry.bird.common_name,
+                                        user: props.route.params.entry.user
                                     }
                                 }) 
-                            }}}>
-                            <Text style={styles.birdDetails}>{props.route.entry.bird.common_name}</Text>
-                            {props.route.entry.images.length > 0 ? 
-                                <FlatList keyExtractor={(item, index) => uuid()} data={props.route.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')}></Image>
+                            {/* } */}
+                            }}>
+                            <Text style={styles.birdDetails}>{props.route.params.entry.bird.common_name}</Text>
+                            {props.route.params.entry.images.length > 0 ? 
+                                <FlatList keyExtractor={(item, index) => uuid()} data={props.route.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')}></Image>
                             }
                         </TouchableOpacity>
                     <View style={styles.flex}>
                         <Text style={styles.notes}>Notes:</Text>
-                        <Text style={styles.text}>{props.route.entry.notes}</Text>
+                        <Text style={styles.text}>{props.route.params.entry.notes}</Text>
                     </View>
                     <View style={styles.mapContainer}>
                         <MapView style={styles.map} region={{
-                            latitude: props.route.entry.latitude,
-                            longitude: props.route.entry.longitude,
+                            latitude: props.route.params.entry.latitude,
+                            longitude: props.route.params.entry.longitude,
                             latitudeDelta: 0.03,
                             longitudeDelta: 0.03}}>
-                            <Marker coordinate={{latitude: props.route.entry.latitude, longitude: props.route.entry.longitude}}>
+                            <Marker coordinate={{latitude: props.route.params.entry.latitude, longitude: props.route.params.entry.longitude}}>
                             <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
                             </Marker>
                         </MapView>
@@ -70,7 +70,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }} />

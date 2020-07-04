@@ -15,7 +15,7 @@ const BirdsList = (props) => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'BirdDetails', params: {
+                        name: 'Bird Details', params: {
                             birdId: bird.item.id,
                             birdName: bird.item.common_name,
                         }

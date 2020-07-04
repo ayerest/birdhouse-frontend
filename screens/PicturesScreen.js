@@ -55,7 +55,7 @@ const PicturesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'FieldEntryInfo', params: {
+                        name: 'Bird Sighting', params: {
                             entryId: thisPhotosEntry.id,
                             entryName: `${thisPhotosEntry.date}`,
                             entry: thisPhotosEntry,
@@ -114,10 +114,6 @@ const PicturesScreen = props => {
 export const screenOptions = navData => {
     return {
         headerTitle: "My Photos",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
-        },
         headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
@@ -125,7 +121,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }}/>

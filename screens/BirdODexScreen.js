@@ -1,9 +1,9 @@
 import React, { useState} from 'react';
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
-import {useSelector, useDispatch} from 'react-redux';
-import { MenuButton } from '../components/MenuButton';
+import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { MenuButton } from '../components/MenuButton';
 import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';
@@ -92,14 +92,11 @@ const BirdODexScreen = props => {
 
 export const screenOptions = navData => {
     let leftOption = (<HeaderButtons HeaderButtonComponent={MenuButton}>
-        <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-            onPress={() => { navData.navigation.toggleDrawer() }} />
+        <Item iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+            onPress={() => { navData.navigation.toggleDrawer() }} title="Menu" />
     </HeaderButtons>)
     return {
         headerTitle: "BirdieDex",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-        },
         headerLeft: () => leftOption,
         headerRight: () => (
             <AvatarButton handleClick={() => {

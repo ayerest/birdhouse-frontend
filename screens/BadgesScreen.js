@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Platform, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -48,10 +48,6 @@ const BadgesScreen = props => {
 export const screenOptions = navData => {
     return {
         headerTitle: "My Badges",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black"
-        },
         headerLeft: () => (<HeaderButtons HeaderButtonComponent={MenuButton}>
             <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
                 onPress={() => { navData.navigation.toggleDrawer() }} />
@@ -59,7 +55,7 @@ export const screenOptions = navData => {
         headerRight: () => (
             <AvatarButton handleClick={() => {
                 navData.navigation.navigate({
-                    name: 'MyAccount', params: {
+                    name: 'My Account', params: {
                     }
                 })
             }} />

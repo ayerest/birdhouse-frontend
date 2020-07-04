@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, FlatList, Image, ScrollView, Dimensions } from 'react-native';
-import uuid from 'uuid';
+import React, { useEffect } from 'react';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 import Card from '../components/Card';
-import { NavigationEvents } from 'react-navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import * as factoidActions from '../store/actions/factoids'
 
@@ -25,8 +23,8 @@ const BadgeDetailsScreen = props => {
     return (
         <ScrollView>
             <Card style={styles.screen}>
-                    <Text style={styles.label}>Bonus Bird Fact</Text>
-                    {fact ? <Text style={styles.label}>{fact.fact}</Text> : null}
+                <Text style={styles.label}>Bonus Bird Fact</Text>
+                {fact ? <Text style={styles.label}>{fact.fact}</Text> : null}
             </Card>
         </ScrollView>
     )

@@ -79,9 +79,8 @@ const BirdDetailsScreen = props => {
     }
 
     const navToBirdForm = () => {
-        console.log(myLocation, "location in bird details");
         props.navigation.navigate({
-            name: 'AddSighting', params: {
+            name: 'Add Sighting', params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,

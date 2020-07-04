@@ -37,11 +37,6 @@ const AuthScreen = (props) => {
             await dispatch(createAccount(username, password, avatar))
             setAvatar(false)
             setIsLoading(false);
-            props.navigation.navigate({
-                name:'Main', params: {
-                    user: user
-                }
-            });
         } catch (err) {
             setError(err.message);
             setAvatar(false);
@@ -56,12 +51,6 @@ const AuthScreen = (props) => {
             await dispatch(userLogin(username, password));
             setAvatar(false);
             setIsLoading(false);
-            props.navigation.navigate({
-              name: "Main",
-              params: {
-                user: user
-              }
-            });
         } catch (err) {
             setError(err.message);
             setAvatar(false);
@@ -70,106 +59,92 @@ const AuthScreen = (props) => {
     }
 
     return (
-        
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={15} 
-        style={styles.screen}>
+        <KeyboardAvoidingView 
+            behavior="padding" 
+            keyboardVerticalOffset={15} 
+            style={styles.screen}
+        >
             <SafeAreaView style={{flex: 1}}>
-
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.inner}>
-                        
-                        <View style={styles.authContainer}>
-                        
+                        <View style={styles.authContainer}>      
                             <Image style={styles.logo} source={require('../assets/images/birdhouse_logo_drawn.png')}></Image>
-
-                        {!login && !signup ? 
-                            <View style={styles.screen}>
-                                <Button title="Create an account" onPress={() => {
-                                    setLogin(false)
-                                    setSignup(true)
-                                    }}/>
-                                <Button title="Already have an account?" onPress={() => {
-                                    setLogin(true);
-                                    setSignup(false);
-                                    }} />
-                            </View> : null
-                        }
-                        {!login && signup ? 
+                            {!login && !signup ? 
+                                <View style={styles.screen}>
+                                    <Button title="Create an account" onPress={() => {
+                                        setLogin(false)
+                                        setSignup(true)
+                                        }}/>
+                                    <Button title="Already have an account?" onPress={() => {
+                                        setLogin(true);
+                                        setSignup(false);
+                                        }} />
+                                </View> : null
+                            }
+                            {!login && signup ? 
+                                    <ScrollView>
+                                        <View style={styles.screen}>
+                                            {/* need to change to select an image and make sure a default image can be chosen */}
+                                            <ImageSelector onImageSelected={imageSelectedHandler} />
+                                        </View>
+                                        <View style={styles.screen}>
+                                            <Text style={styles.label}>Username</Text>
+                                            <TextInput autoCapitalize="none" accessibilityRole="text" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
+                                                initialValue="" />
+                                        </View>
+                                        <View style={styles.screen}>
+                                            <Text style={styles.label}>Password</Text>
+                                            <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none" accessibilityRole="text"
+                                                minLength={3}
+                                                errorText="Please enter a valid password." onChangeText={text => {
+                                                    setPassword(text)
+                                                }}
+                                                initialValue="" />
+                                        </View>
+                                        {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> :
+                                            <View>
+                                                <Button title="Sign Up" onPress={signupHandler} />
+                                                <Button title="Already have an account?" onPress={() => {
+                                                    setSignup(false);
+                                                    setLogin(true);
+                                                    }} />
+                                            </View>
+                                        }
+                                    </ScrollView>
+                            : null
+                            }
+                            {!signup && login ? 
                                 <ScrollView>
                                     <View style={styles.screen}>
-                                        {/* need to change to select an image and make sure a default image can be chosen */}
-                                        <ImageSelector onImageSelected={imageSelectedHandler} />
-                                    </View>
-                                    <View style={styles.screen}>
                                         <Text style={styles.label}>Username</Text>
-                                        <TextInput autoCapitalize="none" accessibilityRole="text" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
-                                            initialValue="" />
+                                            <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" accessibilityRole="text" autoCapitalize="none" onChangeText={text => setUsername(text)}
+                                        initialValue="" />
                                     </View>
                                     <View style={styles.screen}>
                                         <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none" accessibilityRole="text"
-                                            minLength={3}
-                                            errorText="Please enter a valid password." onChangeText={text => {
-                                                setPassword(text)
-                                            }}
+                                            <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required accessibilityRole="text"
+                                        minLength={3}
+                                        errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
                                             initialValue="" />
                                     </View>
-                                    {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> :
+                                    {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
                                         <View>
-                                            <Button title="Sign Up" onPress={signupHandler} />
-                                            <Button title="Already have an account?" onPress={() => {
-                                                setSignup(false);
-                                                setLogin(true);
-                                                }} />
+                                        <Button title="Login" onPress={loginHandler}/>
+                                        <Button title="Create a new account?" onPress={() => {
+                                            setSignup(true);
+                                            setLogin(false);
+                                            }}/>
                                         </View>
                                     }
-                                </ScrollView>
-                        : null
-                        }
-                        {!signup && login ? 
-                            <ScrollView>
-                                <View style={styles.screen}>
-                                    <Text style={styles.label}>Username</Text>
-                                        <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" accessibilityRole="text" autoCapitalize="none" onChangeText={text => setUsername(text)}
-                                    initialValue="" />
-                                </View>
-                                <View style={styles.screen}>
-                                    <Text style={styles.label}>Password</Text>
-                                        <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required accessibilityRole="text"
-                                    minLength={3}
-                                    errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
-                                        initialValue="" />
-                                </View>
-                                {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
-                                    <View>
-                                    <Button title="Login" onPress={loginHandler}/>
-                                    <Button title="Create a new account?" onPress={() => {
-                                        setSignup(true);
-                                        setLogin(false);
-                                        }}/>
-                                    </View>
+                                </ScrollView> : null
                                 }
-                            </ScrollView> : null
-                            }
-                        </View>
+                            </View>
                     </View>
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         </KeyboardAvoidingView>
     )
 }
-
-export const screenOptions = navData => {
-    return {
-        headerTitle: "BirdHouse",
-        headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-            color: "black",
-            fontFamily: 'Fred-Great',
-            fontSize: 18,
-        },
-    }
-};
 
 const styles = StyleSheet.create({
     screen: {

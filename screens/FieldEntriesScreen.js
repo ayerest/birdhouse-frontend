@@ -9,7 +9,7 @@ import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
-import { NavigationEvents } from 'react-navigation';
+// import { NavigationEvents } from 'react-navigation';
 
 const FieldEntriesScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
@@ -41,14 +41,15 @@ const FieldEntriesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'FieldEntry', params: {
+                        name: 'Bird Sighting', 
+                        params: {
                             entryId: fieldentry.item.id,
                             entryName: `${fieldentry.item.date}`,
                             entry: fieldentry.item
                         }
                     })
                 }}
-                >
+            >
                 <EntryCard notes={fieldentry.item.notes} fieldentry={fieldentry.item}/>
             </TouchableOpacity> 
         )
@@ -91,7 +92,7 @@ const FieldEntriesScreen = props => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
                 props.navigation.navigate({
-                    name: 'EntryInfo', params: {
+                    name: 'Bird Sighting', params: {
                         entry: entry
                     }
                 })
@@ -167,29 +168,21 @@ export const screenOptions = navData => {
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
     </HeaderButtons>)
-    if (navData.navigation.state.name === 'BirdieSightings') {
-        return {
-        headerTitle: "My Bird Sightings",
-            headerStyle: {
-            backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-                color: "black"
-        },
-        headerRight: () => (
-            <AvatarButton handleClick={() => {
-                navData.navigation.navigate({
-                    name: 'MyAccount', params: {
-                    }
-                })
-            }} />)
-        }
-    } 
-    else {
+    // if (navData.navigation.state.name === 'BirdieSightings') {
+    //     return {
+    //     headerTitle: "My Bird Sightings",
+    //     headerRight: () => (
+    //         <AvatarButton handleClick={() => {
+    //             navData.navigation.navigate({
+    //                 name: 'MyAccount', params: {
+    //                 }
+    //             })
+    //         }} />)
+    //     }
+    // } 
+    // else {
         return {
             headerTitle: "My Bird Sightings",
-            headerStyle: {
-                backgroundColor: Platform.OS === "ios" ? Colors.myColor : "thistle",
-                color: "black"
-            },
             headerLeft: () => leftOption,
             headerRight: () => (
                 <AvatarButton handleClick={() => {
@@ -199,7 +192,7 @@ export const screenOptions = navData => {
                     })
             }} />)
         }
-    }
+    // }
 }
 
 const styles = StyleSheet.create({
