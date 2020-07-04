@@ -146,15 +146,15 @@ const AuthScreen = (props) => {
     )
 }
 
-export const screenOptions = navData => {
-    return {
-        headerTitle: "BirdHouse",
-        headerStyle: {
-            fontFamily: 'Fred-Great',
-            fontSize: 18,
-        },
-    }
-};
+// export const screenOptions = navData => {
+//     return {
+//         headerTitle: "BirdHouse",
+//         headerStyle: {
+//             fontFamily: 'Fred-Great',
+//             fontSize: 18,
+//         },
+//     }
+// };
 
 const styles = StyleSheet.create({
     screen: {

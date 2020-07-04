@@ -1,9 +1,9 @@
 import React, { useState} from 'react';
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
-import {useSelector, useDispatch} from 'react-redux';
-import { MenuButton } from '../components/MenuButton';
+import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { MenuButton } from '../components/MenuButton';
 import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';

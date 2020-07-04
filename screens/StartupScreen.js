@@ -10,7 +10,7 @@ const StartupScreen = props => {
         const tryLogin = async () => {
             const userData = await AsyncStorage.getItem("userData")
             if (!userData) {
-                dispatch(authActions.SET_AUTOLOGIN());
+                dispatch(authActions.setAutologin());
                 return;
             } 
             const transformedData = JSON.parse(userData);
