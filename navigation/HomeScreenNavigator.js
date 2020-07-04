@@ -3,11 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MainViewScreen, {
   screenOptions as mainViewScreenOptions,
 } from "../screens/MainViewScreen";
-import GeoMap from "../components/GeoMap";
-import StaticMap from "../components/StaticMap";
-import FieldEntryDetailsScreen, {
-  screenOptions as fieldEntryDetailsScreenOptions,
-} from "../screens/FieldEntryDetailsScreen";
+// import GeoMap from "../components/GeoMap";
+// import StaticMap from "../components/StaticMap";
+import FieldEntryDetailsScreen from "../screens/FieldEntryDetailsScreen";
 import BirdDetailsScreen, {
   screenOptions as birdDetailsScreenOptions,
 } from "../screens/BirdDetailsScreen";
@@ -25,11 +23,12 @@ export const HomeScreenNavigator = () => {
         component={MainViewScreen}
         options={screenOptions}
       />
-      <HomeScreenStackNavigator.Screen name="Live Map" component={GeoMap} />
-      <HomeScreenStackNavigator.Screen name="Map View" component={StaticMap} />
+      {/* <HomeScreenStackNavigator.Screen name="Live Map" component={GeoMap} />
+      <HomeScreenStackNavigator.Screen name="Map View" component={StaticMap} /> */}
       <HomeScreenStackNavigator.Screen
         name="Field Sighting Details"
-        component={screenOptions}
+        component={FieldEntryDetailsScreen}
+        options={screenOptions}
       />
       <HomeScreenStackNavigator.Screen
         name="Add Entry"
@@ -38,6 +37,7 @@ export const HomeScreenNavigator = () => {
       <HomeScreenStackNavigator.Screen
         name="Bird Details"
         component={BirdDetailsScreen}
+        options={birdDetailsScreenOptions}
       />
     </HomeScreenStackNavigator.Navigator>
   );

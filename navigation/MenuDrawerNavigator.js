@@ -68,12 +68,3 @@ const styles = StyleSheet.create({
     opacity: 0.8
   }
 });
-
-const defaultNavOptions = {
-  headerStyle: {
-    backgroundColor: 'thistle'
-  },
-  headerTitleStyle: {
-    fontFamily: 'Fred-Great',
-  }
-}

@@ -1,9 +1,10 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
-import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
-import FieldEntryDetailsScreen, { screenOptions as fieldEntryDetailsScreenOptions } from "../screens/FieldEntryDetailsScreen";
+import FieldEntriesScreen from '../screens/FieldEntriesScreen';
+import FieldEntryDetailsScreen from "../screens/FieldEntryDetailsScreen";
 import BirdDetailsScreen, { screenOptions as birdDetailsScreenOptions } from '../screens/BirdDetailsScreen';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
+import { screenOptions } from './ScreenOptions';
 import defaultNavOptions from './DefaultNavOptions';
 
 const FieldEntriesStackNavigator = createStackNavigator();
@@ -14,7 +15,7 @@ export const FieldEntriesNavigator = () => {
             <FieldEntriesStackNavigator.Screen
                 name="My Bird Sightings"
                 component={FieldEntriesScreen}
-                options={fieldEntriesScreenOptions}
+                options={screenOptions}
             />
             <FieldEntriesStackNavigator.Screen
                 name="Bird Sighting"
@@ -23,6 +24,7 @@ export const FieldEntriesNavigator = () => {
             <FieldEntriesStackNavigator.Screen
                 name="Bird Details"
                 component={BirdDetailsScreen}
+                options={birdDetailsScreenOptions}
             />
             <FieldEntriesStackNavigator.Screen
                 name="Add Sighting"
@@ -32,41 +34,3 @@ export const FieldEntriesNavigator = () => {
     );
 };
 
-
-// Old set up:
-
-// const FieldEntries = createStackNavigator({
-//   FieldEntries: {
-//     screen: FieldEntriesScreen,
-//     navigationOptions: {
-//       title: 'My Bird Sightings',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 17,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   EntryInfo: {screen: FieldEntryDetailsScreen,
-//   navigationOptions: {
-//     title: 'Bird Sighting',
-//     headerTitleStyle: {
-//       fontFamily: 'Fred-Great',
-//       fontSize: 20,
-//       fontWeight: '400'
-//     }
-//   }
-// },
-//   FieldEntry: {
-//     screen: FieldEntryDetailsScreen,
-//     navigationOptions: {
-//       title: 'Bird Sighting',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 20,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   BirdStuff: BirdDetailsScreen,
-// })

@@ -20,7 +20,6 @@ export const PicturesNavigator = () => {
             <PicturesStackNavigator.Screen
                 name="Bird Sighting"
                 component={FieldEntryDetailsScreen}
-                options={screenOptions}
             />
             <PicturesStackNavigator.Screen
                 name="Bird Details"
@@ -34,22 +33,3 @@ export const PicturesNavigator = () => {
         </PicturesStackNavigator.Navigator>
     );
 };
-
-
-// old set up:
-
-// const Pictures = createStackNavigator({
-//   MyPhotos: {
-//     screen: PicturesScreen,
-//     navigationOptions: {
-//       title: 'My Photos',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 20,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   FieldEntryInfo: FieldEntryDetailsScreen,
-//   BirdieInfo: BirdDetailsScreen,
-// })

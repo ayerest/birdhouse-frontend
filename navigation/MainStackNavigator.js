@@ -17,34 +17,3 @@ export const MainNavigator = () => {
       </MainStackNavigator.Navigator>
     );
 };
-
-// Old set up: 
-
-// const Main = createStackNavigator({
-//   Main: {
-//     screen: MainViewScreen,
-//     navigationOptions: {
-//       title: 'BirdHouse',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 21,
-//         fontWeight: '400'
-//       }
-//     }},
-//   GeoMap: GeoMap,
-//   StaticMap: StaticMap,
-//   FieldDetails: FieldEntryDetailsScreen,
-//   AddEntry: {
-//     screen: AddFieldEntryForm,
-//     navigationOptions: {
-//       title: 'Add Bird Sighting',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 19,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   BirdInfo: BirdDetailsScreen,
-//   BirdStuff: BirdDetailsScreen,
-// })
