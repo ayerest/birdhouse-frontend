@@ -41,7 +41,7 @@ const FieldEntriesScreen = props => {
                 style={styles.gridItem}
                 onPress={() => {
                     props.navigation.navigate({
-                        name: 'FieldEntry', 
+                        name: 'Bird Sighting', 
                         params: {
                             entryId: fieldentry.item.id,
                             entryName: `${fieldentry.item.date}`,
@@ -168,19 +168,19 @@ export const screenOptions = navData => {
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
     </HeaderButtons>)
-    if (navData.navigation.state.name === 'BirdieSightings') {
-        return {
-        headerTitle: "My Bird Sightings",
-        headerRight: () => (
-            <AvatarButton handleClick={() => {
-                navData.navigation.navigate({
-                    name: 'MyAccount', params: {
-                    }
-                })
-            }} />)
-        }
-    } 
-    else {
+    // if (navData.navigation.state.name === 'BirdieSightings') {
+    //     return {
+    //     headerTitle: "My Bird Sightings",
+    //     headerRight: () => (
+    //         <AvatarButton handleClick={() => {
+    //             navData.navigation.navigate({
+    //                 name: 'MyAccount', params: {
+    //                 }
+    //             })
+    //         }} />)
+    //     }
+    // } 
+    // else {
         return {
             headerTitle: "My Bird Sightings",
             headerLeft: () => leftOption,
@@ -192,7 +192,7 @@ export const screenOptions = navData => {
                     })
             }} />)
         }
-    }
+    // }
 }
 
 const styles = StyleSheet.create({

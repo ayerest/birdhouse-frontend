@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AddFieldEntryForm from '../components/AddFieldEntryForm';
-import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
+// import FieldEntriesScreen, { screenOptions as fieldEntriesScreenOptions } from '../screens/FieldEntriesScreen';
 import FieldEntryDetailsScreen, {
   screenOptions as fieldEntryDetailsScreenOptions } from "../screens/FieldEntryDetailsScreen";
 import BirdODexScreen, { screenOptions as birdODexScreenOptions } from '../screens/BirdODexScreen';
@@ -14,124 +14,21 @@ import BirdDetailsScreen, { screenOptions as birdDetailsScreenOptions } from '..
 import MainViewScreen, {
   screenOptions as mainViewScreenOptions
 } from "../screens/MainViewScreen";
-import BadgesScreen, { screenOptions as badgesScreenOptions } from '../screens/BadgesScreen';
-import PicturesScreen, { screenOptions as picturesScreenOptions } from '../screens/PicturesScreen';
+// import BadgesScreen, { screenOptions as badgesScreenOptions } from '../screens/BadgesScreen';
+// import PicturesScreen, { screenOptions as picturesScreenOptions } from '../screens/PicturesScreen';
 import GeoMap from '../components/GeoMap';
 import StaticMap from '../components/StaticMap';
 import AuthScreen, { screenOptions as authScreenOptions } from '../screens/AuthScreen';
-import StartupScreen from '../screens/StartupScreen';
-import BadgeCard from '../components/BadgeCard';
-import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
+// import StartupScreen from '../screens/StartupScreen';
+// import BadgeCard from '../components/BadgeCard';
+// import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
 import MyAccountScreen, { screenOptions as myAccountScreenOptions } from '../screens/MyAccountScreen';
 import Colors from '../constants/Colors';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import * as authActions from '../store/actions/auth';
-
-const BadgesStackNavigator = createStackNavigator();
-
-export const BadgesNavigator = () => {
-  return (
-    <BadgesStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <BadgesStackNavigator.Screen
-        name="My Badges"
-        component={BadgesScreen}
-      />
-      <BadgesStackNavigator.Screen
-        name="My Badge"
-        component={BadgeCard}
-      />
-      <BadgesStackNavigator.Screen
-        name="Badge Details"
-        component={BadgeDetailsScreen}
-      />
-    </BadgesStackNavigator.Navigator>
-  );
-};
-
-// const Badges = createStackNavigator({
-//   MyBadges: {
-//     screen: BadgesScreen,
-//     navigationOptions: {
-//       title: 'My Badges',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 20,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   Badge: {screen: BadgeCard,
-//   navigationOptions: {
-//     title: 'My Badge',
-//     headerTitleStyle: {
-//       fontFamily: 'Fred-Great',
-//       fontSize: 19,
-//       fontWeight: '400'
-//     }
-//   }},
-//   BadgeDetails: BadgeDetailsScreen
-// })
-
-const PicturesStackNavigator = createStackNavigator();
-
-export const PicturesNavigator = () => {
-  return (
-    <PicturesStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <PicturesStackNavigator.Screen
-        name="My Photos"
-        screen={PicturesScreen}
-        
-      />
-      <PicturesStackNavigator.Screen
-        name="My Entry - via Pictures"
-        screen={FieldEntryDetailsScreen}
-        
-      />
-      <PicturesStackNavigator.Screen
-        name="Bird Details - via Pictures"
-        screen={BirdDetailsScreen}
-        
-      />
-    </PicturesStackNavigator.Navigator>
-  );
-};
-
-// const Pictures = createStackNavigator({
-//   MyPhotos: {
-//     screen: PicturesScreen,
-//     navigationOptions: {
-//       title: 'My Photos',
-//       headerTitleStyle: {
-//         fontFamily: 'Fred-Great',
-//         fontSize: 20,
-//         fontWeight: '400'
-//       }
-//     }
-//   },
-//   FieldEntryInfo: FieldEntryDetailsScreen,
-//   BirdieInfo: BirdDetailsScreen,
-// })
-
-const FieldEntriesStackNavigator = createStackNavigator();
-
-export const FieldEntriesNavigator = () => {
-  return (
-    <FieldEntriesStackNavigator.Navigator screenOptions={defaultNavOptions}>
-      <FieldEntriesStackNavigator.Screen
-        name="My Bird Sightings"
-        component={FieldEntriesScreen}
-      />
-      <FieldEntriesStackNavigator.Screen
-        name="Bird Sighting"
-        component={FieldEntryDetailsScreen}
-      />
-      <FieldEntriesStackNavigator.Screen
-        name="Bird Details - via Field Entries"
-        component={BirdDetailsScreen}
-      />
-    </FieldEntriesStackNavigator.Navigator>
-  );
-};
+import { BadgesNavigator } from './BadgesStackNavigator';
+import { PicturesNavigator } from './PicturesStackNavigator';
+import { FieldEntriesNavigator } from './FieldEntriesNavigator';
 
 // const FieldEntries = createStackNavigator({
 //   FieldEntries: {
@@ -329,7 +226,7 @@ export const MenuNavigator = () => {
     <MenuDrawerNavigator.Navigator
       drawerContent={props => {return <View >
         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never', alignContent: 'flex-start', alignItems: 'flex-start' }}>
-          <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
+          {/* <Image style={{ height: 80, width: 80 }} source={require("../assets/images/birdhouse_logo_drawn.png")} /> */}
           <DrawerItemList {...props} user={user} style={{ flex: 1, width: '100%' }} />
           <TouchableOpacity onPress={() => {
             dispatch(authActions.logout());
@@ -349,7 +246,11 @@ export const MenuNavigator = () => {
         }
       }}
     >
-      <MenuDrawerNavigator.Screen name="Home" component={MainNavigator} />
+      <MenuDrawerNavigator.Screen name="Home" component={MainNavigator} options={{
+        drawerIcon: props => (
+          <Image style={{ height: 50, width: 50 }} source={require("../assets/images/birdhouse_logo_drawn.png")} />
+        )
+      }}/>
       <MenuDrawerNavigator.Screen name="BirdieDex" component={BirdsNavigator} />
       <MenuDrawerNavigator.Screen name="My Sightings" component={FieldEntriesNavigator} />
       <MenuDrawerNavigator.Screen name="My Badges" component={BadgesNavigator} />
