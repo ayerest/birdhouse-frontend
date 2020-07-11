@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Platform, View, Text, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, ActivityIndicator, StyleSheet, Button, TextInput, Alert, Image} from 'react-native';
+import { View, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, StyleSheet, Alert, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import { createAccount, userLogin } from '../store/actions/auth';
 import Colors from '../constants/Colors';
-import ImageSelector from '../components/ImageSelector';
+import SignupLoginPrompt from '../components/SignupLoginPrompt';
+import SignupPrompt from '../components/SignupPrompt';
+import LoginPrompt from '../components/LoginPrompt';
 
 const AuthScreen = (props) => {
     const dispatch = useDispatch();
@@ -69,75 +71,18 @@ const AuthScreen = (props) => {
                     <View style={styles.inner}>
                         <View style={styles.authContainer}>      
                             <Image style={styles.logo} source={require('../assets/images/birdhouse_logo_drawn.png')}></Image>
-                            {!login && !signup ? 
-                                <View style={styles.screen}>
-                                    <Button title="Create an account" onPress={() => {
-                                        setLogin(false)
-                                        setSignup(true)
-                                        }}/>
-                                    <Button title="Already have an account?" onPress={() => {
-                                        setLogin(true);
-                                        setSignup(false);
-                                        }} />
-                                </View> : null
+                            {
+                                (!login && !signup) && 
+                                <SignupLoginPrompt setLogin={setLogin} setSignup={setSignup} />
                             }
-                            {!login && signup ? 
-                                    <ScrollView>
-                                        <View style={styles.screen}>
-                                            {/* need to change to select an image and make sure a default image can be chosen */}
-                                            <ImageSelector onImageSelected={imageSelectedHandler} />
-                                        </View>
-                                        <View style={styles.screen}>
-                                            <Text style={styles.label}>Username</Text>
-                                            <TextInput autoCapitalize="none" accessibilityRole="text" style={styles.input} id="username" label="username" value={username} keyboardType="default" required defaultValue="Enter username" autoCompleteType="off" errorText="Please enter a username." onChangeText={text => setUsername(text)}
-                                                initialValue="" />
-                                        </View>
-                                        <View style={styles.screen}>
-                                            <Text style={styles.label}>Password</Text>
-                                            <TextInput style={styles.input} id="password" autoCompleteType="off" label="password" keyboardType="default" secureTextEntry required autoCapitalize="none" accessibilityRole="text"
-                                                minLength={3}
-                                                errorText="Please enter a valid password." onChangeText={text => {
-                                                    setPassword(text)
-                                                }}
-                                                initialValue="" />
-                                        </View>
-                                        {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> :
-                                            <View>
-                                                <Button title="Sign Up" onPress={signupHandler} />
-                                                <Button title="Already have an account?" onPress={() => {
-                                                    setSignup(false);
-                                                    setLogin(true);
-                                                    }} />
-                                            </View>
-                                        }
-                                    </ScrollView>
-                            : null
+                            {
+                                (!login && signup) &&
+                                <SignupPrompt signupHandler={signupHandler} isLoading={isLoading} username={username} setLogin={setLogin} setSignup={setSignup} setUsername={setUsername} setPassword={setPassword} imageSelectedHandler={imageSelectedHandler} />
                             }
-                            {!signup && login ? 
-                                <ScrollView>
-                                    <View style={styles.screen}>
-                                        <Text style={styles.label}>Username</Text>
-                                            <TextInput style={styles.input} id="username" label="username" value={username} keyboardType="default" required errorText="Please enter a username." autoCompleteType="off" accessibilityRole="text" autoCapitalize="none" onChangeText={text => setUsername(text)}
-                                        initialValue="" />
-                                    </View>
-                                    <View style={styles.screen}>
-                                        <Text style={styles.label}>Password</Text>
-                                            <TextInput style={styles.input} id="password" label="password" autoCapitalize="none" keyboardType="default" autoCompleteType="off" secureTextEntry required accessibilityRole="text"
-                                        minLength={3}
-                                        errorText="Please enter a  valid password." onChangeText={text => setPassword(text)}
-                                            initialValue="" />
-                                    </View>
-                                    {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> :
-                                        <View>
-                                        <Button title="Login" onPress={loginHandler}/>
-                                        <Button title="Create a new account?" onPress={() => {
-                                            setSignup(true);
-                                            setLogin(false);
-                                            }}/>
-                                        </View>
-                                    }
-                                </ScrollView> : null
-                                }
+                            {
+                                (!signup && login) && 
+                                <LoginPrompt loginHandler={loginHandler} isLoading={isLoading} username={username} setLogin={setLogin} setSignup={setSignup} setUsername={setUsername} setPassword={setPassword} />
+                            }
                             </View>
                     </View>
                 </TouchableWithoutFeedback>
