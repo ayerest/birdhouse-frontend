@@ -15,12 +15,16 @@ const BadgesScreen = props => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        const loadMyBadges = async () => {
-            setIsLoading(true);
-            await dispatch(badgesActions.getMyBadges());
-            setIsLoading(false);
+        let mounted = true;
+        if (mounted) {
+            const loadMyBadges = async () => {
+                setIsLoading(true);
+                await dispatch(badgesActions.getMyBadges());
+                setIsLoading(false);
+            }
+            loadMyBadges();
         }
-        loadMyBadges();
+        return () => mounted = false;
     }, [dispatch, badgesList]);
 
     const badgesList = useSelector(state => {

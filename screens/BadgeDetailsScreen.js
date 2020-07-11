@@ -9,16 +9,19 @@ const BadgeDetailsScreen = props => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        getRandomFact();
+        let mounted = true;
+        if (mounted) {
+            const getRandomFact = async () => {
+                await dispatch(factoidActions.getFact())
+            }
+            getRandomFact();
+        }
+        return () => mounted = false;
     }, [dispatch])
 
     const fact = useSelector(state => {
         return state.factoids.fact
     })
-
-    const getRandomFact = async () => {
-        await dispatch(factoidActions.getFact())
-    }
 
     return (
         <ScrollView>

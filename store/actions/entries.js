@@ -99,7 +99,6 @@ const getSharedEntries = () => {
     }
 }
 
-
 const dismissSharedEntries = () => {
     return { type: "DISMISS" }
 }

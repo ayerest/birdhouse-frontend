@@ -1,4 +1,3 @@
-
 import { CREATE_FIELD_ENTRY, MY_ENTRIES, SHARED_ENTRIES, DISMISS } from '../actions/entries';
 
 const initialState = {

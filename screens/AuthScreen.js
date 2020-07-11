@@ -19,9 +19,13 @@ const AuthScreen = (props) => {
     const [error, setError] = useState();
 
     useEffect(()=>{
-        if (error) {
-            Alert.alert('An error occured!', error);
+        let mounted = true;
+        if (mounted) {
+            if (error) {
+                Alert.alert('An error occured!', error);
+            }
         }
+        return () => mounted = false;
     }, [error]);
 
     const imageSelectedHandler = (image) => {

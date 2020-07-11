@@ -9,7 +9,11 @@ const LocationLogic = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getLocationHandler();
+        let mounted = true;
+        if (mounted) {
+            getLocationHandler();
+        }
+        return () => mounted = false;
     }, [getLocationHandler]);
 
     const verifyPermissions = async () => {

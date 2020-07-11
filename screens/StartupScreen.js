@@ -7,25 +7,28 @@ import Colors from '../constants/Colors';
 const StartupScreen = props => {
     const dispatch = useDispatch();
     useEffect(() => {
-        const tryLogin = async () => {
-            const userData = await AsyncStorage.getItem("userData")
-            if (!userData) {
-                dispatch(authActions.setAutologin());
-                return;
-            } 
-            const transformedData = JSON.parse(userData);
-            const {token, userId, expiryDate} = transformedData;
-            const expirationDate = new Date(expiryDate)
+        let mounted = true;
+        if (mounted) {
+            const tryLogin = async () => {
+                const userData = await AsyncStorage.getItem("userData")
+                if (!userData) {
+                    await dispatch(authActions.setAutologin());
+                    return () => mounted = false;
+                } 
+                const transformedData = JSON.parse(userData);
+                const {token, userId, expiryDate} = transformedData;
+                const expirationDate = new Date(expiryDate)
             
-        
-            if (expirationDate <= new Date() || !token || !userId ) {
-                dispatch(authActions.setAutologin());
-                return;
-            }
-            dispatch(authActions.authenticate(userId, token))
-
-        };
-        tryLogin();
+                if (expirationDate <= new Date() || !token || !userId ) {
+                    await dispatch(authActions.setAutologin());
+                    return () => mounted = false;
+                }
+                await dispatch(authActions.authenticate(userId, token))
+                return () => mounted = false;
+            };
+            tryLogin();
+        }
+        return () => mounted = false;
     }, [dispatch])
 
     return (

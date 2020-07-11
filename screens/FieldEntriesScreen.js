@@ -22,8 +22,12 @@ const FieldEntriesScreen = props => {
     })
 
     useEffect(() => {
-        setIsLoading(true);
-        loadMyFieldEntries();
+        let mounted = true;
+        if (mounted) {
+            setIsLoading(true);
+            loadMyFieldEntries();
+        }
+        return () => mounted = false;
     }, [dispatch]);
 
     const loadMyFieldEntries = async () => {

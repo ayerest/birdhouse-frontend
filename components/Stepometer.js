@@ -12,10 +12,14 @@ const Stepometer = props => {
     let everyStepYouTake = false;
 
     useEffect(() => {
-        initializePedometer();
-        if (!!everyStepYouTake) {
-            return everyStepYouTake.remove();
-        };
+        let mounted = true;
+        if (mounted) {
+            initializePedometer();
+            if (!!everyStepYouTake) {
+                return everyStepYouTake.remove();
+            };
+        }
+        return () => mounted = false;
     }, [initializePedometer])
     
     const initializePedometer = async () => {

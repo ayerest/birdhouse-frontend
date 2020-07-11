@@ -26,8 +26,12 @@ const PicturesScreen = props => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setPhotosLoading(true);
-        loadMyPhotos();
+        let mounted = true;
+        if (mounted) {
+            setPhotosLoading(true);
+            loadMyPhotos();
+        }
+        return () => mounted = false;
     }, [dispatch]);
 
     const loadMyPhotos = async () => {
@@ -40,12 +44,16 @@ const PicturesScreen = props => {
     }
 
     useEffect(() => {
-        const loadMyFieldEntries = async () => {
-            setEntriesLoading(true);
-            await dispatch(getMyEntries());
-            setEntriesLoading(false);
+        let mounted = true;
+        if (mounted) {
+            const loadMyFieldEntries = async () => {
+                setEntriesLoading(true);
+                await dispatch(getMyEntries());
+                setEntriesLoading(false);
+            }
+            loadMyFieldEntries();
         }
-        loadMyFieldEntries();
+        return () => mounted = false;
     }, [dispatch])
 
     const renderPhotoItem = (image) => {

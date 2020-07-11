@@ -1,4 +1,3 @@
-
 import { GET_FACT } from '../actions/factoids';
 
 const initialState = {

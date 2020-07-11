@@ -1,4 +1,3 @@
-
 import { SET_MY_LOCATION } from '../actions/location';
 
 const initialState = {

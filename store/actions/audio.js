@@ -1,4 +1,3 @@
-
 const STOP_AUDIO = 'STOP_AUDIO';
 const PLAY_AUDIO = 'PLAY_AUDIO';
 

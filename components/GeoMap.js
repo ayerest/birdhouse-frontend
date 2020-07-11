@@ -13,7 +13,11 @@ const GeoMap = (props) => {
     const myLocation = useSelector((state) => state.location.myLocation); 
 
     useEffect(() => {
-        setVisible(true);
+        let mounted = true;
+        if (mounted) {
+            setVisible(true);
+        }
+        return () => mounted = false;
     }, [newMarker])
 
     let mapRegion = {

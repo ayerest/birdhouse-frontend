@@ -32,11 +32,15 @@ const MyAccountScreen = props => {
     })
 
     useEffect(() => {
-        if (!!user && user.last_login) {
-            loadUserSteps();
+        let mounted = true;
+        if (mounted) {
+            if (!!user && user.last_login) {
+                loadUserSteps();
+            }
+            loadBirdsAndSightings();
+            setIsLoading(false);
         }
-        loadBirdsAndSightings();
-        setIsLoading(false);
+        return () => mounted = false;
     }, [dispatch]);
 
     const loadUserSteps = async () => {

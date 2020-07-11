@@ -10,15 +10,15 @@ const authReducer = (state=initialState, action) => {
     switch(action.type) {
         case SIGNUP:
             return {
-                ...state,
+                didTryAutoLogin: true,
                 user: action.payload.user,
                 token: action.payload.jwt
             }
         case LOGIN:
             return {
-                ...state,
                 user: action.payload.user,
-                token: action.payload.jwt
+                token: action.payload.jwt,
+                didTryAutoLogin: true
             }
         case AUTHENTICATE:
             return {

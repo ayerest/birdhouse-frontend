@@ -13,10 +13,14 @@ const CategoriesList = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const loadCategories = async () => {
-            await dispatch(birdsActions.fetchBirdCategories());
+        let mounted = true;
+        if (mounted) {
+            const loadCategories = async () => {
+                await dispatch(birdsActions.fetchBirdCategories());
+            }
+            loadCategories();
         }
-        loadCategories();
+        return () => mounted = false;
     }, []);
 
 
@@ -42,7 +46,11 @@ const CategoriesList = (props) => {
         }
     }
     useEffect(() => {
-        getBirds();
+        let mounted = true;
+        if (mounted) {            
+            getBirds();
+        }
+        return () => mounted = false;
     }, [currentCategory])
 
     const renderCategoryItem = (categoryItem) => {

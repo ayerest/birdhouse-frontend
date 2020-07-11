@@ -10,12 +10,16 @@ const BirdCount = (props) => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        const loadMyBirdCount = async () => {
-            setIsLoading(true);
-            await dispatch(birdsActions.getMyBirds());  
-            setIsLoading(false);
+        let mounted = true;
+        if (mounted) {
+            const loadMyBirdCount = async () => {
+                setIsLoading(true);
+                await dispatch(birdsActions.getMyBirds());  
+                setIsLoading(false);
+            }
+            loadMyBirdCount();
         }
-        loadMyBirdCount();
+        return () => mounted = false;
     }, [dispatch]);
 
     const myBirds = useSelector(state => {

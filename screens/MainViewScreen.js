@@ -28,15 +28,23 @@ const MainViewScreen = props => {
     })
     
     useEffect(() => {
-        if (!!user && user.last_login) {
-            loadUserSteps();
+        let mounted = true;
+        if (mounted) {
+            if (!!user && user.last_login) {
+                loadUserSteps();
+            }
         }
+        return () => mounted = false;
     }, [user, dispatch])
 
     useEffect(() => {
-        dispatch(getSharedEntries());
-        dispatch(getMyEntries());
-        dispatch(getMyBirds());
+        let mounted = true;
+        if (mounted) {
+            dispatch(getSharedEntries());
+            dispatch(getMyEntries());
+            dispatch(getMyBirds());
+        }
+        return () => mounted = false;
     }, [dispatch])
 
     

@@ -15,7 +15,13 @@ const MenuDrawerNavigator = createDrawerNavigator();
 
 export const MenuNavigator = () => {
   const dispatch = useDispatch();
-  useEffect(() => {}, [user]);
+  // useEffect(() => {
+  //   let mounted = true;
+  //   if (mounted) {
+      
+  //   }
+  //   return () => mounted = false;
+  // }, [user]);
 
   const user = useSelector((state) => {
     return state.user.user;

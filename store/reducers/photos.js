@@ -1,4 +1,3 @@
-
 import { MY_PHOTOS } from '../actions/photos';
 
 const initialState = {

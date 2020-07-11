@@ -20,14 +20,18 @@ const StaticMap = (props) => {
     }
 
     useEffect(() => {
-        let points = [];
-        if (sharedEntries.length > 0) {
-            points = sharedEntries.map(entry => {
-            return { latitude: entry.latitude, longitude: entry.longitude }
-        })
+        let mounted = true;
+        if (mounted) {
+            let points = [];
+            if (sharedEntries.length > 0) {
+                points = sharedEntries.map(entry => {
+                return { latitude: entry.latitude, longitude: entry.longitude }
+            })
+            }
+            points.length > 0 ?
+            getNewMapRegion(points) : displayMapHandler();
         }
-        points.length > 0 ?
-        getNewMapRegion(points) : displayMapHandler();
+        return () => mounted = false;
     }, [sharedEntries]);
 
 

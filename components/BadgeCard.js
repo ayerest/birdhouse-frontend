@@ -26,7 +26,11 @@ const BadgeCard = props => {
     });
 
     useEffect(() => {
-        loadBirdsAndSightings();
+        let mounted = true;
+        if (mounted) {
+            loadBirdsAndSightings();
+        }
+        return () => mounted = false;
     }, [loadBirdsAndSightings]);
 
     const loadBirdsAndSightings = async () => {

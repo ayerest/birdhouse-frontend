@@ -19,13 +19,17 @@ const BirdDetailsScreen = props => {
     const myLocation = useSelector((state) => state.location.myLocation); 
 
     useEffect(() => {
-        setIsLoading(true);
-        const loadBird = async () => {
-            const birdId = props.route.params.birdId;
-            await dispatch(birdsActions.getBird(birdId));
-            setIsLoading(false);
+        let mounted = true;
+        if (mounted) {
+            setIsLoading(true);
+            const loadBird = async () => {
+                const birdId = props.route.params.birdId;
+                await dispatch(birdsActions.getBird(birdId));
+                setIsLoading(false);
+            }
+            loadBird();
         }
-        loadBird();
+        return () => mounted = false;
     }, [dispatch, singleBird]);
 
     const singleBird = useSelector(state => {
