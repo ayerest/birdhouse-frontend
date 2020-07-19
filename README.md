@@ -1,6 +1,6 @@
 # BirdHouse
 
-BirdHouse is a mobile birdwatching companion app aimed at making birdwatching fun and accessible for beginners.
+BirdHouse is a mobile birdwatching companion app that makes birdwatching fun and accessible for beginners.
 
 ![BirdHouse logo](https://github.com/ayerest/birdhouse-frontend/blob/master/assets/images/birdhouse_logo_drawn.png)
 
