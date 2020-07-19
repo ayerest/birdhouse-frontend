@@ -10,20 +10,22 @@ import { Audio } from 'expo-av';
 import Card from './Card';
 import { Entypo } from '@expo/vector-icons';
 import * as audioActions from '../store/actions/audio';
-import { NavigationEvents } from 'react-navigation';
 import Colors from '../constants/Colors';
 import moment from 'moment';
 
-const AddFieldEntryForm = props => {
-    // useEffect(() => {
-        
-    // }, [bird]);
+const AddFieldEntryForm = ({ navigation, route }) => {
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            handleUnsetBird();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     const [image, setImage] = useState(false);
     const [notes, setNotes] = useState();
     const [showSearchResults, setShowSearchResults] = useState(false);
-    const [bird, setBird] = useState(props.route.params.bird ? props.route.params.bird : null);
-    // const [modalVisible, setModalVisible] = useState(props.visible);
+    const [bird, setBird] = useState(route.params.bird ? route.params.bird : null);
     const [share, setShare] = useState(false);
     const [error, setError] = useState()
     const [confirmed, setConfirmed] = useState(false)
@@ -34,8 +36,8 @@ const AddFieldEntryForm = props => {
 
     const submitHandler = async () => {
     
-        let latitude = props.route.params.coords.latitude ? props.route.params.coords.latitude : props.route.params.coords.lat;
-        let longitude = props.route.params.coords.longitude ?props.route.params.coords.longitude : props.route.params.coords.lng;
+        let latitude = route.params.coords.latitude ? route.params.coords.latitude : route.params.coords.lat;
+        let longitude = route.params.coords.longitude ? route.params.coords.longitude : route.params.coords.lng;
         try {
             await dispatch(entriesActions.postNewEntry(fullDate, bird, notes, image, latitude, longitude, share));
             setImage(false);
@@ -46,7 +48,7 @@ const AddFieldEntryForm = props => {
             if (audio) {
                 await audio.stopAsync();
             }
-            props.navigation.goBack();
+            navigation.goBack();
         } catch (err) {
             setError(err.message);
             Alert.alert("You must select a bird using the search bar to submit your entry and enter notes for your sighting.", err.message);
@@ -101,16 +103,11 @@ const AddFieldEntryForm = props => {
         setShare(!share)
     }
 
-    // const handleComingBack = () => {
-    //     setModalVisible(true);
-    // }
-
     const handleBackButtonClick = async () => {
         if (audio) {
-
             await audio.stopAsync();
         }
-        props.navigation.goBack()
+        navigation.goBack()
     }
 
     const handleConfirmBird = async () => {
@@ -133,7 +130,7 @@ const AddFieldEntryForm = props => {
         if (audio) {
         await audio.stopAsync();
         }
-        props.navigation.navigate({
+        navigation.navigate({
             name: 'Bird Details', params: {
                 birdId: bird.id,
                 birdName: bird.common_name,
@@ -148,99 +145,90 @@ const AddFieldEntryForm = props => {
     // use position with keyboardvertical offset to move field up
     return (
         <ScrollView>
-                {/* <NavigationEvents
-                    onWillBlur={handleUnsetBird}
-                /> */}
-        <KeyboardAvoidingView behavior="positon" style={{flex: 1}} keyboardVerticalOffset={50}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={{flex: 1}}>
+            <KeyboardAvoidingView behavior="positon" style={{flex: 1}} keyboardVerticalOffset={50}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{flex: 1}}>
 
-                <View style={styles.space}>
-                    <Text style={styles.label}>{fullDate}</Text>
-                    <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
-                </View>
-              
-                        <View >
-                            <View style={styles.formtop}>
-                                <Text style={styles.label}>Share Sighting?</Text>
-                                <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
-                            </View>
-
-                            <View style={styles.form}>
-                                <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList} />
-                            </View>
-
-                        </View>
-                    <View></View>
-                        {!!bird ? 
-                            <View>
-                                <View >
-                                    <Text style={styles.label}>Selected Bird:</Text>
-                                </View>
-                                { confirmed ? 
-                                <View style={styles.row}>
-                                <Text style={styles.label}>{bird.common_name}</Text>
-                                    <Feather name="x-square" color={"red"} size={30} onPress={() => {
-                                        setBird()
-                                        setConfirmed(false)
-                                        }} />
-                                </View> : 
-                                <Card>
-                                    <View style={styles.row}>
-                                        <Text style={styles.label}>{bird.common_name}</Text>
-                                        <Feather style={styles.audioIcon} name="volume-2" size={30} onPress={handlePlayAudio} color={Colors.linkColor}/>
-                                    </View>
-                                    <TouchableOpacity onPress={handleLeaveForBirdDetails}>
-                                        <Image style={styles.birdie} source={{uri: bird.img_url}} />
-                                        </TouchableOpacity>
-                                    <View style={styles.spaceEven}>
-                                        <TouchableOpacity onPress={handleConfirmBird}>
-                                            <Feather name="check-square" size={30} color={"green"} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={handleUnsetBird}>
-                                            <Feather name="x-square" size={30} color={"red"} />
-                                        </TouchableOpacity>
-                                    </View>
-                                </Card> }
-                            </View> 
-                        : null }
-                    {showSearchResults ?
-                    <View style={{flex: 1}}>
-                        <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
-                            numColumns={1} />
+                    <View style={styles.space}>
+                        <Text style={styles.label}>{fullDate}</Text>
+                        <Feather name="x-square" color={"red"} size={35} onPress={handleBackButtonClick}/>
                     </View>
-                    : null}
-
-                        <View style={styles.inner}>
-
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Notes</Text>
-                            <Entypo name="feather" color={"green"} size={30} />
-                        </View>
-                                <View>
-                                    <TextInput multiline={true}
-                                    numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onFocus={()=> {
-                                        setShowSearchResults(false)
-                                        setConfirmed(true)
-                                        }} onChangeText={(text) => {setNotes(text)}}/>
-                                    <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
-                        
+                
+                            <View >
+                                <View style={styles.formtop}>
+                                    <Text style={styles.label}>Share Sighting?</Text>
+                                    <Switch style={styles.share} value={share} onValueChange={handleShareToggle}/>
                                 </View>
+
+                                <View style={styles.form}>
+                                    <SearchBar style={{marginVertical: 10}}onShowBirds={displayBirdList} />
+                                </View>
+
+                            </View>
+                        <View></View>
+                            {!!bird ? 
+                                <View>
+                                    <View >
+                                        <Text style={styles.label}>Selected Bird:</Text>
+                                    </View>
+                                    { confirmed ? 
+                                    <View style={styles.row}>
+                                    <Text style={styles.label}>{bird.common_name}</Text>
+                                        <Feather name="x-square" color={"red"} size={30} onPress={() => {
+                                            setBird()
+                                            setConfirmed(false)
+                                            }} />
+                                    </View> : 
+                                    <Card>
+                                        <View style={styles.row}>
+                                            <Text style={styles.label}>{bird.common_name}</Text>
+                                            <Feather style={styles.audioIcon} name="volume-2" size={30} onPress={handlePlayAudio} color={Colors.linkColor}/>
+                                        </View>
+                                        <TouchableOpacity onPress={handleLeaveForBirdDetails}>
+                                            <Image style={styles.birdie} source={{uri: bird.img_url}} />
+                                            </TouchableOpacity>
+                                        <View style={styles.spaceEven}>
+                                            <TouchableOpacity onPress={handleConfirmBird}>
+                                                <Feather name="check-square" size={30} color={"green"} />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={handleUnsetBird}>
+                                                <Feather name="x-square" size={30} color={"red"} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </Card> }
+                                </View> 
+                            : null }
+                        {showSearchResults ?
+                        <View style={{flex: 1}}>
+                            <FlatList keyExtractor={(item, index) => uuid()} data={filteredBirds} renderItem={renderBirdListItem}
+                                numColumns={1} />
                         </View>
-                <Button title="Submit Entry" onPress={submitHandler} />
-                <View style={{flex: 1, paddingBottom: 100}} ></View>
-            </View>
-        </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-</ScrollView>
+                        : null}
+
+                            <View style={styles.inner}>
+
+                            <View style={styles.row}>
+                                <Text style={styles.label}>Notes</Text>
+                                <Entypo name="feather" color={"green"} size={30} />
+                            </View>
+                                    <View>
+                                        <TextInput multiline={true}
+                                        numberOfLines={5} style={styles.textInput} placeholder="Enter notes for your sighting" value={notes} onFocus={()=> {
+                                            setShowSearchResults(false)
+                                            setConfirmed(true)
+                                            }} onChangeText={(text) => {setNotes(text)}}/>
+                                        <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
+                            
+                                    </View>
+                            </View>
+                    <Button title="Submit Entry" onPress={submitHandler} />
+                    <View style={{flex: 1, paddingBottom: 100}} ></View>
+                </View>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+    </ScrollView>
     )
 }
-
-// AddFieldEntryForm.navigationOptions = (navigationData) => {
-//     return {
-//         headerTitle: "Add Bird Sighting",
-//     }
-// }
 
 const styles = StyleSheet.create({
     form: {
