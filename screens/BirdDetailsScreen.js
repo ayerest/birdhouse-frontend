@@ -16,6 +16,8 @@ const BirdDetailsScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const myLocation = useSelector((state) => state.location.myLocation); 
+    const singleBird = useSelector((state) => state.birds.singleBird);
+    const audio = useSelector((state) => state.audio.currentSound);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('blur', () => {
@@ -23,8 +25,7 @@ const BirdDetailsScreen = ({ navigation, route }) => {
         });
 
         return unsubscribe;
-    }, [navigation]);
-
+    }, [navigation, audio]);
 
     useEffect(() => {
         let mounted = true;
@@ -38,35 +39,23 @@ const BirdDetailsScreen = ({ navigation, route }) => {
             loadBird();
         }
         return () => mounted = false;
-    }, [dispatch, singleBird]);
-
-    const singleBird = useSelector(state => {
-        return state.birds.singleBird;
-    })
+    }, [dispatch]);
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
         try {
             await soundObject.loadAsync({uri: singleBird.birdcall});
-            // handlePlayingMultiAudio(soundObject)
             await dispatch(audioActions.playAudio(soundObject))
-
-            // Your sound is playing!
         } catch (error) {
-            // An error occurred!
+            console.log(error);
         }
     }
-
-    const audio = useSelector(state => {
-        return state.audio.currentSound;
-    })
 
     const handleLeaving = async () => {
         if (audio) {
             await audio.stopAsync();
-            dispatch(audioActions.stopAudio);
+            await dispatch(audioActions.stopAudio);
         }
-        navigation.goBack();
     }
     
     const renderDetails = () => {
@@ -78,6 +67,7 @@ const BirdDetailsScreen = ({ navigation, route }) => {
     }
 
     const navToBirdForm = () => {
+        handleLeaving();
         navigation.navigate('My Sightings', {
             screen: 'Add Sighting',
             params: {
