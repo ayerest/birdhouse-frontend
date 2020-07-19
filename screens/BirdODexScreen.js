@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import Colors from '../constants/Colors';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,27 +8,31 @@ import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList'
 import BirdCount from '../components/BirdCount';
 import CategoriesList from '../components/CategoriesList';
-// import { NavigationEvents } from 'react-navigation';
 import * as audioActions from '../store/actions/audio';
 import AvatarButton from '../components/AvatarButton'
 
 const BirdODexScreen = props => {
+    const { navigation } = props;
     const [isLoading, setIsLoading] = useState(false);
     const [showBirds, setShowBirds] = useState(false);
     const [currentBirds, setCurrentBirds] = useState([]);
     const dispatch = useDispatch();
     
-    const filteredBirds = useSelector(state => {
-        return state.birds.filteredBirds;
-    })
+    const filteredBirds = useSelector((state) => state.birds.filteredBirds);
     
-    const myBirds = useSelector(state => {
-        return state.birds.myBirds;
-    })
+    const myBirds = useSelector((state) => state.birds.myBirds);
     
-    const categoryBirds = useSelector(state => {
-        return state.birds.categoryBirds;
-    })
+    const categoryBirds = useSelector((state) => state.birds.categoryBirds);
+
+    const audio = useSelector((state) => state.audio.currentSound);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            handleLeaving();
+        });
+
+        return unsubscribe;
+    }, [navigation, audio]);
     
     const handleOnShowBirds = async (type) => {
         setIsLoading(true);
@@ -64,10 +68,6 @@ const BirdODexScreen = props => {
         }
     }
 
-    const audio = useSelector(state => {
-        return state.audio.currentSound;
-    })
-
     const handleLeaving = async () => {
         if (audio) {
             await audio.stopAsync();
@@ -83,9 +83,6 @@ const BirdODexScreen = props => {
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : null}
             {showBirds && currentBirds.length > 0 ? <BirdsList onShowBirds={handleOnShowBirds} {...props} birdList={currentBirds}/> : null}
             <CategoriesList onShowBirds={handleOnShowBirds}/>
-            {/* <NavigationEvents
-                onWillBlur={handleLeaving}
-            /> */}
         </View>
     )
 }

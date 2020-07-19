@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import uuid from 'uuid';
 import * as birdsActions from '../store/actions/birds';
@@ -7,71 +7,55 @@ import { Audio } from 'expo-av';
 import { Feather } from '@expo/vector-icons';
 import Card from '../components/Card';
 import * as audioActions from '../store/actions/audio';
-import {NavigationEvents} from 'react-navigation';
 import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faBinoculars } from "@fortawesome/free-solid-svg-icons";
 
-const BirdDetailsScreen = props => {
+const BirdDetailsScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const myLocation = useSelector((state) => state.location.myLocation); 
+    const singleBird = useSelector((state) => state.birds.singleBird);
+    const audio = useSelector((state) => state.audio.currentSound);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            handleLeaving();
+        });
+
+        return unsubscribe;
+    }, [navigation, audio]);
 
     useEffect(() => {
         let mounted = true;
         if (mounted) {
             setIsLoading(true);
             const loadBird = async () => {
-                const birdId = props.route.params.birdId;
+                const birdId = route.params.birdId;
                 await dispatch(birdsActions.getBird(birdId));
                 setIsLoading(false);
             }
             loadBird();
         }
         return () => mounted = false;
-    }, [dispatch, singleBird]);
-
-    const singleBird = useSelector(state => {
-        return state.birds.singleBird;
-    })
+    }, [dispatch]);
 
     const handlePlayAudio = async () => {
         const soundObject = new Audio.Sound();
         try {
             await soundObject.loadAsync({uri: singleBird.birdcall});
-            // handlePlayingMultiAudio(soundObject)
             await dispatch(audioActions.playAudio(soundObject))
-
-            // Your sound is playing!
         } catch (error) {
-            // An error occurred!
+            console.log(error);
         }
     }
-
-    const audio = useSelector(state => {
-        return state.audio.currentSound;
-    })
-
-    // const handleBackButtonClick = async () => {
-        
-    //     if (props.navigation.getParam('onComingBack')) {
-    //         const goBack = props.navigation.getParam('onComingBack');
-    //         goBack();
-    //     }
-    //     if (audio) {
-    //         await audio.stopAsync();
-    //         dispatch(audioActions.stopAudio);
-    //     }
-    //     props.navigation.goBack();
-    // }
 
     const handleLeaving = async () => {
         if (audio) {
             await audio.stopAsync();
-            dispatch(audioActions.stopAudio);
+            await dispatch(audioActions.stopAudio);
         }
-        props.navigation.goBack();
     }
     
     const renderDetails = () => {
@@ -83,8 +67,10 @@ const BirdDetailsScreen = props => {
     }
 
     const navToBirdForm = () => {
-        props.navigation.navigate({
-            name: 'Add Sighting', params: {
+        handleLeaving();
+        navigation.navigate('My Sightings', {
+            screen: 'Add Sighting',
+            params: {
                 visible: true,
                 coords: myLocation,
                 bird: singleBird,
@@ -94,9 +80,6 @@ const BirdDetailsScreen = props => {
 
     return (
         <View style={styles.screen}>
-            {/* <NavigationEvents
-                onWillBlur={handleLeaving}
-            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} /> : 
             <ScrollView>
                 <Card>

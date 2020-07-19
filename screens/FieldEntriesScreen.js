@@ -9,17 +9,15 @@ import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import MapView, { Marker } from 'react-native-maps';
 import AvatarButton from '../components/AvatarButton';
-// import { NavigationEvents } from 'react-navigation';
 
 const FieldEntriesScreen = props => {
+    const { navigation } = props;
     const [isLoading, setIsLoading] = useState(false);
     const [showMap, setShowMap] = useState(false);
     const [mapRegion, setMapRegion] = useState(null);
     const [displayIndex, setDisplayIndex] = useState(0);
     const dispatch = useDispatch();
-    const fieldEntriesList = useSelector(state => {
-        return state.entries.entries;
-    })
+    const fieldEntriesList = useSelector((state) => state.entries.entries);
 
     useEffect(() => {
         let mounted = true;
@@ -30,7 +28,24 @@ const FieldEntriesScreen = props => {
         return () => mounted = false;
     }, [dispatch]);
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            handleLeaving();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
+    useEffect(() => {
+        const subscribe = navigation.addListener('focus', () => {
+            handlePageLoad();
+        });
+
+        return subscribe;
+    }, [navigation]);
+
     const loadMyFieldEntries = async () => {
+        setIsLoading(true);
         await dispatch(entriesActions.getMyEntries());
         setIsLoading(false);
     }
@@ -44,7 +59,7 @@ const FieldEntriesScreen = props => {
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() => {
-                    props.navigation.navigate({
+                    navigation.navigate({
                         name: 'Bird Sighting', 
                         params: {
                             entryId: fieldentry.item.id,
@@ -95,7 +110,7 @@ const FieldEntriesScreen = props => {
     const renderMarkers = () => {
         return fieldEntriesList.map(entry => {
             return (<Marker key={entry.id} {...props} title="My Sighting" coordinate={{ latitude: entry.latitude, longitude: entry.longitude }} onPress={() => {
-                props.navigation.navigate({
+                navigation.navigate({
                     name: 'Bird Sighting', params: {
                         entry: entry
                     }
@@ -144,10 +159,6 @@ const FieldEntriesScreen = props => {
     return (
         // if loading, display spinner, otherwise if no entries, say as much or display entries and map option
         <View style={styles.screen}>
-            {/* <NavigationEvents
-                onWillBlur={handleLeaving}
-                onWillFocus={handlePageLoad}
-            /> */}
             {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} /> : 
             fieldEntriesList.length === 0 ? <Text style={styles.label}>You haven't posted any bird sightings yet!</Text> : !showMap ? <View>
                 <Button title="Show My Sightings on the Map!" onPress={showOnMapHandler} />
@@ -172,31 +183,17 @@ export const screenOptions = navData => {
         <Item title="Menu" iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
             onPress={() => { navData.navigation.toggleDrawer() }} />
     </HeaderButtons>)
-    // if (navData.navigation.state.name === 'BirdieSightings') {
-    //     return {
-    //     headerTitle: "My Bird Sightings",
-    //     headerRight: () => (
-    //         <AvatarButton handleClick={() => {
-    //             navData.navigation.navigate({
-    //                 name: 'MyAccount', params: {
-    //                 }
-    //             })
-    //         }} />)
-    //     }
-    // } 
-    // else {
-        return {
-            headerTitle: "My Bird Sightings",
-            headerLeft: () => leftOption,
-            headerRight: () => (
-                <AvatarButton handleClick={() => {
-                    navData.navigation.navigate({
-                        name: 'MyAccount', params: {
-                        }
-                    })
-            }} />)
-        }
-    // }
+    return {
+        headerTitle: "My Bird Sightings",
+        headerLeft: () => leftOption,
+        headerRight: () => (
+            <AvatarButton handleClick={() => {
+                navData.navigation.navigate({
+                    name: 'MyAccount', params: {
+                    }
+                })
+        }} />)
+    }
 }
 
 const styles = StyleSheet.create({

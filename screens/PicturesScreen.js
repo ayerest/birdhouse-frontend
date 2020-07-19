@@ -9,9 +9,8 @@ import { getMyEntries } from '../store/actions/entries';
 import uuid from 'uuid';
 import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
-import { NavigationEvents } from 'react-navigation';
 
-const PicturesScreen = props => {
+const PicturesScreen = ({ navigation }) => {
 
     const photosList = useSelector(state => {
         return state.photos.myPhotos.length > 0 ? state.photos.myPhotos : false;
@@ -24,6 +23,22 @@ const PicturesScreen = props => {
     const [entriesLoading, setEntriesLoading] = useState(false);
     const [displayIndex, setDisplayIndex] = useState(0);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            handleLeaving();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
+    useEffect(() => {
+        const subscribe = navigation.addListener('focus', () => {
+            handlePageLoad();
+        });
+
+        return subscribe;
+    }, [navigation]);
 
     useEffect(() => {
         let mounted = true;
@@ -62,7 +77,7 @@ const PicturesScreen = props => {
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() => {
-                    props.navigation.navigate({
+                    navigation.navigate({
                         name: 'Bird Sighting', params: {
                             entryId: thisPhotosEntry.id,
                             entryName: `${thisPhotosEntry.date}`,
@@ -100,10 +115,6 @@ const PicturesScreen = props => {
 
     return (
         <View style={styles.screen}>
-            {/* <NavigationEvents
-                onWillBlur={handleLeaving}
-                onWillFocus={handlePageLoad}
-            /> */}
             {photosLoading && entriesLoading ? <ActivityIndicator size="large" color={Colors.linkColor}/> : 
             !photosList ? <Text style={styles.label}>You haven't taken any photos yet!</Text> :
             <View>
