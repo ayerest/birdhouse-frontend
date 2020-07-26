@@ -22,7 +22,7 @@ Ruby on Rails backend ([BirdHouse backend](https://github.com/ayerest/birdhouse-
 
 ### Frontend
 
-React Native app with Expo SDK frontend. From Expo: Image Picker, Pedometer, MapView, Audio. Image Picker allows users to select an image from their camera library for an avatar on signup and also allows in-app camera use on the bird sighting form. Pedometer for live updating step count during app use - also updates overall step count for a date range upon login. MapView for live updating and static map views. Audio to play bird calls in app. Used React Hooks to manage local state and Redux.js for app-wide state.
+React Native app with Expo SDK frontend. From Expo: Image Picker, Pedometer, MapView, Audio. Image Picker allows users to select an image from their camera library for an avatar on signup and also allows in-app camera use on the bird sighting form. Pedometer for live updating step count during app use - also updates overall step count for a date range upon login. MapView for live updating and static map views. Audio to play bird calls in app. Used React Hooks (checkout out my [blog post on Hooks](https://dev.to/iris/looky-looky-i-wrote-about-hook-s-y-28o7)) to manage local state and Redux.js for app-wide state.
 
 ## Credits
 
