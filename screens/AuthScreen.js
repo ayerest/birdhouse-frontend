@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView,  Keyboard, TouchableWithoutFeedback, SafeAreaView, StyleSheet, Alert, Image} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createAccount, userLogin } from '../store/actions/auth';
 import Colors from '../constants/Colors';
 import SignupLoginPrompt from '../components/SignupLoginPrompt';
@@ -31,18 +31,12 @@ const AuthScreen = (props) => {
     const imageSelectedHandler = (image) => {
         setAvatar(image);
     }
-
-    const user = useSelector(state => {
-        return state.user.user;
-    })
     
     const signupHandler = async () => {
         setError(null);
         setIsLoading(true);
         try {
             await dispatch(createAccount(username, password, avatar))
-            setAvatar(false)
-            setIsLoading(false);
         } catch (err) {
             setError(err.message);
             setAvatar(false);
@@ -55,8 +49,6 @@ const AuthScreen = (props) => {
         setIsLoading(true);
         try {
             await dispatch(userLogin(username, password));
-            setAvatar(false);
-            setIsLoading(false);
         } catch (err) {
             setError(err.message);
             setAvatar(false);
