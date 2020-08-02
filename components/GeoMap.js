@@ -8,17 +8,8 @@ import LocationLogic from './LocationLogic';
 const GeoMap = (props) => {
     const [newMarker, setNewMarker] = useState(null);
     const [isGettingLocation, setIsGettingLocation] = useState(true);
-    const [visible, setVisible] = useState(true);
     const [follow, setFollow] = useState(!props.showShares);
     const myLocation = useSelector((state) => state.location.myLocation); 
-
-    useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            setVisible(true);
-        }
-        return () => mounted = false;
-    }, [newMarker])
 
     let mapRegion = {
         latitude: (!!myLocation ? myLocation.lat : 46.6062),
@@ -38,10 +29,6 @@ const GeoMap = (props) => {
         setNewMarker({latitude: lat, longitude: lng });
     }
 
-    handleModalClose = () => {
-        setVisible(false);
-    }
-
     return (
         <View style={styles.mapContainer}>
             <LocationLogic stillLoading={loadingLocation} />
@@ -51,8 +38,6 @@ const GeoMap = (props) => {
                         <Marker {...props} title="New Bird Sighting" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 name: 'Add Entry', params: {
-                                    onHandleModalClose: handleModalClose,
-                                    visible: visible,
                                     coords: newMarker
                                 }
                             })

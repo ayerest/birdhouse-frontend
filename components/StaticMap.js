@@ -8,16 +8,11 @@ import LocationLogic from './LocationLogic';
 const StaticMap = (props) => {
     const [newMarker, setNewMarker] = useState(null);
     const [isGettingLocation, setIsGettingLocation] = useState(true);
-    const [visible, setVisible] = useState(true);
     const [mapRegion, setMapRegion] = useState(null);
     const myLocation = useSelector((state) => state.location.myLocation); 
     const sharedEntries = useSelector(state => {
         return state.entries.sharedEntries;
     })
-
-    handleModalClose = () => {
-        setVisible(false);
-    }
 
     useEffect(() => {
         let mounted = true;
@@ -121,7 +116,6 @@ const StaticMap = (props) => {
                         <Marker {...props}   title="New Bird Sighting" coordinate={newMarker} onPress={() => {
                             props.navigation.navigate({
                                 name: 'Add Entry', params: {
-                                    visible: visible,
                                     coords: newMarker
                                 }
                             })
@@ -134,12 +128,6 @@ const StaticMap = (props) => {
         </View>
     )
 }
-
-// StaticMap.navigationOptions = (navigationData) => {
-//     return {
-//         headerTitle: "Map View",
-//     }
-// }
 
 const styles = StyleSheet.create({
     mapContainer: {
