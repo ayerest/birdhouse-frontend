@@ -15,17 +15,11 @@ const MenuDrawerNavigator = createDrawerNavigator();
 
 export const MenuNavigator = () => {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   let mounted = true;
-  //   if (mounted) {
-      
-  //   }
-  //   return () => mounted = false;
-  // }, [user]);
 
   const user = useSelector((state) => {
     return state.user.user;
   });
+  
   return (
     <MenuDrawerNavigator.Navigator
       drawerContent={props => {return <View >
