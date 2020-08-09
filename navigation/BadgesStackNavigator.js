@@ -1,8 +1,8 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
-import BadgesScreen from '../screens/BadgesScreen';
+import BadgesScreen from '../screens/BadgesScreen.jsx';
 import BadgeCard from '../components/BadgeCard';
-import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
+import BadgeDetailsScreen from '../screens/BadgeDetailsScreen.jsx';
 import { screenOptions } from './ScreenOptions'; 
 import defaultNavOptions from './DefaultNavOptions';
 

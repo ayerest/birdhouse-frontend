@@ -24,6 +24,7 @@ const BadgeCard = props => {
     const myEntries = useSelector(state => {
         return state.entries.entries;
     });
+    console.log(props);
 
     useEffect(() => {
         let mounted = true;
@@ -94,13 +95,13 @@ const BadgeCard = props => {
         <Card style={styles.card}>
             <View>
                 {renderBadgeText()}
-                <TouchableOpacity onPress={() => {
+                {/* <TouchableOpacity onPress={() => {
                     props.navigation.navigate({
                         name: 'Badge Details',
                     })
                 }}>
                     {renderMedalImage()}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Text style={styles.center}>Earned on: {badge.updated_at.slice(0, 10)}</Text>
                 {showInfo ? <BadgesInfo category={badge.category} /> : null}
                 <View>
