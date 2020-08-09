@@ -41,7 +41,7 @@ const BadgesScreen = (props) => {
   const badgesList = useSelector((state) => state.badges.myBadges);
 
   const renderBadgeItem = (badge) => (
-    <BadgeCard badge={badge.item} />
+    <BadgeCard badge={badge.item} {...props} />
   );
 
   return (
