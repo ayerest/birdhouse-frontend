@@ -111,7 +111,6 @@ const FieldEntriesScreen = (props) => {
       maxX = Math.max(maxX, point.latitude);
       minY = Math.min(minY, point.longitude);
       maxY = Math.max(maxY, point.longitude);
-      return 'hello';
     });
 
     const midX = (minX + maxX) / 2;
@@ -148,7 +147,7 @@ const FieldEntriesScreen = (props) => {
 
   const showOnMapHandler = () => {
     const points = fieldEntriesList.map((e) => ({ latitude: e.latitude, longitude: e.longitude }));
-    if (!points.length === 0) {
+    if (points.length !== 0) {
       getNewMapRegion(points);
       setShowMap(true);
     }

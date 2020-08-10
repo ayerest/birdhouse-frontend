@@ -92,23 +92,23 @@ const BadgeCard = props => {
     }
 
     return (
-        <Card style={styles.card}>
-            <View>
-                {renderBadgeText()}
-                {/* <TouchableOpacity onPress={() => {
+      <Card style={styles.card}>
+          <View>
+              {renderBadgeText()}
+              <TouchableOpacity onPress={() => {
                     props.navigation.navigate({
                         name: 'Badge Details',
                     })
                 }}>
-                    {renderMedalImage()}
-                </TouchableOpacity> */}
-                <Text style={styles.center}>Earned on: {badge.updated_at.slice(0, 10)}</Text>
-                {showInfo ? <BadgesInfo category={badge.category} /> : null}
-                <View>
-                    <TouchableOpacity onPress={() => {
+                  {renderMedalImage()}
+                </TouchableOpacity>
+              <Text style={styles.center}>Earned on: {badge.updated_at.slice(0, 10)}</Text>
+              {showInfo ? <BadgesInfo category={badge.category} /> : null}
+              <View>
+                  <TouchableOpacity onPress={() => {
                         setShowInfo(!showInfo);
                     }}>
-                        <Feather style={styles.info} name="info" size={40} color={"cornflowerblue"} />
+                      <Feather style={styles.info} name="info" size={40} color={"cornflowerblue"} />
                     </TouchableOpacity>
                 </View>
             </View>
