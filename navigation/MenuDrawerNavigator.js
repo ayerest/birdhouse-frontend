@@ -7,11 +7,11 @@ import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as authActions from '../store/actions/auth';
 import BadgesNavigator from './BadgesStackNavigator';
-import { PicturesNavigator } from './PicturesStackNavigator';
-import { FieldEntriesNavigator } from './FieldEntriesNavigator';
-import { BirdsNavigator } from './BirdsStackNavigator';
-import { AccountNavigator } from './AccountStackNavigator';
-import { MainNavigator } from './MainStackNavigator';
+import PicturesNavigator from './PicturesStackNavigator';
+import FieldEntriesNavigator from './FieldEntriesNavigator';
+import BirdsNavigator from './BirdsStackNavigator';
+import AccountNavigator from './AccountStackNavigator';
+import MainNavigator from './MainStackNavigator';
 
 const MenuDrawerNavigator = createDrawerNavigator();
 
@@ -65,7 +65,7 @@ const MenuNavigator = () => {
         name="Home"
         component={MainNavigator}
         options={{
-          drawerIcon: (props) => (
+          drawerIcon: () => (
             <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdhouse_logo_drawn.png')} />
           ),
         }}

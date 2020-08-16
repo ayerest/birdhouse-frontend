@@ -1,12 +1,14 @@
-import Colors from "../constants/Colors";
+import Colors from '../constants/Colors';
 
-export default defaultNavOptions = {
+const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Colors.myColor,
   },
   headerTitleStyle: {
-    fontFamily: "Fred-Great",
+    fontFamily: 'Fred-Great',
     fontSize: 20,
-    fontWeight: '400'
+    fontWeight: '400',
   },
 };
+
+export default defaultNavOptions;

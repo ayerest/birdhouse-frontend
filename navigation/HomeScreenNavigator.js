@@ -1,19 +1,19 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import MainViewScreen from "../screens/MainViewScreen";
-import GeoMap from "../components/GeoMap";
-import StaticMap from "../components/StaticMap";
-import FieldEntryDetailsScreen from "../screens/FieldEntryDetailsScreen";
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import MainViewScreen from '../screens/MainViewScreen';
+import GeoMap from '../components/GeoMap';
+import StaticMap from '../components/StaticMap';
+import FieldEntryDetailsScreen from '../screens/FieldEntryDetailsScreen';
 import BirdDetailsScreen, {
   screenOptions as birdDetailsScreenOptions,
-} from "../screens/BirdDetailsScreen";
-import AddFieldEntryForm from "../components/AddFieldEntryForm";
-import { screenOptions } from './ScreenOptions';
-import defaultNavOptions from "./DefaultNavOptions";
+} from '../screens/BirdDetailsScreen';
+import AddFieldEntryForm from '../components/AddFieldEntryForm';
+import screenOptions from './ScreenOptions';
+import defaultNavOptions from './DefaultNavOptions';
 
 const HomeScreenStackNavigator = createStackNavigator();
 
-export const HomeScreenNavigator = () => {
+const HomeScreenNavigator = () => {
   return (
     <HomeScreenStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <HomeScreenStackNavigator.Screen
@@ -40,3 +40,5 @@ export const HomeScreenNavigator = () => {
     </HomeScreenStackNavigator.Navigator>
   );
 };
+
+export default HomeScreenNavigator;

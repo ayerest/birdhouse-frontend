@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BadgesScreen from '../screens/BadgesScreen';
 import BadgeCard from '../components/BadgeCard';
 import BadgeDetailsScreen from '../screens/BadgeDetailsScreen';
-import { screenOptions } from './ScreenOptions';
+import screenOptions from './ScreenOptions';
 import defaultNavOptions from './DefaultNavOptions';
 
 const BadgesStackNavigator = createStackNavigator();
