@@ -60,19 +60,19 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/2birdsightings.png'),
-      require('./assets/images/2birdspecies.png'),
-      require('./assets/images/5birdsighting.png'),
-      require('./assets/images/5birdspecies.png'),
-      require('./assets/images/10birdsightings.png'),
-      require('./assets/images/10birdspecies.png'),
-      require('./assets/images/1000steps.png'),
-      require('./assets/images/5000steps.png'),
-      require('./assets/images/20000steps.png'),
+      require('./assets/images/SightingsBronze.png'),
+      require('./assets/images/BirdsBronze.png'),
+      require('./assets/images/SightingsSilver.png'),
+      require('./assets/images/BirdsSilver.png'),
+      require('./assets/images/SightingsGold.png'),
+      require('./assets/images/BirdsGold.png'),
+      require('./assets/images/StepsBronze.png'),
+      require('./assets/images/StepsSilver.png'),
+      require('./assets/images/StepsGold.png'),
       require('./assets/images/birdicon.png'),
-      require('./assets/images/logingold.png'),
-      require('./assets/images/loginsilver.png'),
-      require('./assets/images/loginweekly.png'),
+      require('./assets/images/LoginGold.png'),
+      require('./assets/images/LoginSilver.png'),
+      require('./assets/images/LoginBronze.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
