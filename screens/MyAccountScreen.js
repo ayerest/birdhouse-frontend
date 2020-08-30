@@ -45,7 +45,6 @@ const MyAccountScreen = ({ navigation }) => {
 
   const user = useSelector((state) => state.user.user);
 
-  // const steps = useSelector((state) => state.steps.myTotalSteps);
   const steppage = useSelector((state) => state.steps);
 
   const myBirds = useSelector((state) => state.birds.myBirds);

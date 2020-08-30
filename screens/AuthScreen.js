@@ -10,6 +10,7 @@ import Colors from '../constants/Colors';
 import SignupLoginPrompt from '../components/SignupLoginPrompt';
 import SignupPrompt from '../components/SignupPrompt';
 import LoginPrompt from '../components/LoginPrompt';
+import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
 
 const styles = StyleSheet.create({
   screen: {
@@ -48,7 +49,7 @@ const AuthScreen = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState('https://www.allaboutbirds.org/guide/assets/photo/63666541-480px.jpg');
+  const [avatar, setAvatar] = useState(null);
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +72,6 @@ const AuthScreen = () => {
       await dispatch(createAccount(username, password, avatar));
     } catch (err) {
       setError(err.message);
-      setAvatar(false);
       setIsLoading(false);
     }
   };
@@ -89,8 +89,7 @@ const AuthScreen = () => {
   };
 
   const birdHouseLogo = () => (
-    // eslint-disable-next-line global-require
-    <Image style={styles.logo} source={require('../assets/images/birdhouse_logo_drawn.png')} />);
+    <Image style={styles.logo} source={BirdHouseLogo} />);
 
   return (
     <KeyboardAvoidingView

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   View, Text, StyleSheet, Platform, FlatList, Image,
-  ActivityIndicator, TouchableOpacity, Button, Alert,
+  ActivityIndicator, TouchableOpacity, Button, Alert, Dimensions,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import uuid from 'uuid';
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 15,
   },
   card: {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 300,
-    width: '100%',
+    width: Dimensions.get('window').width * 0.9,
     borderRadius: 15,
     borderWidth: 2,
     borderColor: 'black',
@@ -137,9 +138,9 @@ const PicturesScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       {photosLoading && entriesLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
-      {!photosLoading && !entriesLoading && !photosList
-      && <Text style={styles.label}>You haven`&apos;`t taken any photos yet!</Text>}
-      {!photosLoading && !entriesLoading && photosList
+      {!photosLoading && !entriesLoading && photosList.length === 0
+      && <Text style={styles.label}>You haven&apos;t taken any photos yet!</Text>}
+      {!photosLoading && !entriesLoading && photosList.length > 0
             && (
             <View>
               <View style={styles.row}>

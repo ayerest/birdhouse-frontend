@@ -12,6 +12,7 @@ import FieldEntriesNavigator from './FieldEntriesNavigator';
 import BirdsNavigator from './BirdsStackNavigator';
 import AccountNavigator from './AccountStackNavigator';
 import MainNavigator from './MainStackNavigator';
+import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
 
 const MenuDrawerNavigator = createDrawerNavigator();
 
@@ -66,7 +67,7 @@ const MenuNavigator = () => {
         component={MainNavigator}
         options={{
           drawerIcon: () => (
-            <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdhouse_logo_drawn.png')} />
+            <Image style={{ height: 50, width: 50 }} source={BirdHouseLogo} />
           ),
         }}
       />

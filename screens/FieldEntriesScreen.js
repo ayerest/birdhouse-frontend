@@ -13,6 +13,7 @@ import Colors from '../constants/Colors';
 import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
 import AvatarButton from '../components/AvatarButton';
+import BirdIcon from '../assets/images/birdicon.png';
 
 const styles = StyleSheet.create({
   screen: {
@@ -141,7 +142,7 @@ const FieldEntriesScreen = (props) => {
         });
       }}
     >
-      <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
+      <Image style={{ height: 50, width: 50 }} source={BirdIcon} />
     </Marker>
   ));
 
@@ -178,10 +179,10 @@ const FieldEntriesScreen = (props) => {
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isLoading && fieldEntriesList.length === 0 && (
         <Text style={styles.label}>
-          You haven`&apos;`t posted any bird sightings yet!
+          You haven&apos;t posted any bird sightings yet!
         </Text>
       )}
-      {!isLoading && !showMap && (
+      {!isLoading && !showMap && fieldEntriesList.length > 0 && (
         <View>
           <Button
             title="Show My Sightings on the Map!"

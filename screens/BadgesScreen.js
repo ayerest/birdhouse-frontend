@@ -46,20 +46,20 @@ const BadgesScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} />
-        : (
-          <ScrollView>
-            <FlatList
-              keyExtractor={() => uuid()}
-              data={badgesList}
-              renderItem={renderBadgeItem}
-              numColumns={1}
-            />
-            {!isLoading && badgesList.length === 0
-              ? <Text style={styles.label}>You haven`&apos;`t earned any badges yet!</Text>
-              : null}
-          </ScrollView>
-        )}
+      {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
+      {!isLoading && badgesList.length > 0
+       && (
+       <ScrollView>
+         <FlatList
+           keyExtractor={() => uuid()}
+           data={badgesList}
+           renderItem={renderBadgeItem}
+           numColumns={1}
+         />
+       </ScrollView>
+       )}
+      {!isLoading && badgesList.length === 0
+              && <Text style={styles.label}>You haven&apos;t earned any badges yet!</Text>}
     </View>
   );
 };
