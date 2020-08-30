@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  card: {
+    backgroundColor: Colors.myColor,
+  },
   image: {
     resizeMode: 'cover',
     height: Dimensions.get('window').height * 0.3,
@@ -146,7 +149,7 @@ const BirdDetailsScreen = ({ navigation, route }) => {
       {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} />
         : (
           <ScrollView>
-            <Card>
+            <Card style={styles.card}>
               <ScrollView maximumZoomScale={2} horizontal contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
                 <View>
                   <Image

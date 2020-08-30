@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 15,
   },
+  card: {
+    backgroundColor: Colors.myColor,
+  },
   image: {
     height: 300,
     width: '100%',
@@ -109,7 +112,7 @@ const PicturesScreen = ({ navigation }) => {
           });
         }}
       >
-        <Card>
+        <Card style={styles.card}>
           <Image style={styles.image} source={{ uri: image.item.img_url }} />
         </Card>
       </TouchableOpacity>

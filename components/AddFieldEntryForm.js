@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
   audioIcon: {
     paddingBottom: 10,
   },
+  card: {
+    backgroundColor: Colors.myColor,
+  },
 });
 
 const AddFieldEntryForm = ({ navigation, route }) => {
@@ -260,7 +263,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
                     </View>
                   )
                   : (
-                    <Card>
+                    <Card style={styles.card}>
                       <View style={styles.row}>
                         <Text style={styles.label}>{bird.common_name}</Text>
                         <Feather style={styles.audioIcon} name="volume-2" size={30} onPress={handlePlayAudio} color={Colors.linkColor} />
