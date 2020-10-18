@@ -1,24 +1,34 @@
+/* eslint-disable global-require */
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Platform, StatusBar, StyleSheet, View,
+} from 'react-native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import AppNavigator from './navigation/AppNavigator';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 import ReduxThunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import AppNavigator from './navigation/AppNavigator';
 import entriesReducer from './store/reducers/entries';
 import birdsReducer from './store/reducers/birds';
 import authReducer from './store/reducers/auth';
-import badgesReducer from './store/reducers/badges'
-import {Provider} from 'react-redux';
+import badgesReducer from './store/reducers/badges';
 import photosReducer from './store/reducers/photos';
 import stepsReducer from './store/reducers/steps';
 import audioReducer from './store/reducers/audio';
 import factoidsReducer from './store/reducers/factoids';
 import locationReducer from './store/reducers/location';
 
-useScreens();
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
+
+enableScreens();
 
 const rootReducer = combineReducers({
   entries: entriesReducer,
@@ -30,7 +40,7 @@ const rootReducer = combineReducers({
   audio: audioReducer,
   factoids: factoidsReducer,
   location: locationReducer,
-})
+});
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
@@ -45,16 +55,15 @@ export default function App(props) {
         onFinish={() => setLoadingComplete(true)}
       />
     );
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <Provider store={store}>
-          <AppNavigator />
-        </Provider>
-      </View>
-    );
   }
+  return (
+    <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    </View>
+  );
 }
 
 async function loadResourcesAsync() {
@@ -81,7 +90,7 @@ async function loadResourcesAsync() {
       // remove this if you are not using it in your app
       // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Roboto-Condensed': require('./assets/fonts/RobotoCondensed-Regular.ttf'),
-      'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf')
+      'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf'),
     }),
   ]);
 }
@@ -91,10 +100,3 @@ function handleLoadingError(error) {
   // service, for example Sentry
   console.warn(error);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

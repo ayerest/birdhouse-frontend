@@ -1,6 +1,7 @@
+/* eslint-disable global-require */
 import React from 'react';
 import {
-  View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Dimensions,
+  View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Dimensions, SafeAreaView
 } from 'react-native';
 import uuid from 'uuid';
 import MapView, { Marker } from 'react-native-maps';
@@ -15,14 +16,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    // height: '100%',
   },
   image: {
     width: Dimensions.get('window').width * 0.85,
     height: Dimensions.get('window').height * 0.4,
-    resizeMode: 'cover',
+    // resizeMode: 'cover',
     borderRadius: 20,
     justifyContent: 'center',
-    marginTop: 0,
+    // marginTop: 0,
   },
   map: {
     height: '100%',
@@ -43,7 +45,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   imageContainer: {
-    flex: 1,
+    // flex: 1,
+    height: '40%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
-    height: '15%',
+    // height: '15%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -74,15 +77,13 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
   const entryDate = moment(route.params.entry.date).format('MMMM Do YYYY, h:mm:ss a');
 
   const renderFieldEntryImage = (image) => (
-    <View>
-      <Image style={styles.image} source={{ uri: image.item.img_url }} />
-    </View>
+    <Image style={styles.image} source={{ uri: image.item.img_url }} />
   );
 
   return (
 
     <Card style={styles.screen}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 300 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Text style={styles.right}>{entryDate}</Text>
         <TouchableOpacity
           style={styles.imageContainer}
@@ -105,7 +106,7 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
           <Text style={styles.notes}>Notes:</Text>
           <Text style={styles.text}>{route.params.entry.notes}</Text>
         </View>
-        <View style={styles.mapContainer}>
+        {/* <View style={styles.mapContainer}> */}
           <MapView
             style={styles.map}
             region={{
@@ -123,8 +124,8 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
               <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
             </Marker>
           </MapView>
-        </View>
-      </ScrollView>
+        {/* </View> */}
+      </SafeAreaView>
     </Card>
   );
 };

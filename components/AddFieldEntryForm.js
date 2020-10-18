@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ScrollView, View, Text, TextInput, Button, StyleSheet, FlatList,
+  View, Text, TextInput, Button, StyleSheet, FlatList,
   TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback,
-  KeyboardAvoidingView, Alert, Dimensions,
+  KeyboardAvoidingView, Alert, Dimensions, SafeAreaView
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'uuid';
@@ -14,7 +14,6 @@ import TakePicture from './TakePicture';
 import * as entriesActions from '../store/actions/entries';
 import SearchBar from './SearchBar';
 import Card from './Card';
-
 import * as audioActions from '../store/actions/audio';
 import Colors from '../constants/Colors';
 
@@ -220,26 +219,22 @@ const AddFieldEntryForm = ({ navigation, route }) => {
   // padding works better for android and position works best for ios with keyboardavoiding
   // use position with keyboardvertical offset to move field up
   return (
-    <ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView behavior="positon" style={{ flex: 1 }} keyboardVerticalOffset={50}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{ flex: 1 }}>
-
             <View style={styles.space}>
               <Text style={styles.label}>{fullDate}</Text>
               <Feather name="x-square" color="red" size={35} onPress={handleBackButtonClick} />
             </View>
-
+            <View style={styles.formtop}>
+              <Text style={styles.label}>Share Sighting?</Text>
+              <Switch style={styles.share} value={share} onValueChange={handleShareToggle} />
+            </View>
             <View>
-              <View style={styles.formtop}>
-                <Text style={styles.label}>Share Sighting?</Text>
-                <Switch style={styles.share} value={share} onValueChange={handleShareToggle} />
-              </View>
-
               <View style={styles.form}>
                 <SearchBar style={{ marginVertical: 10 }} onShowBirds={displayBirdList} />
               </View>
-
             </View>
             <View />
             {bird ? (
@@ -285,7 +280,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
             )
               : null }
             {showSearchResults
-              ? (
+              && (
                 <View style={{ flex: 1 }}>
                   <FlatList
                     keyExtractor={() => uuid()}
@@ -294,11 +289,8 @@ const AddFieldEntryForm = ({ navigation, route }) => {
                     numColumns={1}
                   />
                 </View>
-              )
-              : null}
-
+              )}
             <View style={styles.inner}>
-
               <View style={styles.row}>
                 <Text style={styles.label}>Notes</Text>
                 <Entypo name="feather" color="green" size={30} />
@@ -325,7 +317,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
