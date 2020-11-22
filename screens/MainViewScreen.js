@@ -14,6 +14,11 @@ import SharedEntries from '../components/SharedEntries';
 import * as stepsActions from '../store/actions/steps';
 import StaticMap from '../components/StaticMap';
 import AvatarButton from '../components/AvatarButton';
+import Colors from '../constants/Colors';
+
+// TODO: remove antipattern in useeffect
+// TODO: remove ternaries from jsx where possible
+// TODO: refacto stylesheet and move to a different file
 
 const styles = StyleSheet.create({
   screen: {
@@ -22,6 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '80%',
     width: '100%',
+    backgroundColor: Colors.myColor,
   },
   row: {
     flexDirection: 'row',
@@ -31,6 +37,7 @@ const styles = StyleSheet.create({
   steps: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: Colors.myColor,
   },
   mapExtras: {
     marginTop: 10,

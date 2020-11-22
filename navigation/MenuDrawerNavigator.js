@@ -14,6 +14,8 @@ import AccountNavigator from './AccountStackNavigator';
 import MainNavigator from './MainStackNavigator';
 import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
 
+// TODO: menu nav stacks should always reset to the top of the stack on press
+
 const MenuDrawerNavigator = createDrawerNavigator();
 
 const styles = StyleSheet.create({

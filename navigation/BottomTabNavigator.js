@@ -5,6 +5,8 @@ import BirdsNavigator from './BirdsStackNavigator';
 import HomeScreenNavigator from './HomeScreenNavigator';
 import Colors from '../constants/Colors';
 
+// TODO: bottom tabs should always reset nav stack
+
 const BirdHouseBottomTabsNavigator = createBottomTabNavigator();
 
 const BirdHouseBottomTabs = () => (

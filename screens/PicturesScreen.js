@@ -14,12 +14,17 @@ import { getMyEntries } from '../store/actions/entries';
 import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
 
+// TODO: fix antipattern in useeffect
+// TODO: remove uuid
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 15,
+    backgroundColor: Colors.myColor,
   },
   card: {
     backgroundColor: Colors.myColor,

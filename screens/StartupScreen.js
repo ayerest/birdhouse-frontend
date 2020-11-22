@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
 
+// TODO: remove antipattern from useeffect
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

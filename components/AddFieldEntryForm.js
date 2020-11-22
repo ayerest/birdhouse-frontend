@@ -20,6 +20,8 @@ import Colors from '../constants/Colors';
 // TODO: don't use UUID for keys anymore
 // TODO: refactor stylesheet and move to separate file
 // TODO: refactor nested ternary statements in jsx
+// TODO: fix memory leak caused by handleunsetbird useeffect fn
+// TODO: navigation.goBack is buggy for nav stack
 
 const styles = StyleSheet.create({
   form: {

@@ -17,6 +17,7 @@ import AvatarButton from '../components/AvatarButton';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: Colors.myColor,
   },
   category: {
     borderBottomColor: 'black',

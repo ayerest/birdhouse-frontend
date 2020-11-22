@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, FlatList, Platform, ActivityIndicator,
+  View, Text, StyleSheet, FlatList, Platform, ActivityIndicator, SafeAreaView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -12,11 +12,15 @@ import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import AvatarButton from '../components/AvatarButton';
 
+// TODO: remove uuid
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.myColor,
   },
   label: {
     fontSize: 16,
@@ -31,8 +35,8 @@ const BadgesScreen = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const loadMyBadges = async () => {
-      setIsLoading(true);
       await dispatch(badgesActions.getMyBadges());
       setIsLoading(false);
     };
@@ -49,14 +53,14 @@ const BadgesScreen = (props) => {
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isLoading && badgesList.length > 0
        && (
-       <ScrollView>
+       <SafeAreaView>
          <FlatList
            keyExtractor={() => uuid()}
            data={badgesList}
            renderItem={renderBadgeItem}
            numColumns={1}
          />
-       </ScrollView>
+       </SafeAreaView>
        )}
       {!isLoading && badgesList.length === 0
               && <Text style={styles.label}>You haven&apos;t earned any badges yet!</Text>}
