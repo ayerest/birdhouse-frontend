@@ -17,6 +17,10 @@ import Card from './Card';
 import * as audioActions from '../store/actions/audio';
 import Colors from '../constants/Colors';
 
+// TODO: don't use UUID for keys anymore
+// TODO: refactor stylesheet and move to separate file
+// TODO: refactor nested ternary statements in jsx
+
 const styles = StyleSheet.create({
   form: {
     justifyContent: 'center',
@@ -28,6 +32,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     marginRight: 10,
+    marginTop: 5,
+    paddingTop: 5,
     alignSelf: 'center',
     fontFamily: 'Roboto-Condensed',
   },
@@ -41,10 +47,8 @@ const styles = StyleSheet.create({
   },
   formtop: {
     flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     marginLeft: '4%',
+    padding: 2,
   },
   birdie: {
     width: Dimensions.get('window').width / 2,
@@ -75,8 +79,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: '4%',
-    flex: 1,
+    marginLeft: '4%',
+    padding: 2,
   },
   spaceEven: {
     flexDirection: 'row',
@@ -205,7 +209,6 @@ const AddFieldEntryForm = ({ navigation, route }) => {
       params: {
         birdId: bird.id,
         birdName: bird.common_name,
-        // onComingBack: handleComingBack
       },
     });
   };
@@ -222,10 +225,6 @@ const AddFieldEntryForm = ({ navigation, route }) => {
             <View style={styles.space}>
               <Text style={styles.label}>{fullDate}</Text>
               <Feather name="x-square" color="red" size={35} onPress={handleBackButtonClick} />
-            </View>
-            <View style={styles.formtop}>
-              <Text style={styles.label}>Share Sighting?</Text>
-              <Switch style={styles.share} value={share} onValueChange={handleShareToggle} />
             </View>
             <View>
               <View style={styles.form}>
@@ -307,6 +306,13 @@ const AddFieldEntryForm = ({ navigation, route }) => {
                 <TakePicture style={styles.imagePicker} onImageSelected={imageSelectedHandler} />
 
               </View>
+            </View>
+            <View style={styles.share}>
+              <View style={styles.formtop}>
+                <Text style={styles.label}>Share Sighting?</Text>
+                <Switch style={styles.share} value={share} onValueChange={handleShareToggle} />
+              </View>
+
             </View>
             <Button title="Submit Entry" onPress={submitHandler} />
             <View style={{ flex: 1, paddingBottom: 100 }} />
