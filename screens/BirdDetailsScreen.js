@@ -15,6 +15,8 @@ import * as audioActions from '../store/actions/audio';
 import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
+// TODO: fix memory leak on first screen load
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

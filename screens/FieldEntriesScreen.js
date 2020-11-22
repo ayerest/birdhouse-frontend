@@ -15,11 +15,17 @@ import EntryCard from '../components/EntryCard';
 import AvatarButton from '../components/AvatarButton';
 import BirdIcon from '../assets/images/birdicon.png';
 
+// TODO: remove uuid from keys
+// TODO: only display "older" button if there are older entries to display
+// TODO: display number of bird sighting on the page
+// TODO: refactor stylesheet and move to a separate file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.myColor,
   },
   mapContainer: {
     height: '98%',
@@ -183,7 +189,7 @@ const FieldEntriesScreen = (props) => {
         </Text>
       )}
       {!isLoading && !showMap && fieldEntriesList.length > 0 && (
-        <View>
+        <View style={styles.button}>
           <Button
             title="Show My Sightings on the Map!"
             onPress={showOnMapHandler}

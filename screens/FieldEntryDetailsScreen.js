@@ -11,20 +11,21 @@ import Card from '../components/Card';
 import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
+// TODO: remove uuid for keys
+// TODO: refactor stylesheet and move to a separate file
+
 const styles = StyleSheet.create({
   screen: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    // height: '100%',
   },
   image: {
-    width: Dimensions.get('window').width * 0.85,
-    height: Dimensions.get('window').height * 0.4,
-    // resizeMode: 'cover',
+    width: Dimensions.get('window').width * 0.9,
+    height: Dimensions.get('window').height * 0.5,
+    resizeMode: 'contain',
     borderRadius: 20,
     justifyContent: 'center',
-    // marginTop: 0,
   },
   map: {
     height: '100%',
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   imageContainer: {
-    // flex: 1,
+    flex: 1,
     height: '40%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -66,8 +67,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   flex: {
-    flex: 1,
-    // height: '15%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -83,7 +82,7 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
   return (
 
     <Card style={styles.screen}>
-      <SafeAreaView style={{ flex: 1 }}>
+      {/* <SafeAreaView > */}
         <Text style={styles.right}>{entryDate}</Text>
         <TouchableOpacity
           style={styles.imageContainer}
@@ -125,7 +124,7 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
             </Marker>
           </MapView>
         {/* </View> */}
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </Card>
   );
 };
