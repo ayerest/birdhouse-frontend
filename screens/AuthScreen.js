@@ -15,6 +15,7 @@ import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: Colors.myColor,
   },
   input: {
     width: '90%',
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
   authContainer: {
     backgroundColor: 'white',
-    height: '95%',
+    height: '100%',
   },
   label: {
     paddingTop: 10,
