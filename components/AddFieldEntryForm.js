@@ -141,19 +141,15 @@ const AddFieldEntryForm = ({ navigation, route }) => {
       navigation.goBack();
     } catch (err) {
       setError(err.message);
-      Alert.alert('You must select a bird using the search bar to submit your entry and enter notes for your sighting.', error);
+      Alert.alert('You must select a bird species using the search bar to submit your entry and enter notes for your sighting.');
     }
   };
 
-  const imageSelectedHandler = (myImage) => {
-    setImage(myImage);
-  };
+  const imageSelectedHandler = (myImage) => setImage(myImage);
 
   const filteredBirds = useSelector((state) => state.birds.filteredBirds);
 
-  const displayBirdList = (display = true) => {
-    display ? setShowSearchResults(true) : setShowSearchResults(false);
-  };
+  const displayBirdList = (display = true) => setShowSearchResults(display);
 
   const selectThatBird = (myBird) => {
     setBird(myBird);
