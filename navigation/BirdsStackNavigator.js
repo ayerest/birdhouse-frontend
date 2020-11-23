@@ -26,11 +26,6 @@ const BirdsNavigator = () => (
       name="Add Sighting"
       component={AddFieldEntryForm}
     />
-     {/* <BirdsStackNavigator.Screen
-      name="Bird Details 2"
-      component={BirdDetailsScreen}
-      options={birdDetailsScreenOptions}
-    /> */}
   </BirdsStackNavigator.Navigator>
 );
 

@@ -12,6 +12,8 @@ import SignupPrompt from '../components/SignupPrompt';
 import LoginPrompt from '../components/LoginPrompt';
 import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
 
+// TODO: refactor stylesheet and move to a separate file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

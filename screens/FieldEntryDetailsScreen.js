@@ -82,49 +82,45 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
   return (
 
     <Card style={styles.screen}>
-      {/* <SafeAreaView > */}
-        <Text style={styles.right}>{entryDate}</Text>
-        <TouchableOpacity
-          style={styles.imageContainer}
-          onPress={() => {
-            navigation.navigate({
-              name: 'Bird Details',
-              params: {
-                birdId: route.params.entry.bird.id,
-                birdName: route.params.entry.bird.common_name,
-                user: route.params.entry.user,
-              },
-            });
-          }}
+      <Text style={styles.right}>{entryDate}</Text>
+      <TouchableOpacity
+        style={styles.imageContainer}
+        onPress={() => {
+          navigation.navigate({
+            name: 'Bird Details',
+            params: {
+              birdId: route.params.entry.bird.id,
+              birdName: route.params.entry.bird.common_name,
+              user: route.params.entry.user,
+            },
+          });
+        }}
+      >
+        <Text style={styles.birdDetails}>{route.params.entry.bird.common_name}</Text>
+        {route.params.entry.images.length > 0
+          ? <FlatList keyExtractor={() => uuid()} data={route.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')} />}
+      </TouchableOpacity>
+      <View style={styles.flex}>
+        <Text style={styles.notes}>Notes:</Text>
+        <Text style={styles.text}>{route.params.entry.notes}</Text>
+      </View>
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: route.params.entry.latitude,
+          longitude: route.params.entry.longitude,
+          latitudeDelta: 0.03,
+          longitudeDelta: 0.03,
+        }}
+      >
+        <Marker
+          coordinate={
+              { latitude: route.params.entry.latitude, longitude: route.params.entry.longitude }
+              }
         >
-          <Text style={styles.birdDetails}>{route.params.entry.bird.common_name}</Text>
-          {route.params.entry.images.length > 0
-            ? <FlatList keyExtractor={() => uuid()} data={route.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')} />}
-        </TouchableOpacity>
-        <View style={styles.flex}>
-          <Text style={styles.notes}>Notes:</Text>
-          <Text style={styles.text}>{route.params.entry.notes}</Text>
-        </View>
-        {/* <View style={styles.mapContainer}> */}
-          <MapView
-            style={styles.map}
-            region={{
-              latitude: route.params.entry.latitude,
-              longitude: route.params.entry.longitude,
-              latitudeDelta: 0.03,
-              longitudeDelta: 0.03,
-            }}
-          >
-            <Marker
-              coordinate={
-                  { latitude: route.params.entry.latitude, longitude: route.params.entry.longitude }
-                  }
-            >
-              <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
-            </Marker>
-          </MapView>
-        {/* </View> */}
-      {/* </SafeAreaView> */}
+          <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
+        </Marker>
+      </MapView>
     </Card>
   );
 };

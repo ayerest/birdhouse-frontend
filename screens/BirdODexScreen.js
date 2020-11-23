@@ -14,6 +14,9 @@ import CategoriesList from '../components/CategoriesList';
 import * as audioActions from '../store/actions/audio';
 import AvatarButton from '../components/AvatarButton';
 
+// TODO: refactor stylesheet and move to a separate file
+// TODO: remove ternary statements from jsx
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -34,11 +37,8 @@ const BirdODexScreen = (props) => {
   const dispatch = useDispatch();
 
   const filteredBirds = useSelector((state) => state.birds.filteredBirds);
-
   const myBirds = useSelector((state) => state.birds.myBirds);
-
   const categoryBirds = useSelector((state) => state.birds.categoryBirds);
-
   const audio = useSelector((state) => state.audio.currentSound);
 
   useEffect(() => {

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Card from '../components/Card';
 import * as factoidActions from '../store/actions/factoids';
 
+// TODO: refactor stylesheet and move to a separate file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

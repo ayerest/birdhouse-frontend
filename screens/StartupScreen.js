@@ -7,6 +7,8 @@ import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
 
 // TODO: remove antipattern from useeffect
+// TODO: refactor stylesheet and move to another file
+
 
 const styles = StyleSheet.create({
   screen: {

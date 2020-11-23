@@ -5,7 +5,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import uuid from 'uuid';
-import { ScrollView } from 'react-native-gesture-handler';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
@@ -63,7 +62,7 @@ const BadgesScreen = (props) => {
        </SafeAreaView>
        )}
       {!isLoading && badgesList.length === 0
-              && <Text style={styles.label}>You haven&apos;t earned any badges yet!</Text>}
+          && <Text style={styles.label}>You haven&apos;t earned any badges yet!</Text>}
     </View>
   );
 };

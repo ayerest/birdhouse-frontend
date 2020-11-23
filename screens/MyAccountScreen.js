@@ -14,6 +14,10 @@ import { getMyBirds } from '../store/actions/birds';
 import * as stepsActions from '../store/actions/steps';
 import Card from '../components/Card';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: fix antipattern in useeffect
+// TODO: remove ternary statements from jsx
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -44,11 +48,8 @@ const MyAccountScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.user);
-
   const steppage = useSelector((state) => state.steps);
-
   const myBirds = useSelector((state) => state.birds.myBirds);
-
   const myEntries = useSelector((state) => state.entries.entries);
 
   useEffect(() => {

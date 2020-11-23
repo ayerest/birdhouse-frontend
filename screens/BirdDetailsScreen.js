@@ -16,6 +16,9 @@ import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
 // TODO: fix memory leak on first screen load
+// TODO: refactor stylesheet and move to another file
+// TODO: remove antipattern from useeffect
+// TODO: remove ternary statements from jsx
 
 const styles = StyleSheet.create({
   screen: {
