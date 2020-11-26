@@ -17,8 +17,8 @@ import Colors from '../constants/Colors';
 
 // TODO: fix memory leak on first screen load
 // TODO: refactor stylesheet and move to another file
-// TODO: remove antipattern from useeffect
-// TODO: remove ternary statements from jsx
+// TODO: if you navigate away immediately after hitting play birdcall, the audio is not stopped
+// TODO: think about using suspense for loading screens
 
 const styles = StyleSheet.create({
   screen: {
@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  scrollText: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   center: {
     alignSelf: 'center',
@@ -100,27 +105,17 @@ const BirdDetailsScreen = ({ navigation, route }) => {
         await dispatch(audioActions.stopAudio);
       }
     };
-    const unsubscribe = navigation.addListener('blur', () => {
-      handleLeaving();
-    });
-
-    return unsubscribe;
+    navigation.addListener('blur', handleLeaving);
   }, [navigation, audio, dispatch]);
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      setIsLoading(true);
-      const loadBird = async () => {
-        const { birdId } = route.params;
-        await dispatch(birdsActions.getBird(birdId));
-        setIsLoading(false);
-      };
-      loadBird();
-    }
-    return () => {
-      mounted = false;
+    setIsLoading(true);
+    const loadBird = async () => {
+      const { birdId } = route.params;
+      await dispatch(birdsActions.getBird(birdId));
+      setIsLoading(false);
     };
+    loadBird();
   }, [dispatch, route.params]);
 
   const handlePlayAudio = async () => {
@@ -152,48 +147,48 @@ const BirdDetailsScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.screen}>
-      {isLoading ? <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} />
-        : (
-          <ScrollView>
-            <Card style={styles.card}>
-              <ScrollView maximumZoomScale={2} horizontal contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
-                <View>
-                  <Image
-                    style={styles.birdImage}
-                    source={{ uri: singleBird.img_url }}
-                  />
-                  {singleBird.range_map
-                    ? (
-                      <Text style={styles.label}>
-                        Scroll right to view geographic range map
-                      </Text>
-                    ) : null}
-                </View>
-                {singleBird.range_map
-                  ? <Image style={styles.image} source={{ uri: singleBird.range_map }} />
-                  : null}
-              </ScrollView>
-              <View style={styles.row}>
-                <TouchableOpacity onPress={navToBirdForm}>
-                  <FontAwesomeIcon
-                    icon={faBinoculars}
-                    color={Colors.linkColor}
-                    size={30}
-                    style={styles.center}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
-                </TouchableOpacity>
+      {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }} />}
+      {!isLoading && (
+        <ScrollView>
+          <Card style={styles.card}>
+            <ScrollView maximumZoomScale={2} horizontal contentContainerStyle={{ paddingRight: Dimensions.get('window').width * 0.2 }}>
+              <View>
+                <Image
+                  style={styles.birdImage}
+                  source={{ uri: singleBird.img_url }}
+                />
+                {singleBird.range_map && (
+                  <View style={styles.scrollText}>
+                    <Text style={styles.label}>
+                      Scroll right to view geographic range map
+                    </Text>
+                    <Feather name="arrow-right" size={35} color={Colors.linkColor} />
+                  </View>
+                )}
               </View>
-              {renderDetails()}
-              <View style={styles.citation}>
-                <Text style={styles.heading}>Citation</Text>
-                <Text style={styles.italic}>{singleBird.citation}</Text>
-              </View>
-            </Card>
-          </ScrollView>
-        ) }
+              {singleBird.range_map && <Image style={styles.image} source={{ uri: singleBird.range_map }} />}
+            </ScrollView>
+            <View style={styles.row}>
+              <TouchableOpacity onPress={navToBirdForm}>
+                <FontAwesomeIcon
+                  icon={faBinoculars}
+                  color={Colors.linkColor}
+                  size={30}
+                  style={styles.center}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Feather style={styles.center} name="volume-2" size={35} onPress={handlePlayAudio} color={Colors.linkColor} />
+              </TouchableOpacity>
+            </View>
+            {renderDetails()}
+            <View style={styles.citation}>
+              <Text style={styles.heading}>Citation</Text>
+              <Text style={styles.italic}>{singleBird.citation}</Text>
+            </View>
+          </Card>
+        </ScrollView>
+      )}
     </View>
   );
 };

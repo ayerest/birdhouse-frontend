@@ -15,7 +15,6 @@ import * as audioActions from '../store/actions/audio';
 import AvatarButton from '../components/AvatarButton';
 
 // TODO: refactor stylesheet and move to a separate file
-// TODO: remove ternary statements from jsx
 
 const styles = StyleSheet.create({
   screen: {
@@ -92,24 +91,14 @@ const BirdODexScreen = (props) => {
     <View style={styles.screen}>
       <SearchBar onShowBirds={handleOnShowBirds} />
       <BirdCount onShowBirds={handleOnShowBirds} />
-      {isLoading
-        ? (
-          <ActivityIndicator
-            size="large"
-            color={Colors.linkColor}
-          />
-        )
-        : null}
-      {showBirds
-      && currentBirds.length > 0
-        ? (
-          <BirdsList
-            onShowBirds={handleOnShowBirds}
-            {...props}
-            birdList={currentBirds}
-          />
-        )
-        : null}
+      {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
+      {!isLoading && showBirds && currentBirds.length > 0 && 
+        <BirdsList
+          onShowBirds={handleOnShowBirds}
+          {...props}
+          birdList={currentBirds}
+        />
+      }
       <CategoriesList onShowBirds={handleOnShowBirds} />
     </View>
   );
