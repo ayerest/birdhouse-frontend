@@ -91,6 +91,7 @@ async function loadResourcesAsync() {
       // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Roboto-Condensed': require('./assets/fonts/RobotoCondensed-Regular.ttf'),
       'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf'),
+      'Roboto-Ital': require('./assets/fonts/RobotoCondensed-Italic.ttf')
     }),
   ]);
 }
