@@ -4,14 +4,12 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import uuid from 'uuid';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
 import AvatarButton from '../components/AvatarButton';
 
-// TODO: remove uuid
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
@@ -54,7 +52,6 @@ const BadgesScreen = (props) => {
        && (
        <SafeAreaView>
          <FlatList
-           keyExtractor={() => uuid()}
            data={badgesList}
            renderItem={renderBadgeItem}
            numColumns={1}
