@@ -5,7 +5,6 @@ import {
   ActivityIndicator, TouchableOpacity, Button, Alert, Dimensions,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import uuid from 'uuid';
 import PropTypes from 'prop-types';
 import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
@@ -15,7 +14,6 @@ import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
 
 // TODO: fix antipattern in useeffect
-// TODO: remove uuid
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
@@ -88,24 +86,19 @@ const PicturesScreen = ({ navigation }) => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      const loadMyFieldEntries = async () => {
-        setEntriesLoading(true);
-        await dispatch(getMyEntries());
-        setEntriesLoading(false);
-      };
-      loadMyFieldEntries();
-    }
-    return () => {
-      mounted = false;
+    setEntriesLoading(true);
+    const loadMyFieldEntries = async () => {
+      await dispatch(getMyEntries());
+      setEntriesLoading(false);
     };
+    loadMyFieldEntries();
   }, [dispatch]);
 
   const renderPhotoItem = (image) => {
     const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);
     return (
       <TouchableOpacity
+        key={thisPhotosEntry.id}
         style={styles.gridItem}
         onPress={() => {
           navigation.navigate({
@@ -145,21 +138,25 @@ const PicturesScreen = ({ navigation }) => {
       {photosLoading && entriesLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!photosLoading && !entriesLoading && photosList.length === 0
       && <Text style={styles.label}>You haven&apos;t taken any photos yet!</Text>}
+      {!photosLoading && !entriesLoading && photosList.length > 10
+        && (
+        <View>
+          <View style={styles.row}>
+            <Button title="Older" onPress={loadMorePhotos} />
+            {displayIndex > 0 ? <Button title="Recent" onPress={loadRecentPhotos} /> : null}
+          </View>
+        </View>
+        )}
       {!photosLoading && !entriesLoading && photosList.length > 0
-            && (
-            <View>
-              <View style={styles.row}>
-                <Button title="Older" onPress={loadMorePhotos} />
-                {displayIndex > 0 ? <Button title="Recent" onPress={loadRecentPhotos} /> : null}
-              </View>
-              <FlatList
-                keyExtractor={() => uuid()}
-                data={photosList.slice(displayIndex, displayIndex + 10)}
-                renderItem={renderPhotoItem}
-                numColumns={1}
-              />
-            </View>
-            )}
+        && (
+        <View>
+          <FlatList
+            data={photosList.slice(displayIndex, displayIndex + 10)}
+            renderItem={renderPhotoItem}
+            numColumns={1}
+          />
+        </View>
+        )}
     </View>
   );
 };
@@ -171,28 +168,5 @@ PicturesScreen.defaultProps = {
 PicturesScreen.propTypes = {
   navigation: PropTypes.instanceOf(Object),
 };
-
-export const screenOptions = (navData) => ({
-  headerTitle: 'My Photos',
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={MenuButton}>
-      <Item
-        title="Menu"
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => { navData.navigation.toggleDrawer(); }}
-      />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <AvatarButton handleClick={() => {
-      navData.navigation.navigate({
-        name: 'My Account',
-        params: {
-        },
-      });
-    }}
-    />
-  ),
-});
 
 export default PicturesScreen;
