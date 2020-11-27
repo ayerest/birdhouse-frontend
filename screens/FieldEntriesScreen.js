@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import uuid from 'uuid';
 import MapView, { Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
 import MenuButton from '../components/MenuButton';
@@ -15,9 +14,6 @@ import EntryCard from '../components/EntryCard';
 import AvatarButton from '../components/AvatarButton';
 import BirdIcon from '../assets/images/birdicon.png';
 
-// TODO: remove uuid from keys
-// TODO: only display "older" button if there are older entries to display
-// TODO: display number of bird sighting on the page
 // TODO: refactor stylesheet and move to a separate file
 
 const styles = StyleSheet.create({
@@ -44,8 +40,14 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
+  sightings: {
+    fontSize: 18,
+    fontFamily: 'Roboto-Condensed',
+    alignSelf: 'center',
+    marginTop: 10,
+  }
 });
 
 const FieldEntriesScreen = (props) => {
@@ -83,6 +85,7 @@ const FieldEntriesScreen = (props) => {
 
   const renderFieldEntryItem = (fieldentry) => (
     <TouchableOpacity
+      key={fieldentry.item.id}
       style={styles.gridItem}
       onPress={() => {
         navigation.navigate({
@@ -190,22 +193,26 @@ const FieldEntriesScreen = (props) => {
       )}
       {!isLoading && !showMap && fieldEntriesList.length > 0 && (
         <View style={styles.button}>
+          <Text style={styles.sightings}>
+          You have posted a total of {fieldEntriesList.length} bird sightings!
+          </Text>
           <Button
-            title="Show My Sightings on the Map!"
+            title="Show My Sightings on the Map"
             onPress={showOnMapHandler}
           />
           <View style={styles.row}>
-            <Button
-              style={styles.older}
-              title="Older"
-              onPress={loadMoreEntries}
-            />
-            {displayIndex > 0 ? (
+            {fieldEntriesList.length > 10 &&
+              <Button
+                style={styles.older}
+                title="Older"
+                onPress={loadMoreEntries}
+              />
+            }
+            {displayIndex > 0 && (
               <Button title="Recent" onPress={loadRecentEntries} />
-            ) : null}
+            )}
           </View>
           <FlatList
-            keyExtractor={() => uuid()}
             data={fieldEntriesList.slice(displayIndex, displayIndex + 10)}
             renderItem={renderFieldEntryItem}
             numColumns={1}
