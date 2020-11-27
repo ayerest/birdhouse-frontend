@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {
   ScrollView, Text, Image, StyleSheet, Platform, Alert, ActivityIndicator,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pedometer } from 'expo-sensors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
-import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import { getMyEntries } from '../store/actions/entries';
 import { getMyBirds } from '../store/actions/birds';
@@ -16,7 +14,6 @@ import Card from '../components/Card';
 
 // TODO: refactor stylesheet and move to another file
 // TODO: fix antipattern in useeffect
-// TODO: remove ternary statements from jsx
 
 const styles = StyleSheet.create({
   screen: {

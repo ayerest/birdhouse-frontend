@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, FlatList, Platform, ActivityIndicator, SafeAreaView,
+  View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
-import AvatarButton from '../components/AvatarButton';
 
 // TODO: refactor stylesheet and move to another file
 
@@ -42,7 +39,7 @@ const BadgesScreen = (props) => {
   const badgesList = useSelector((state) => state.badges.myBadges);
 
   const renderBadgeItem = (badge) => (
-    <BadgeCard key={badge.item} badge={badge.item} {...props} />
+    <BadgeCard badge={badge.item} {...props} />
   );
 
   return (
@@ -52,6 +49,7 @@ const BadgesScreen = (props) => {
        && (
        <SafeAreaView>
          <FlatList
+           keyExtractor={item => item.id.toString()}
            data={badgesList}
            renderItem={renderBadgeItem}
            numColumns={1}
@@ -63,28 +61,5 @@ const BadgesScreen = (props) => {
     </View>
   );
 };
-
-export const screenOptions = (navData) => ({
-  headerTitle: 'My Badges',
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={MenuButton}>
-      <Item
-        title="Menu"
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => { navData.navigation.toggleDrawer(); }}
-      />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <AvatarButton handleClick={() => {
-      navData.navigation.navigate({
-        name: 'My Account',
-        params: {
-        },
-      });
-    }}
-    />
-  ),
-});
 
 export default BadgesScreen;
