@@ -3,7 +3,6 @@ import React from 'react';
 import {
   View, Text, StyleSheet, FlatList, Image, ScrollView, TouchableOpacity, Dimensions, SafeAreaView
 } from 'react-native';
-import uuid from 'uuid';
 import MapView, { Marker } from 'react-native-maps';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -11,7 +10,6 @@ import Card from '../components/Card';
 import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
-// TODO: remove uuid for keys
 // TODO: refactor stylesheet and move to a separate file
 
 const styles = StyleSheet.create({
@@ -76,7 +74,7 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
   const entryDate = moment(route.params.entry.date).format('MMMM Do YYYY, h:mm:ss a');
 
   const renderFieldEntryImage = (image) => (
-    <Image style={styles.image} source={{ uri: image.item.img_url }} />
+    <Image key={image.item.id} style={styles.image} source={{ uri: image.item.img_url }} />
   );
 
   return (
@@ -98,7 +96,7 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
       >
         <Text style={styles.birdDetails}>{route.params.entry.bird.common_name}</Text>
         {route.params.entry.images.length > 0
-          ? <FlatList keyExtractor={() => uuid()} data={route.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')} />}
+          ? <FlatList data={route.params.entry.images} renderItem={renderFieldEntryImage} numColumns={1} /> : <Image style={styles.image} source={require('../assets/images/birdicon.png')} />}
       </TouchableOpacity>
       <View style={styles.flex}>
         <Text style={styles.notes}>Notes:</Text>

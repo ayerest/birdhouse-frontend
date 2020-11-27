@@ -17,8 +17,7 @@ import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
 // TODO: remove antipattern in useeffect
-// TODO: remove ternaries from jsx where possible
-// TODO: refacto stylesheet and move to a different file
+// TODO: refactor stylesheet and move to a different file
 
 const styles = StyleSheet.create({
   screen: {
@@ -136,14 +135,13 @@ const MainViewScreen = (props) => {
   return (
     <ScrollView contentContainerStyle={{ height: '100%' }}>
       {sharedEntries.length > 0
-        ? (
+        && (
           <SharedEntries
             hideOnMap={handleHideOnMap}
             showOnMap={handleShowSharesOnMap}
             sharedEntries={sharedEntries}
           />
-        )
-        : null}
+        )}
       <View style={styles.steps}>
         <Stepometer />
         <View style={styles.row}>
@@ -172,34 +170,6 @@ const MainViewScreen = (props) => {
       </View>
     </ScrollView>
   );
-};
-
-export const screenOptions = (navData) => {
-  const user = navData.route.params ? navData.route.params.user : {};
-
-  return {
-    headerTitle: 'BirdHouse',
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={MenuButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-          onPress={() => { navData.navigation.toggleDrawer(); }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <AvatarButton handleClick={() => {
-        navData.navigation.navigate({
-          name: 'My Account',
-          params: {
-            user,
-          },
-        });
-      }}
-      />
-    ),
-  };
 };
 
 export default MainViewScreen;

@@ -20,8 +20,7 @@ import Card from '../components/Card';
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     height: '80%',
     width: '90%',
@@ -30,9 +29,7 @@ const styles = StyleSheet.create({
   image: {
     height: '40%',
     width: '80%',
-    resizeMode: 'cover',
-    borderWidth: 1,
-    borderRadius: 50,
+    resizeMode: 'contain',
   },
   label: {
     fontSize: 16,
@@ -41,6 +38,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Roboto-Condensed',
   },
+  username: {
+    fontSize: 32,
+    fontFamily: 'Fred-Great',
+  }
 });
 
 const MyAccountScreen = ({ navigation }) => {
@@ -105,14 +106,13 @@ const MyAccountScreen = ({ navigation }) => {
         alignItems: 'center',
       }}
     >
-      {isLoading ? (
+      {isLoading && (
         <ActivityIndicator size="large" color={Colors.linkColor} />
-      ) : (
+      )}
+      {!isLoading && (
         <Card style={styles.screen}>
-          <Text style={styles.label}>
+          <Text style={styles.username}>
             {user.username}
-            {' '}
-            Account Information
           </Text>
           <Image style={styles.image} source={{ uri: user.avatar }} />
           <Text style={styles.label}>
@@ -164,18 +164,5 @@ MyAccountScreen.defaultProps = {
 MyAccountScreen.propTypes = {
   navigation: PropTypes.instanceOf(Object),
 };
-
-export const screenOptions = (navData) => ({
-  headerTitle: 'My Account',
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={MenuButton}>
-      <Item
-        title="Menu"
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => { navData.navigation.toggleDrawer(); }}
-      />
-    </HeaderButtons>
-  ),
-});
 
 export default MyAccountScreen;
