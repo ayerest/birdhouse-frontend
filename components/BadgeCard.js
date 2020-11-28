@@ -23,6 +23,10 @@ import SightingsBronze from '../assets/images/SightingsBronze.png';
 import SightingsSilver from '../assets/images/SightingsSilver.png';
 import SightingsGold from '../assets/images/SightingsGold.png';
 
+// TODO: remove ternary statements from jsx
+// TODO: refactor stylesheet and move to another file
+// TODO: remove antipattern in useeffect
+
 const styles = StyleSheet.create({
   badge: {
     resizeMode: 'contain',
@@ -50,9 +54,7 @@ const BadgeCard = (props) => {
   const { badge } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-
   const myBirds = useSelector((state) => state.birds.myBirds);
-
   const myEntries = useSelector((state) => state.entries.entries);
 
   useEffect(() => {

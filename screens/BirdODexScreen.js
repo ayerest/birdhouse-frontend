@@ -3,16 +3,13 @@ import {
   View, StyleSheet, ActivityIndicator, Platform,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import PropTypes from 'prop-types';
 import Colors from '../constants/Colors';
-import MenuButton from '../components/MenuButton';
 import SearchBar from '../components/SearchBar';
 import BirdsList from '../components/BirdsList';
 import BirdCount from '../components/BirdCount';
 import CategoriesList from '../components/CategoriesList';
 import * as audioActions from '../store/actions/audio';
-import AvatarButton from '../components/AvatarButton';
 
 // TODO: refactor stylesheet and move to a separate file
 
@@ -102,32 +99,6 @@ const BirdODexScreen = (props) => {
       <CategoriesList onShowBirds={handleOnShowBirds} />
     </View>
   );
-};
-
-export const screenOptions = (navData) => {
-  const leftOption = (
-    <HeaderButtons HeaderButtonComponent={MenuButton}>
-      <Item
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => { navData.navigation.toggleDrawer(); }}
-        title="Menu"
-      />
-    </HeaderButtons>
-  );
-  return {
-    headerTitle: 'BirdieDex',
-    headerLeft: () => leftOption,
-    headerRight: () => (
-      <AvatarButton handleClick={() => {
-        navData.navigation.navigate({
-          name: 'My Account',
-          params: {
-          },
-        });
-      }}
-      />
-    ),
-  };
 };
 
 BirdODexScreen.defaultProps = {

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  View, Text, StyleSheet, Platform, FlatList, Image,
+  View, Text, StyleSheet, FlatList, Image,
   ActivityIndicator, TouchableOpacity, Button, Alert, Dimensions,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import PropTypes from 'prop-types';
-import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import { getMyPhotos } from '../store/actions/photos';
 import { getMyEntries } from '../store/actions/entries';
-import AvatarButton from '../components/AvatarButton';
 import Card from '../components/Card';
+import moment from 'moment';
+
 
 // TODO: fix antipattern in useeffect
 // TODO: refactor stylesheet and move to another file
@@ -96,6 +95,7 @@ const PicturesScreen = ({ navigation }) => {
 
   const renderPhotoItem = (image) => {
     const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);
+    const entryDate = moment(thisPhotosEntry.date).format('MMMM Do YYYY, h:mm:ss a');
     return (
       <TouchableOpacity
         style={styles.gridItem}
@@ -112,6 +112,8 @@ const PicturesScreen = ({ navigation }) => {
       >
         <Card style={styles.card}>
           <Image style={styles.image} source={{ uri: image.item.img_url }} />
+          <Text style={styles.label}>{thisPhotosEntry.bird.common_name}</Text>
+          <Text style={styles.label}>{entryDate}</Text>
         </Card>
       </TouchableOpacity>
     );
@@ -156,7 +158,7 @@ const PicturesScreen = ({ navigation }) => {
             numColumns={1}
           />
         </View>
-        )}
+      )}
     </View>
   );
 };

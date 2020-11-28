@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, Image, Button, TouchableOpacity,
-  Platform, FlatList, ActivityIndicator, Alert,
+  View, Text, StyleSheet, Image, Button, TouchableOpacity, FlatList, ActivityIndicator, Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import MapView, { Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
-import MenuButton from '../components/MenuButton';
 import Colors from '../constants/Colors';
 import * as entriesActions from '../store/actions/entries';
 import EntryCard from '../components/EntryCard';
-import AvatarButton from '../components/AvatarButton';
 import BirdIcon from '../assets/images/birdicon.png';
 
 // TODO: refactor stylesheet and move to a separate file
@@ -85,7 +81,6 @@ const FieldEntriesScreen = (props) => {
 
   const renderFieldEntryItem = (fieldentry) => (
     <TouchableOpacity
-      key={fieldentry.item.id}
       style={styles.gridItem}
       onPress={() => {
         navigation.navigate({
@@ -213,6 +208,7 @@ const FieldEntriesScreen = (props) => {
             )}
           </View>
           <FlatList
+            keyExtractor={item => item.id.toString()}
             data={fieldEntriesList.slice(displayIndex, displayIndex + 10)}
             renderItem={renderFieldEntryItem}
             numColumns={1}
@@ -229,32 +225,6 @@ const FieldEntriesScreen = (props) => {
       )}
     </View>
   );
-};
-
-export const screenOptions = (navData) => {
-  const leftOption = (
-    <HeaderButtons HeaderButtonComponent={MenuButton}>
-      <Item
-        title="Menu"
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => { navData.navigation.toggleDrawer(); }}
-      />
-    </HeaderButtons>
-  );
-  return {
-    headerTitle: 'My Bird Sightings',
-    headerLeft: () => leftOption,
-    headerRight: () => (
-      <AvatarButton handleClick={() => {
-        navData.navigation.navigate({
-          name: 'MyAccount',
-          params: {
-          },
-        });
-      }}
-      />
-    ),
-  };
 };
 
 FieldEntriesScreen.defaultProps = {

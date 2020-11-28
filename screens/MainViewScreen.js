@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, ScrollView, Text, StyleSheet, Switch, Platform, Alert,
+  View, ScrollView, Text, StyleSheet, Switch, Alert,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pedometer } from 'expo-sensors';
-import MenuButton from '../components/MenuButton';
 import GeoMap from '../components/GeoMap';
 import Stepometer from '../components/Stepometer';
 import { getMyEntries, getSharedEntries } from '../store/actions/entries';
@@ -13,7 +11,6 @@ import { getMyBirds } from '../store/actions/birds';
 import SharedEntries from '../components/SharedEntries';
 import * as stepsActions from '../store/actions/steps';
 import StaticMap from '../components/StaticMap';
-import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
 // TODO: remove antipattern in useeffect

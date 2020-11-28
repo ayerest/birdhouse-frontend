@@ -91,8 +91,7 @@ const AuthScreen = () => {
     }
   };
 
-  const birdHouseLogo = () => (
-    <Image style={styles.logo} source={BirdHouseLogo} />);
+  const birdHouseLogo = () => (<Image style={styles.logo} source={BirdHouseLogo} />);
 
   return (
     <KeyboardAvoidingView

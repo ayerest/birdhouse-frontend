@@ -10,7 +10,6 @@ import Colors from '../constants/Colors';
 import LocationLogic from './LocationLogic';
 
 // TODO: refactor stylesheet and move to another file
-// TODO: remove ternary statemenets from jsx
 
 const styles = StyleSheet.create({
   mapContainer: {
@@ -132,31 +131,29 @@ const StaticMap = (props) => {
   return (
     <View style={styles.mapContainer}>
       <LocationLogic stillLoading={loadingLocation} />
-      {isGettingLocation ? <ActivityIndicator size="large" color={Colors.linkColor} />
-        : (
-          <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
-            {sharedEntries.length > 0
-              ? renderMarkers() : null }
-            {newMarker ? (
-              <Marker
-                {...props}
-                title="New Bird Sighting"
-                coordinate={newMarker}
-                onPress={() => {
-                  props.navigation.navigate({
-                    name: 'Add Entry',
-                    params: {
-                      coords: newMarker,
-                    },
-                  });
-                }}
-              >
-                <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
-              </Marker>
-            )
-              : null }
-          </MapView>
-        )}
+      {isGettingLocation && <ActivityIndicator size="large" color={Colors.linkColor} />}
+      {!isGettingLocation && (
+        <MapView style={styles.map} initialRegion={mapRegion} onPress={addMarkerHandler}>
+          {sharedEntries.length > 0 && renderMarkers()}
+          {newMarker && (
+            <Marker
+              {...props}
+              title="New Bird Sighting"
+              coordinate={newMarker}
+              onPress={() => {
+                props.navigation.navigate({
+                  name: 'Add Entry',
+                  params: {
+                    coords: newMarker,
+                  },
+                });
+              }}
+            >
+              <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
+            </Marker>
+          )}
+        </MapView>
+      )}
     </View>
   );
 };

@@ -128,7 +128,6 @@ const BirdDetailsScreen = ({ navigation, route }) => {
   };
 
   const renderDetails = () => {
-    console.log(singleBird)
     if (singleBird.details) {
       return (
         <View key={singleBird.id}>

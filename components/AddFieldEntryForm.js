@@ -22,6 +22,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 // TODO: navigation.goBack is buggy for nav stack
 // TODO: pass down prop to search bar to clear search after selection
 // TODO: add clear success or fail messaging when form is submitted 
+// TODO: refactor into smaller components - file is a bit too big
 
 const styles = StyleSheet.create({
   form: {
