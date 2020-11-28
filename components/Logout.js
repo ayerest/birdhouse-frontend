@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import * as authActions from '../store/actions/auth'
+
+// TODO: refactor stylesheet and move to another file
 
 const Logout = props => {
     const dispatch = useDispatch();

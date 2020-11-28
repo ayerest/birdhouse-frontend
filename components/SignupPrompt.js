@@ -5,6 +5,8 @@ import {
 import ImageSelector from './ImageSelector';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

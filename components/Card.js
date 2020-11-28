@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   card: {
     shadowColor: 'black',

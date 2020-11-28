@@ -7,6 +7,9 @@ import * as Permissions from 'expo-permissions';
 import PropTypes from 'prop-types';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: refactor component so the image selector can also be used on the field entry form
+
 const styles = StyleSheet.create({
   imagePreview: {
     width: 100,

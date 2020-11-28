@@ -11,6 +11,8 @@ import * as audioActions from '../store/actions/audio';
 import Colors from '../constants/Colors';
 import BirdIcon from '../assets/images/birdicon.png';
 
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   card: {
     height: Dimensions.get('window').height * 0.4,

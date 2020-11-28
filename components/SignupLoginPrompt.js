@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 
+// TODO: refactor setLogin / setSignup so I don't have to send up both everytime since the values change together
 
 const SignupLoginPrompt = props => {
     return (

@@ -4,6 +4,11 @@ import { TextInput, StyleSheet, Text, View, Button } from 'react-native';
 import * as birdActions from '../store/actions/birds'
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: use custom input instead of textinput
+// TODO: add clear search to state so can pass down as a prop
+// TODO: would it make more sense to show the search results with this component? or create a custom component for them?
+// TODO: remove ternary statement from jsx
 
 const SearchBar = props => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -36,15 +41,15 @@ const SearchBar = props => {
     }
 
     return (
-            <View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Search Birds</Text>
-                    {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
-                </View>
-                    <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
-                    initialValue="" placeholder="Enter bird name or keyword"
-                {...props} style={{ ...styles.input, ...props.style }} />
+        <View>
+            <View style={styles.row}>
+                <Text style={styles.label}>Search Birds</Text>
+                {searchTerm.length > 0 ? <Button title="Clear Search" onPress={handleClearSearch}/> : null}
             </View>
+                <TextInput autoCompleteType="off" autoCapitalize="none" accessibilityRole="search" label="search" value={searchTerm} keyboardType="default" onChangeText={handleSearchInput}
+                initialValue="" placeholder="Enter bird name or keyword"
+            {...props} style={{ ...styles.input, ...props.style }} />
+        </View>
     );
 };
 

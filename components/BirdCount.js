@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 import * as birdsActions from '../store/actions/birds';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: remove anti pattern in useeffect
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',

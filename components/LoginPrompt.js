@@ -2,6 +2,10 @@ import React from 'react';
 import { View, ScrollView, Text, StyleSheet, Button, TextInput, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: use custom input component instead of textinput
+// TODO: remove ternary statements from jsx
+
 const LoginPrompt = props => {
   return (
     <ScrollView>

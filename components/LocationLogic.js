@@ -5,6 +5,9 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { setMyLocation } from '../store/actions/location';
 
+// TODO: this should really be a custom hook
+// TODO: remove antipattern in useeffect
+
 const LocationLogic = (props) => {
     const dispatch = useDispatch();
 

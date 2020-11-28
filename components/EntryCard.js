@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import BirdIcon from '../assets/images/birdicon.png';
 
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   entry: {
     justifyContent: 'center',

@@ -5,6 +5,10 @@ import * as entriesActions from '../store/actions/entries'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
+// TODO: refactor ternary statement in jsx
+// TODO: refactor stylesheet and move to another file
+// TODO: import individual icons instead of the whole package
+
 
 const SharedEntries = props => {
 

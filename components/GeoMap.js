@@ -9,6 +9,8 @@ import Colors from '../constants/Colors';
 import LocationLogic from './LocationLogic';
 import BirdIcon from '../assets/images/birdicon.png';
 
+// TODO: refactor stylesheet and move to another file
+
 const styles = StyleSheet.create({
   mapContainer: {
     height: '100%',
@@ -62,35 +64,35 @@ const GeoMap = (props) => {
       {isGettingLocation && !myLocation
       && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isGettingLocation && myLocation
+        && (
+        <MapView
+          showsUserLocation={follow}
+          followsUserLocation={follow}
+          style={styles.map}
+          initialRegion={mapRegion}
+          onPress={addMarkerHandler}
+        >
+        {(newMarker
           && (
-          <MapView
-            showsUserLocation={follow}
-            followsUserLocation={follow}
-            style={styles.map}
-            initialRegion={mapRegion}
-            onPress={addMarkerHandler}
-          >
-            {(newMarker
-              && (
-                <Marker
-                  {...props}
-                  title="New Bird Sighting"
-                  coordinate={newMarker}
-                  onPress={() => {
-                    props.navigation.navigate({
-                      name: 'Add Entry',
-                      params: {
-                        coords: newMarker,
-                      },
-                    });
-                  }}
-                >
-                  <Image style={{ height: 50, width: 50 }} source={BirdIcon} />
-                </Marker>
-              )
-            )}
-          </MapView>
-          )}
+            <Marker
+              {...props}
+              title="New Bird Sighting"
+              coordinate={newMarker}
+              onPress={() => {
+                props.navigation.navigate({
+                  name: 'Add Entry',
+                  params: {
+                    coords: newMarker,
+                  },
+                });
+              }}
+            >
+              <Image style={{ height: 50, width: 50 }} source={BirdIcon} />
+            </Marker>
+          )
+        )}
+        </MapView>
+      )}
     </View>
   );
 };
