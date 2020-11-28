@@ -7,6 +7,9 @@ import { Pedometer } from 'expo-sensors';
 import * as stepsActions from '../store/actions/steps';
 import Colors from '../constants/Colors';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: remove antipattern from useeffect
+
 const styles = StyleSheet.create({
   input: {
     height: 30,

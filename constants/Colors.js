@@ -1,3 +1,7 @@
+// TODO: rename colors
+// TODO: add more colors for theme
+// TODO: set up a context?
+
 const tintColor = '#2f95dc';
 const myColor = 'ghostwhite';
 const linkColor = 'cornflowerblue';

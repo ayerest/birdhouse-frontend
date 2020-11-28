@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: re-write component so that this can also be used on the create an account form
+// TODO: remove ternary statement from jsx
+
 const styles = StyleSheet.create({
   imagePreview: {
     width: 100,

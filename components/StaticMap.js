@@ -10,6 +10,7 @@ import Colors from '../constants/Colors';
 import LocationLogic from './LocationLogic';
 
 // TODO: refactor stylesheet and move to another file
+// TODO: some of the map logic should probably be a custom hook
 
 const styles = StyleSheet.create({
   mapContainer: {

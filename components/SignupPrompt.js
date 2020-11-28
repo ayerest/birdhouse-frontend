@@ -6,6 +6,8 @@ import ImageSelector from './ImageSelector';
 import Colors from '../constants/Colors';
 
 // TODO: refactor stylesheet and move to another file
+// TODO: use custom input instead of textinput
+// TODO: remove ternary statement from jsx
 
 const styles = StyleSheet.create({
   screen: {

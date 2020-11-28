@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import Colors from '../constants/Colors';
 
+// TODO: import just the needed icons
+
 export default function TabBarIcon({ name, focused }) {
   return (
     <Ionicons
