@@ -9,6 +9,9 @@ import MapView, { Marker } from 'react-native-maps';
 import Colors from '../constants/Colors';
 import LocationLogic from './LocationLogic';
 
+// TODO: refactor stylesheet and move to another file
+// TODO: remove ternary statemenets from jsx
+
 const styles = StyleSheet.create({
   mapContainer: {
     height: '100%',

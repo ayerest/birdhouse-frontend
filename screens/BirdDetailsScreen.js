@@ -3,7 +3,6 @@ import {
   View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, TouchableOpacity, Dimensions, Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import uuid from 'uuid';
 import { Audio } from 'expo-av';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -12,13 +11,13 @@ import PropTypes from 'prop-types';
 import * as birdsActions from '../store/actions/birds';
 import Card from '../components/Card';
 import * as audioActions from '../store/actions/audio';
-import AvatarButton from '../components/AvatarButton';
 import Colors from '../constants/Colors';
 
 // TODO: fix memory leak on first screen load
 // TODO: refactor stylesheet and move to another file
 // TODO: if you navigate away immediately after hitting play birdcall, the audio is not stopped
 // TODO: think about using suspense for loading screens
+// TODO: screen title should be bird common name
 
 const styles = StyleSheet.create({
   screen: {
@@ -129,8 +128,12 @@ const BirdDetailsScreen = ({ navigation, route }) => {
   };
 
   const renderDetails = () => {
+    console.log(singleBird)
     if (singleBird.details) {
-      return singleBird.details.split('!PARAGRAPH!').map((paragraph) => <Text style={styles.paragraph} key={uuid()}>{paragraph}</Text>);
+      return (
+        <View key={singleBird.id}>
+          {singleBird.details.split('!PARAGRAPH!').map((paragraph) => <Text style={styles.paragraph}>{paragraph}</Text>)}
+        </View>)
     }
   };
 
@@ -203,26 +206,5 @@ BirdDetailsScreen.propTypes = {
   route: PropTypes.instanceOf(Object),
 };
 
-export const screenOptions = (navData) => {
-  const { birdName } = navData.route.params;
-  return {
-    headerTitle: birdName,
-    headerTitleStyle: {
-      fontFamily: 'Fred-Great',
-      fontSize: 19,
-      fontWeight: '400',
-    },
-    headerRight: () => (
-      <AvatarButton handleClick={() => {
-        navData.navigation.navigate({
-          name: 'My Account',
-          params: {
-          },
-        });
-      }}
-      />
-    ),
-  };
-};
 
 export default BirdDetailsScreen;

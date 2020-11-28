@@ -170,7 +170,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
   };
 
   const renderBirdListItem = (myBird) =>
-    <TouchableOpacity key={myBird.item.id} style={styles.searchResults} onPress={() => selectThatBird(myBird.item)}>
+    <TouchableOpacity style={styles.searchResults} onPress={() => selectThatBird(myBird.item)}>
       <Text style={styles.label}>
         {myBird.item.common_name}
         <Text> - </Text>
@@ -248,6 +248,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
             && (
               <View style={{ flex: 4 }}>
                 <FlatList
+                  keyExtractor={item => item.id.toString()}
                   data={filteredBirds}
                   renderItem={renderBirdListItem}
                   numColumns={1}

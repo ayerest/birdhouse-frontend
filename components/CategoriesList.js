@@ -3,11 +3,13 @@ import {
   View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import uuid from 'uuid';
 import { Entypo } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import * as birdsActions from '../store/actions/birds';
 import Colors from '../constants/Colors';
+
+// TODO: remove antipattern in useeffects
+// TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
   text: {
@@ -82,9 +84,9 @@ const CategoriesList = (props) => {
 
   return (
     <View>
-      {isLoading && !!currentCategory ? <ActivityIndicator size="large" color={Colors.linkColor} /> : null}
+      {isLoading && !!currentCategory && <ActivityIndicator size="large" color={Colors.linkColor} />}
       <FlatList
-        keyExtractor={() => uuid()}
+        keyExtractor={item => item}
         data={categoryList}
         renderItem={renderCategoryItem}
         numColumns={1}
@@ -96,7 +98,6 @@ const CategoriesList = (props) => {
 
 CategoriesList.defaultProps = {
   onShowBirds: '',
-
 };
 
 CategoriesList.propTypes = {

@@ -4,9 +4,10 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import BirdCard from './BirdCard';
 import * as audioActions from '../store/actions/audio';
+
+// TODO: refactor stylesheet and move to separate file
 
 const styles = StyleSheet.create({
   flex: {
@@ -69,7 +70,7 @@ const BirdsList = (props) => {
       <Button title="Back" onPress={handleBackButtonPress} />
       <FlatList
         contentContainerStyle={{ paddingBottom: 100 }}
-        keyExtractor={() => uuid()}
+        keyExtractor={item => item.id.toString()}
         data={birdList}
         renderItem={renderBirdGridItem}
         numColumns={1}

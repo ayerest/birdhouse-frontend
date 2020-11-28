@@ -98,7 +98,6 @@ const PicturesScreen = ({ navigation }) => {
     const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);
     return (
       <TouchableOpacity
-        key={thisPhotosEntry.id}
         style={styles.gridItem}
         onPress={() => {
           navigation.navigate({
@@ -151,6 +150,7 @@ const PicturesScreen = ({ navigation }) => {
         && (
         <View>
           <FlatList
+            keyExtractor={item => item.id.toString()}
             data={photosList.slice(displayIndex, displayIndex + 10)}
             renderItem={renderPhotoItem}
             numColumns={1}
