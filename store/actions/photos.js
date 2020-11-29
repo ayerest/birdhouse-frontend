@@ -7,7 +7,8 @@ const MY_PHOTOS = 'MY_PHOTOS';
 const photosAbortController = new AbortController();
 
 const abortMyPhotos = () => async () => {
-  photosAbortController.abort();
+//   console.log("what's going on?");
+//   photosAbortController.abort();
 };
 
 const getMyPhotos = () => async (dispatch, getState) => {

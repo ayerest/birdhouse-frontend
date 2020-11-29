@@ -7,11 +7,12 @@ import {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Colors from '../constants/Colors';
-import { getMyPhotos, abortMyPhotos } from '../store/actions/photos';
+import { getMyPhotos } from '../store/actions/photos';
 import { getMyEntries } from '../store/actions/entries';
 import Card from '../components/Card';
 
 // TODO: fix potential memory leak in useeffects
+// TODO: use suspense instead of loading states
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
 });
 
 const PicturesScreen = ({ navigation }) => {
-  const photosList = useSelector((state) => (state.photos.myPhotos || false));
+  const photosList = useSelector((state) => (state.photos.myPhotos));
   const myEntries = useSelector((state) => state.entries.entries);
 
   const [photosLoading, setPhotosLoading] = useState(false);
@@ -59,35 +60,35 @@ const PicturesScreen = ({ navigation }) => {
   useEffect(() => {
     const handleLeaving = () => {
       setDisplayIndex(0);
-      dispatch(abortMyPhotos());
     };
-    const unsubscribe = navigation.addListener('blur', () => {
-      handleLeaving();
-    });
+    navigation.addListener('blur', handleLeaving);
 
-    return unsubscribe;
-  }, [dispatch, navigation]);
+    return () => {
+      navigation.removeListener('blur', handleLeaving);
+    };
+  }, [dispatch, entriesLoading, navigation, photosLoading]);
 
   useEffect(() => {
     const loadMyPhotos = async () => {
       await dispatch(getMyPhotos());
-      setPhotosLoading(false);
     };
-    const handlePageLoad = () => {
-      setPhotosLoading(true);
-      loadMyPhotos();
+    navigation.addListener('focus', loadMyPhotos);
+    loadMyPhotos();
+    return () => {
+      navigation.removeListener('focus', loadMyPhotos);
     };
-    navigation.addListener('focus', handlePageLoad);
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    setEntriesLoading(true);
     const loadMyFieldEntries = async () => {
       await dispatch(getMyEntries());
-      setEntriesLoading(false);
     };
+    navigation.addListener('focus', loadMyFieldEntries);
     loadMyFieldEntries();
-  }, [dispatch]);
+    return () => {
+      navigation.removeListener('focus', loadMyFieldEntries);
+    };
+  }, [dispatch, navigation]);
 
   const renderPhotoItem = (image) => {
     const thisPhotosEntry = myEntries.find((entry) => entry.id === image.item.field_entry_id);

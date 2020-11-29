@@ -1,19 +1,19 @@
 import { MY_PHOTOS } from '../actions/photos';
 
 const initialState = {
-    myPhotos: []
-}
+  myPhotos: [],
+};
 
 const photosReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case MY_PHOTOS:
-            return {
-                ...state,
-                myPhotos: action.myPhotos
-            };
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+  case MY_PHOTOS:
+    return {
+      ...state,
+      myPhotos: action.myPhotos,
+    };
+  default:
+    return state;
+  }
+};
 
 export default photosReducer;

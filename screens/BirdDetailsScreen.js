@@ -131,9 +131,11 @@ const BirdDetailsScreen = ({ navigation, route }) => {
     if (singleBird.details) {
       return (
         <View key={singleBird.id}>
-          {singleBird.details.split('!PARAGRAPH!').map((paragraph) => <Text style={styles.paragraph}>{paragraph}</Text>)}
-        </View>)
+          {singleBird.details.split('!PARAGRAPH!').map((paragraph) => <Text key={paragraph} style={styles.paragraph}>{paragraph}</Text>)}
+        </View>
+      );
     }
+    return null;
   };
 
   const navToBirdForm = () => {
@@ -168,7 +170,8 @@ const BirdDetailsScreen = ({ navigation, route }) => {
                   </View>
                 )}
               </View>
-              {singleBird.range_map && <Image style={styles.image} source={{ uri: singleBird.range_map }} />}
+              {singleBird.range_map
+                && <Image style={styles.image} source={{ uri: singleBird.range_map }} />}
             </ScrollView>
             <View style={styles.row}>
               <TouchableOpacity onPress={navToBirdForm}>
@@ -204,6 +207,5 @@ BirdDetailsScreen.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   route: PropTypes.instanceOf(Object),
 };
-
 
 export default BirdDetailsScreen;
