@@ -44,28 +44,6 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
-
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => setLoadingComplete(true)}
-      />
-    );
-  }
-  return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      <Provider store={store}>
-        <AppNavigator />
-      </Provider>
-    </View>
-  );
-}
-
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
@@ -91,7 +69,7 @@ async function loadResourcesAsync() {
       // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Roboto-Condensed': require('./assets/fonts/RobotoCondensed-Regular.ttf'),
       'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf'),
-      'Roboto-Ital': require('./assets/fonts/RobotoCondensed-Italic.ttf')
+      'Roboto-Ital': require('./assets/fonts/RobotoCondensed-Italic.ttf'),
     }),
   ]);
 }
@@ -100,4 +78,26 @@ function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
   console.warn(error);
+}
+
+export default function App(props) {
+  const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  if (!isLoadingComplete && !props.skipLoadingScreen) {
+    return (
+      <AppLoading
+        startAsync={loadResourcesAsync}
+        onError={handleLoadingError}
+        onFinish={() => setLoadingComplete(true)}
+      />
+    );
+  }
+  return (
+    <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    </View>
+  );
 }

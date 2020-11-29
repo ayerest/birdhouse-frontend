@@ -2,36 +2,46 @@ import { base1 } from '../../env';
 
 const MY_PHOTOS = 'MY_PHOTOS';
 
-const getMyPhotos = () => {
-    return async (dispatch, getState) => {
-        const token = getState().user.token
-        const user = getState().user.user
-        try {
-            const response = await fetch(`${base1}/images`, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "user": user
-                })
-            })
+// TODO: use abort controller to abort fetch requests when component is unmounted
 
-            if (!response.ok) {
-                throw new Error("error in entries action")
-            }
+const photosAbortController = new AbortController();
 
-            const photosData = await response.json();
+const abortMyPhotos = () => async () => {
+  photosAbortController.abort();
+};
 
-            dispatch({ type: MY_PHOTOS, myPhotos: photosData })
-        } catch (err) {
-            throw err;
-        }
+const getMyPhotos = () => async (dispatch, getState) => {
+  const { token, user } = getState().user;
+  try {
+    const response = await fetch(`${base1}/images`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user,
+      }),
+      signal: photosAbortController.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error('error in entries action');
     }
-}
+
+    const photosData = await response.json();
+
+    dispatch({ type: MY_PHOTOS, myPhotos: photosData });
+  } catch (err) {
+    if (!photosAbortController.signal.aborted) {
+      console.log({ error: err.message });
+    }
+    throw err;
+  }
+};
 
 export {
-    MY_PHOTOS,
-    getMyPhotos,
-}
+  MY_PHOTOS,
+  getMyPhotos,
+  abortMyPhotos,
+};

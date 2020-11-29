@@ -5,14 +5,13 @@ import {
   ActivityIndicator, TouchableOpacity, Button, Alert, Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import Colors from '../constants/Colors';
-import { getMyPhotos } from '../store/actions/photos';
+import { getMyPhotos, abortMyPhotos } from '../store/actions/photos';
 import { getMyEntries } from '../store/actions/entries';
 import Card from '../components/Card';
-import moment from 'moment';
 
-
-// TODO: fix antipattern in useeffect
+// TODO: fix potential memory leak in useeffects
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
@@ -60,13 +59,14 @@ const PicturesScreen = ({ navigation }) => {
   useEffect(() => {
     const handleLeaving = () => {
       setDisplayIndex(0);
+      dispatch(abortMyPhotos());
     };
     const unsubscribe = navigation.addListener('blur', () => {
       handleLeaving();
     });
 
     return unsubscribe;
-  }, [navigation]);
+  }, [dispatch, navigation]);
 
   useEffect(() => {
     const loadMyPhotos = async () => {
@@ -77,11 +77,7 @@ const PicturesScreen = ({ navigation }) => {
       setPhotosLoading(true);
       loadMyPhotos();
     };
-    const subscribe = navigation.addListener('focus', () => {
-      handlePageLoad();
-    });
-
-    return subscribe;
+    navigation.addListener('focus', handlePageLoad);
   }, [dispatch, navigation]);
 
   useEffect(() => {
@@ -141,24 +137,24 @@ const PicturesScreen = ({ navigation }) => {
       && <Text style={styles.label}>You haven&apos;t taken any photos yet!</Text>}
       {!photosLoading && !entriesLoading && photosList.length > 10
         && (
-        <View>
-          <View style={styles.row}>
-            <Button title="Older" onPress={loadMorePhotos} />
-            {displayIndex > 0 ? <Button title="Recent" onPress={loadRecentPhotos} /> : null}
+          <View>
+            <View style={styles.row}>
+              <Button title="Older" onPress={loadMorePhotos} />
+              {displayIndex > 0 ? <Button title="Recent" onPress={loadRecentPhotos} /> : null}
+            </View>
           </View>
-        </View>
         )}
       {!photosLoading && !entriesLoading && photosList.length > 0
         && (
-        <View>
-          <FlatList
-            keyExtractor={item => item.id.toString()}
-            data={photosList.slice(displayIndex, displayIndex + 10)}
-            renderItem={renderPhotoItem}
-            numColumns={1}
-          />
-        </View>
-      )}
+          <View>
+            <FlatList
+              keyExtractor={(item) => item.id.toString()}
+              data={photosList.slice(displayIndex, displayIndex + 10)}
+              renderItem={renderPhotoItem}
+              numColumns={1}
+            />
+          </View>
+        )}
     </View>
   );
 };
