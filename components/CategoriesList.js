@@ -37,7 +37,7 @@ const CategoriesList = (props) => {
     let mounted = true;
     if (mounted) {
       const loadCategories = async () => {
-        await dispatch(birdsActions.fetchBirdCategories());
+        dispatch(birdsActions.fetchBirdCategories());
       };
       loadCategories();
     }
@@ -49,31 +49,31 @@ const CategoriesList = (props) => {
   const categoryList = useSelector((state) => state.birds.birdCategories);
 
   const setCategory = async (category) => {
-    await setCurrentCategory(category);
+    setCurrentCategory(category);
   };
 
-  const getBirds = async () => {
-    try {
-      setIsLoading(true);
-      await dispatch(birdsActions.fetchBirds(currentCategory));
-      props.onShowBirds('category');
-      setIsLoading(false);
-      setCurrentCategory(null);
-    } catch (err) {
-      setIsLoading(false);
-      setCurrentCategory(null);
-      throw new Error(err);
-    }
-  };
   useEffect(() => {
     let mounted = true;
+    const getBirds = async () => {
+      try {
+        setIsLoading(true);
+        dispatch(birdsActions.fetchBirds(currentCategory));
+        props.onShowBirds('category');
+        setIsLoading(false);
+        setCurrentCategory(null);
+      } catch (err) {
+        setIsLoading(false);
+        setCurrentCategory(null);
+        throw new Error(err);
+      }
+    };
     if (mounted) {
       getBirds();
     }
     return () => {
       mounted = false;
     };
-  }, [currentCategory]);
+  }, [currentCategory, dispatch, props]);
 
   const renderCategoryItem = (categoryItem) => (
     <TouchableOpacity style={styles.category} onPress={() => setCategory(categoryItem.item)}>
@@ -86,7 +86,7 @@ const CategoriesList = (props) => {
     <View>
       {isLoading && !!currentCategory && <ActivityIndicator size="large" color={Colors.linkColor} />}
       <FlatList
-        keyExtractor={item => item}
+        keyExtractor={(item) => item}
         data={categoryList}
         renderItem={renderCategoryItem}
         numColumns={1}

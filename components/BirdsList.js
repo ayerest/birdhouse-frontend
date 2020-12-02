@@ -70,7 +70,7 @@ const BirdsList = (props) => {
       <Button title="Back" onPress={handleBackButtonPress} />
       <FlatList
         contentContainerStyle={{ paddingBottom: 100 }}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         data={birdList}
         renderItem={renderBirdGridItem}
         numColumns={1}

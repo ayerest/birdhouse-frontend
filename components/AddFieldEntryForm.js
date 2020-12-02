@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 import {
   View, Text, TextInput, Button, StyleSheet, FlatList,
   TouchableOpacity, Image, Switch, Keyboard, TouchableWithoutFeedback,
-  KeyboardAvoidingView, Alert, Dimensions, SafeAreaView
+  KeyboardAvoidingView, Alert, Dimensions, SafeAreaView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import moment from 'moment';
+import { ScrollView } from 'react-native-gesture-handler';
 import TakePicture from './TakePicture';
 import * as entriesActions from '../store/actions/entries';
 import SearchBar from './SearchBar';
 import Card from './Card';
 import * as audioActions from '../store/actions/audio';
 import Colors from '../constants/Colors';
-import { ScrollView } from 'react-native-gesture-handler';
 
 // TODO: refactor stylesheet and move to separate file
 // TODO: fix memory leak caused by handleunsetbird useeffect fn
 // TODO: navigation.goBack is buggy for nav stack
 // TODO: pass down prop to search bar to clear search after selection
-// TODO: add clear success or fail messaging when form is submitted 
+// TODO: add clear success or fail messaging when form is submitted
 // TODO: refactor into smaller components - file is a bit too big
 
 const styles = StyleSheet.create({
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: 'grey',
     paddingLeft: 5,
-  }
+  },
 });
 
 const AddFieldEntryForm = ({ navigation, route }) => {
@@ -170,7 +170,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
     setConfirmed(false);
   };
 
-  const renderBirdListItem = (myBird) =>
+  const renderBirdListItem = (myBird) => (
     <TouchableOpacity style={styles.searchResults} onPress={() => selectThatBird(myBird.item)}>
       <Text style={styles.label}>
         {myBird.item.common_name}
@@ -179,7 +179,8 @@ const AddFieldEntryForm = ({ navigation, route }) => {
           {myBird.item.species_name}
         </Text>
       </Text>
-    </TouchableOpacity>;
+    </TouchableOpacity>
+  );
 
   const handlePlayAudio = async () => {
     const soundObject = new Audio.Sound();
@@ -249,7 +250,7 @@ const AddFieldEntryForm = ({ navigation, route }) => {
             && (
               <View style={{ flex: 4 }}>
                 <FlatList
-                  keyExtractor={item => item.id.toString()}
+                  keyExtractor={(item) => item.id.toString()}
                   data={filteredBirds}
                   renderItem={renderBirdListItem}
                   numColumns={1}

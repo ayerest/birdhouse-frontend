@@ -9,42 +9,43 @@ import { setMyLocation } from '../store/actions/location';
 // TODO: remove antipattern in useeffect
 
 const LocationLogic = (props) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            getLocationHandler();
-        }
-        return () => mounted = false;
-    }, [getLocationHandler]);
+  useEffect(() => {
+    let mounted = true;
 
     const verifyPermissions = async () => {
-        const result = await Permissions.askAsync(Permissions.LOCATION);
-        if (result.status !== 'granted') {
-            Alert.alert("Please grant location permissions to use the map feature.");
-            return false;
-        }
-        return true;
-    }
+      const result = await Permissions.askAsync(Permissions.LOCATION);
+      if (result.status !== 'granted') {
+        Alert.alert('Please grant location permissions to use the map feature.');
+        return false;
+      }
+      return true;
+    };
 
     const getLocationHandler = async () => {
-        const hasPermission = await verifyPermissions();
-        if (!hasPermission) {
-            return;
-        }
-        try {
-            const location = await Location.getCurrentPositionAsync({ timeout: 10000 });
-            dispatch(setMyLocation({
-                lat: location.coords.latitude,
-                lng: location.coords.longitude
-            }))
-        } catch (err) {
-            Alert.alert("Unable to access current location.", "Please try again later.")
-        }
-        props.stillLoading();
-    } 
-    return (null);
-}
+      const hasPermission = await verifyPermissions();
+      if (!hasPermission) {
+        return;
+      }
+      try {
+        const location = await Location.getCurrentPositionAsync({ timeout: 10000 });
+        dispatch(setMyLocation({
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        }));
+      } catch (err) {
+        Alert.alert('Unable to access current location.', 'Please try again later.');
+      }
+      props.stillLoading();
+    };
+    if (mounted) {
+      getLocationHandler();
+    }
+    return () => mounted = false;
+  }, [dispatch, props]);
+
+  return (null);
+};
 
 export default LocationLogic;

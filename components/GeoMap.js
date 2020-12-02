@@ -65,14 +65,14 @@ const GeoMap = (props) => {
       && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isGettingLocation && myLocation
         && (
-        <MapView
-          showsUserLocation={follow}
-          followsUserLocation={follow}
-          style={styles.map}
-          initialRegion={mapRegion}
-          onPress={addMarkerHandler}
-        >
-        {(newMarker
+          <MapView
+            showsUserLocation={follow}
+            followsUserLocation={follow}
+            style={styles.map}
+            initialRegion={mapRegion}
+            onPress={addMarkerHandler}
+          >
+            {(newMarker
           && (
             <Marker
               {...props}
@@ -90,9 +90,9 @@ const GeoMap = (props) => {
               <Image style={{ height: 50, width: 50 }} source={BirdIcon} />
             </Marker>
           )
+            )}
+          </MapView>
         )}
-        </MapView>
-      )}
     </View>
   );
 };

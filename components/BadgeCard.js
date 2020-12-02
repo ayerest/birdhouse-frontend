@@ -73,72 +73,73 @@ const BadgeCard = (props) => {
 
   const renderLoginMedal = () => {
     switch (badge.medal) {
-      case 'Bronze':
-        return <Image style={styles.badge} source={LoginBronze} />;
-      case 'Silver':
-        return <Image style={styles.badge} source={LoginSilver} />;
-      case 'Gold':
-        return <Image style={styles.badge} source={LoginGold} />;
-      default:
-        return null;
+    case 'Bronze':
+      return <Image style={styles.badge} source={LoginBronze} />;
+    case 'Silver':
+      return <Image style={styles.badge} source={LoginSilver} />;
+    case 'Gold':
+      return <Image style={styles.badge} source={LoginGold} />;
+    default:
+      return null;
     }
   };
 
   const renderBirdsMedal = () => {
     switch (badge.medal) {
-      case 'Bronze':
-        return <Image style={styles.badge} source={BirdsBronze} />;
-      case 'Silver':
-        return <Image style={styles.badge} source={BirdsSilver} />;
-      case 'Gold':
-        return <Image style={styles.badge} source={BirdsGold} />;
-      default:
-        return null;
+    case 'Bronze':
+      return <Image style={styles.badge} source={BirdsBronze} />;
+    case 'Silver':
+      return <Image style={styles.badge} source={BirdsSilver} />;
+    case 'Gold':
+      return <Image style={styles.badge} source={BirdsGold} />;
+    default:
+      return null;
     }
   };
 
   const renderStepsMedal = () => {
     switch (badge.medal) {
-      case 'Bronze':
-        return <Image style={styles.badge} source={StepsBronze} />;
-      case 'Silver':
-        return <Image style={styles.badge} source={StepsSilver} />;
-      case 'Gold':
-        return <Image style={styles.badge} source={StepsGold} />;
-      default:
-        return null;
+    case 'Bronze':
+      return <Image style={styles.badge} source={StepsBronze} />;
+    case 'Silver':
+      return <Image style={styles.badge} source={StepsSilver} />;
+    case 'Gold':
+      return <Image style={styles.badge} source={StepsGold} />;
+    default:
+      return null;
     }
   };
 
   const renderSightingsMedal = () => {
     switch (badge.medal) {
-      case 'Bronze':
-        return <Image style={styles.badge} source={SightingsBronze} />;
-      case 'Silver':
-        return <Image style={styles.badge} source={SightingsSilver} />;
-      case 'Gold':
-        return <Image style={styles.badge} source={SightingsGold} />;
-      default:
-        return null;
+    case 'Bronze':
+      return <Image style={styles.badge} source={SightingsBronze} />;
+    case 'Silver':
+      return <Image style={styles.badge} source={SightingsSilver} />;
+    case 'Gold':
+      return <Image style={styles.badge} source={SightingsGold} />;
+    default:
+      return null;
     }
   };
 
   const renderMedalImage = () => {
     switch (badge.category) {
-      case 'Login':
-        return renderLoginMedal();
-      case 'Birds':
-        return renderBirdsMedal();
-      case 'Steps':
-        return renderStepsMedal();
-      case 'Sightings':
-        return renderSightingsMedal();
-      default:
-        return null;
+    case 'Login':
+      return renderLoginMedal();
+    case 'Birds':
+      return renderBirdsMedal();
+    case 'Steps':
+      return renderStepsMedal();
+    case 'Sightings':
+      return renderSightingsMedal();
+    default:
+      return null;
     }
   };
 
-  const renderLoginMedalText = () => <Text style={styles.center}>Great job logging in at least once a week!</Text>;
+  const renderLoginMedalText = () => (
+    <Text style={styles.center}>Great job logging in at least once a week!</Text>);
 
   const renderBirdsMedalText = () => (
     <Text style={styles.center}>
@@ -174,16 +175,16 @@ const BadgeCard = (props) => {
 
   const renderBadgeText = () => {
     switch (badge.category) {
-      case 'Login':
-        return renderLoginMedalText();
-      case 'Birds':
-        return renderBirdsMedalText();
-      case 'Steps':
-        return renderStepsMedalText();
-      case 'Sightings':
-        return renderSightingsMedalText();
-      default:
-        return null;
+    case 'Login':
+      return renderLoginMedalText();
+    case 'Birds':
+      return renderBirdsMedalText();
+    case 'Steps':
+      return renderStepsMedalText();
+    case 'Sightings':
+      return renderSightingsMedalText();
+    default:
+      return null;
     }
   };
 
@@ -203,7 +204,7 @@ const BadgeCard = (props) => {
           Earned on:
           {badge.updated_at.slice(0, 10)}
         </Text>
-        {showInfo ? <BadgesInfo category={badge.category} /> : null}
+        {showInfo && <BadgesInfo category={badge.category} />}
         <View>
           <TouchableOpacity onPress={() => {
             setShowInfo(!showInfo);
