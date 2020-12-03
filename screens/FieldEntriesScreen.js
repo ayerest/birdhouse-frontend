@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Condensed',
     alignSelf: 'center',
     marginTop: 10,
-  }
+  },
 });
 
 const FieldEntriesScreen = (props) => {
@@ -189,26 +189,31 @@ const FieldEntriesScreen = (props) => {
       {!isLoading && !showMap && fieldEntriesList.length > 0 && (
         <View style={styles.button}>
           <Text style={styles.sightings}>
-          You have posted a total of {fieldEntriesList.length} bird sightings!
+            You have posted a total of
+            {' '}
+            {fieldEntriesList.length}
+            {' '}
+            bird sightings!
           </Text>
           <Button
             title="Show My Sightings on the Map"
             onPress={showOnMapHandler}
           />
           <View style={styles.row}>
-            {fieldEntriesList.length > 10 &&
-              <Button
-                style={styles.older}
-                title="Older"
-                onPress={loadMoreEntries}
-              />
-            }
+            {fieldEntriesList.length > 10
+              && (
+                <Button
+                  style={styles.older}
+                  title="Older"
+                  onPress={loadMoreEntries}
+                />
+              )}
             {displayIndex > 0 && (
               <Button title="Recent" onPress={loadRecentEntries} />
             )}
           </View>
           <FlatList
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item) => item.id.toString()}
             data={fieldEntriesList.slice(displayIndex, displayIndex + 10)}
             renderItem={renderFieldEntryItem}
             numColumns={1}

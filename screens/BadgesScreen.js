@@ -47,14 +47,14 @@ const BadgesScreen = (props) => {
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isLoading && badgesList.length > 0
        && (
-       <SafeAreaView>
-         <FlatList
-           keyExtractor={item => item.id.toString()}
-           data={badgesList}
-           renderItem={renderBadgeItem}
-           numColumns={1}
-         />
-       </SafeAreaView>
+         <SafeAreaView>
+           <FlatList
+             keyExtractor={(item) => item.id.toString()}
+             data={badgesList}
+             renderItem={renderBadgeItem}
+             numColumns={1}
+           />
+         </SafeAreaView>
        )}
       {!isLoading && badgesList.length === 0
           && <Text style={styles.label}>You haven&apos;t earned any badges yet!</Text>}

@@ -111,30 +111,30 @@ const AuthScreen = () => {
               {
                 (!login && signup)
                 && (
-                <SignupPrompt
-                  signupHandler={signupHandler}
-                  isLoading={isLoading}
-                  username={username}
-                  setLogin={setLogin}
-                  setSignup={setSignup}
-                  setUsername={setUsername}
-                  setPassword={setPassword}
-                  imageSelectedHandler={imageSelectedHandler}
-                />
+                  <SignupPrompt
+                    signupHandler={signupHandler}
+                    isLoading={isLoading}
+                    username={username}
+                    setLogin={setLogin}
+                    setSignup={setSignup}
+                    setUsername={setUsername}
+                    setPassword={setPassword}
+                    imageSelectedHandler={imageSelectedHandler}
+                  />
                 )
               }
               {
                 (!signup && login)
                 && (
-                <LoginPrompt
-                  loginHandler={loginHandler}
-                  isLoading={isLoading}
-                  username={username}
-                  setLogin={setLogin}
-                  setSignup={setSignup}
-                  setUsername={setUsername}
-                  setPassword={setPassword}
-                />
+                  <LoginPrompt
+                    loginHandler={loginHandler}
+                    isLoading={isLoading}
+                    username={username}
+                    setLogin={setLogin}
+                    setSignup={setSignup}
+                    setUsername={setUsername}
+                    setPassword={setPassword}
+                  />
                 )
               }
             </View>

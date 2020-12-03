@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  ScrollView, Text, Image, StyleSheet, Platform, Alert, ActivityIndicator,
+  ScrollView, Text, Image, StyleSheet, Alert, ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pedometer } from 'expo-sensors';
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 32,
     fontFamily: 'Fred-Great',
-  }
+  },
 });
 
 const MyAccountScreen = ({ navigation }) => {

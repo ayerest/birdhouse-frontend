@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import {
-  View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions
+  View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import moment from 'moment';
@@ -96,15 +96,20 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
       >
         <Text style={styles.birdDetails}>{route.params.entry.bird.common_name}</Text>
         {route.params.entry.images.length > 0
-          ? <FlatList
-              keyExtractor={item => item.id.toString()}
+          ? (
+            <FlatList
+              keyExtractor={(item) => item.id.toString()}
               data={route.params.entry.images}
               renderItem={renderFieldEntryImage}
-              numColumns={1} />
-          : <Image
+              numColumns={1}
+            />
+          )
+          : (
+            <Image
               style={styles.image}
-              source={require('../assets/images/birdicon.png')} />
-        }
+              source={require('../assets/images/birdicon.png')}
+            />
+          )}
       </TouchableOpacity>
       <View style={styles.flex}>
         <Text style={styles.notes}>Notes:</Text>
@@ -121,8 +126,8 @@ const FieldEntryDetailsScreen = ({ navigation, route }) => {
       >
         <Marker
           coordinate={
-              { latitude: route.params.entry.latitude, longitude: route.params.entry.longitude }
-              }
+            { latitude: route.params.entry.latitude, longitude: route.params.entry.longitude }
+          }
         >
           <Image style={{ height: 50, width: 50 }} source={require('../assets/images/birdicon.png')} />
         </Marker>

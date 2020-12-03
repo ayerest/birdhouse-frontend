@@ -56,31 +56,31 @@ const BirdODexScreen = (props) => {
     setCurrentBirds([]);
     setShowBirds(false);
     switch (type) {
-      case false:
-        setCurrentBirds([]);
-        setShowBirds(false);
-        setIsLoading(false);
-        return;
-      case 'mine':
-        if (audio) {
-          await audio.stopAsync();
-          dispatch(audioActions.stopAudio);
-        }
-        setCurrentBirds(myBirds);
-        setShowBirds(true);
-        setIsLoading(false);
-        return;
-      case 'search':
-        setCurrentBirds(filteredBirds);
-        setShowBirds(true);
-        setIsLoading(false);
-        return;
-      case 'category':
-        setCurrentBirds(categoryBirds);
-        setShowBirds(true);
-        setIsLoading(false);
-        break;
-      default:
+    case false:
+      setCurrentBirds([]);
+      setShowBirds(false);
+      setIsLoading(false);
+      return;
+    case 'mine':
+      if (audio) {
+        await audio.stopAsync();
+        dispatch(audioActions.stopAudio);
+      }
+      setCurrentBirds(myBirds);
+      setShowBirds(true);
+      setIsLoading(false);
+      return;
+    case 'search':
+      setCurrentBirds(filteredBirds);
+      setShowBirds(true);
+      setIsLoading(false);
+      return;
+    case 'category':
+      setCurrentBirds(categoryBirds);
+      setShowBirds(true);
+      setIsLoading(false);
+      break;
+    default:
     }
   };
 
@@ -89,13 +89,14 @@ const BirdODexScreen = (props) => {
       <SearchBar onShowBirds={handleOnShowBirds} />
       <BirdCount onShowBirds={handleOnShowBirds} />
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
-      {!isLoading && showBirds && currentBirds.length > 0 && 
-        <BirdsList
-          onShowBirds={handleOnShowBirds}
-          {...props}
-          birdList={currentBirds}
-        />
-      }
+      {!isLoading && showBirds && currentBirds.length > 0
+        && (
+          <BirdsList
+            onShowBirds={handleOnShowBirds}
+            {...props}
+            birdList={currentBirds}
+          />
+        )}
       <CategoriesList onShowBirds={handleOnShowBirds} />
     </View>
   );
