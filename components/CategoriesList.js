@@ -44,7 +44,7 @@ const CategoriesList = (props) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [dispatch]);
 
   const categoryList = useSelector((state) => state.birds.birdCategories);
 

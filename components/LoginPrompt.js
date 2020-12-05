@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 // TODO: refactor stylesheet and move to another file
 // TODO: use custom input component instead of textinput
 // TODO: remove ternary statements from jsx
+// TODO: add prop types
 
 const styles = StyleSheet.create({
   screen: {

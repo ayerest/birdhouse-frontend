@@ -10,7 +10,6 @@ import Colors from '../constants/Colors';
 // TODO: use custom input instead of textinput
 // TODO: add clear search to state so can pass down as a prop
 // TODO: show the search results with this component? or create a custom component for them?
-// TODO: remove ternary statement from jsx
 
 const styles = StyleSheet.create({
   input: {
@@ -40,6 +39,7 @@ const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
 
   const sendUpSearch = async () => {

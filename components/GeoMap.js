@@ -10,6 +10,7 @@ import LocationLogic from './LocationLogic';
 import BirdIcon from '../assets/images/birdicon.png';
 
 // TODO: refactor stylesheet and move to another file
+// TODO: props spreading
 
 const styles = StyleSheet.create({
   mapContainer: {

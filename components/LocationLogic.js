@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 import * as Location from 'expo-location';
@@ -42,7 +42,9 @@ const LocationLogic = (props) => {
     if (mounted) {
       getLocationHandler();
     }
-    return () => mounted = false;
+    return () => {
+      mounted = false;
+    };
   }, [dispatch, props]);
 
   return (null);

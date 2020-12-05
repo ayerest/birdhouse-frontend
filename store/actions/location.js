@@ -1,10 +1,8 @@
 const SET_MY_LOCATION = 'SET_MY_LOCATION';
 
-const setMyLocation = (coords) => {
-    return { type: 'SET_MY_LOCATION', newLoc: coords }
-};
+const setMyLocation = (coords) => ({ type: 'SET_MY_LOCATION', newLoc: coords });
 
 export {
-    SET_MY_LOCATION,
-    setMyLocation,
-}
+  SET_MY_LOCATION,
+  setMyLocation,
+};

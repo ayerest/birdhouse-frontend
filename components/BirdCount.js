@@ -54,14 +54,14 @@ const BirdCount = (props) => {
     <View>
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isLoading && (
-      <View style={styles.row}>
-        <Button onPress={handleShowMyBirds} title="My Birds" />
-        <Text style={styles.label}>
-          Species Seen:
-          {' '}
-          {myBirds.length}
-        </Text>
-      </View>
+        <View style={styles.row}>
+          <Button onPress={handleShowMyBirds} title="My Birds" />
+          <Text style={styles.label}>
+            Species Seen:
+            {' '}
+            {myBirds.length}
+          </Text>
+        </View>
       )}
     </View>
   );
