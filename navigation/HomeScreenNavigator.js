@@ -11,6 +11,8 @@ import defaultNavOptions from './DefaultNavOptions';
 
 const HomeScreenStackNavigator = createStackNavigator();
 
+// TODO: fix double header bug
+
 const HomeScreenNavigator = () => (
   <HomeScreenStackNavigator.Navigator screenOptions={defaultNavOptions}>
     <HomeScreenStackNavigator.Screen

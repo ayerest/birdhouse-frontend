@@ -56,14 +56,15 @@ const FieldEntriesScreen = (props) => {
   const fieldEntriesList = useSelector((state) => state.entries.entries);
 
   useEffect(() => {
+    // setIsLoading(true);
     const loadMyFieldEntries = async () => {
-      setIsLoading(true);
       await dispatch(entriesActions.getMyEntries());
       setIsLoading(false);
     };
     const subscribe = navigation.addListener('focus', () => {
       loadMyFieldEntries();
     });
+    loadMyFieldEntries();
 
     return subscribe;
   }, [dispatch, navigation]);

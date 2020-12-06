@@ -16,12 +16,11 @@ import Card from '../components/Card';
 // TODO: fix antipattern in useeffect
 
 const styles = StyleSheet.create({
-  screen: {
+  card: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '80%',
+    height: '90%',
     width: '90%',
-    backgroundColor: Colors.myColor,
   },
   image: {
     height: '40%',
@@ -101,13 +100,14 @@ const MyAccountScreen = ({ navigation }) => {
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: Colors.warningText,
       }}
     >
       {isLoading && (
         <ActivityIndicator size="large" color={Colors.linkColor} />
       )}
       {!isLoading && (
-        <Card style={styles.screen}>
+        <Card style={styles.card}>
           <Text style={styles.username}>
             {user.username}
           </Text>

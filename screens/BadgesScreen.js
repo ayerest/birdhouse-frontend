@@ -6,16 +6,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
 import * as badgesActions from '../store/actions/badges';
 import BadgeCard from '../components/BadgeCard';
+import ScreenStyles from '../styles/DefaultScreenStyles';
 
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.myColor,
-  },
+  // screen: {
+  //   flex: 1,
+  //   // justifyContent: 'center',
+  //   // alignItems: 'center',
+  //   backgroundColor: Colors.myColor,
+  // },
   label: {
     fontSize: 16,
     marginBottom: 5,
@@ -43,7 +44,7 @@ const BadgesScreen = (props) => {
   );
 
   return (
-    <View style={styles.screen}>
+    <View style={ScreenStyles.screen}>
       {isLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!isLoading && badgesList.length > 0
        && (

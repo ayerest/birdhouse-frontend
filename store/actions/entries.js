@@ -54,7 +54,6 @@ const getMyEntries = () => async (dispatch, getState) => {
         user,
       }),
     });
-
     if (!response.ok) {
       throw new Error('error in entries action');
     }

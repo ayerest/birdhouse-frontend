@@ -10,19 +10,20 @@ import Colors from '../constants/Colors';
 import { getMyPhotos } from '../store/actions/photos';
 import { getMyEntries } from '../store/actions/entries';
 import Card from '../components/Card';
+import ScreenStyles from '../styles/DefaultScreenStyles';
 
 // TODO: fix potential memory leak in useeffects
 // TODO: use suspense instead of loading states
 // TODO: refactor stylesheet and move to another file
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 15,
-    backgroundColor: Colors.myColor,
-  },
+  // screen: {
+  //   flex: 1,
+  //   // justifyContent: 'center',
+  //   // alignItems: 'center',
+  //   // paddingTop: 15,
+  //   backgroundColor: Colors.myColor,
+  // },
   card: {
     backgroundColor: Colors.myColor,
   },
@@ -132,7 +133,7 @@ const PicturesScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.screen}>
+    <View style={ScreenStyles.screen}>
       {photosLoading && entriesLoading && <ActivityIndicator size="large" color={Colors.linkColor} />}
       {!photosLoading && !entriesLoading && photosList.length === 0
       && <Text style={styles.label}>You haven&apos;t taken any photos yet!</Text>}

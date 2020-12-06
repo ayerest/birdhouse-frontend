@@ -11,14 +11,15 @@ import SignupLoginPrompt from '../components/SignupLoginPrompt';
 import SignupPrompt from '../components/SignupPrompt';
 import LoginPrompt from '../components/LoginPrompt';
 import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
+import ScreenStyles from '../styles/DefaultScreenStyles';
 
 // TODO: refactor stylesheet and move to a separate file
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: Colors.myColor,
-  },
+  // screen: {
+  //   flex: 1,
+  //   backgroundColor: Colors.myColor,
+  // },
   input: {
     width: '90%',
     backgroundColor: Colors.myColor,
@@ -97,7 +98,7 @@ const AuthScreen = () => {
     <KeyboardAvoidingView
       behavior="padding"
       keyboardVerticalOffset={15}
-      style={styles.screen}
+      style={ScreenStyles.screen}
     >
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

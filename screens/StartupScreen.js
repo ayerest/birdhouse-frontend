@@ -5,18 +5,19 @@ import {
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
+import ScreenStyles from '../styles/DefaultScreenStyles';
 
 // TODO: remove antipattern from useeffect
 // TODO: refactor stylesheet and move to another file
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.myColor,
-  },
-});
+// const styles = StyleSheet.create({
+//   screen: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: Colors.myColor,
+//   },
+// });
 
 const StartupScreen = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const StartupScreen = () => {
   }, [dispatch]);
 
   return (
-    <View style={styles.screen}>
+    <View style={ScreenStyles.screen}>
       <ActivityIndicator size="large" color={Colors.linkColor} />
     </View>
   );
