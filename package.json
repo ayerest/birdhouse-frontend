@@ -74,5 +74,6 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest-expo": "^39.0.0"
   },
-  "private": true
+  "private": true,
+  "name": "birdhouse-frontend"
 }
