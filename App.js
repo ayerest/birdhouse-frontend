@@ -62,11 +62,6 @@ async function loadResourcesAsync() {
       require('./assets/images/LoginBronze.png'),
     ]),
     Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      // ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Roboto-Condensed': require('./assets/fonts/RobotoCondensed-Regular.ttf'),
       'Fred-Great': require('./assets/fonts/FrederickatheGreat-Regular.ttf'),
       'Roboto-Ital': require('./assets/fonts/RobotoCondensed-Italic.ttf'),
