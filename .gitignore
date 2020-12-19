@@ -11,4 +11,3 @@ web-build/
 web-report/
 env.js
 package-lock.json
-.eslintrc.js
