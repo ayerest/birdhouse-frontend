@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  View, Text, StyleSheet, Image, SafeAreaView, Dimensions,
+  View, Text, StyleSheet, Image, SafeAreaView, Dimensions, TouchableOpacity,
 } from 'react-native';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as authActions from '../store/actions/auth';
 import BadgesNavigator from './BadgesStackNavigator';
 import PicturesNavigator from './PicturesStackNavigator';
