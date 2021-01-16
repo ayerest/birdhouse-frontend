@@ -5,6 +5,7 @@ import BirdHouseBottomTabs from './BottomTabNavigator';
 import defaultNavOptions from './DefaultNavOptions';
 
 const MainStackNavigator = createStackNavigator();
+// TODO: either refactor the bottom tab nav stack or remove it
 
 const MainNavigator = () => (
   <MainStackNavigator.Navigator screenOptions={defaultNavOptions}>

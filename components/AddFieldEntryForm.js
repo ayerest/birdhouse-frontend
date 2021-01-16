@@ -128,12 +128,8 @@ const AddFieldEntryForm = ({ navigation, route }) => {
     setConfirmed(false);
   };
   useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      handleUnsetBird();
-    });
-
-    return unsubscribe;
-  });
+    navigation.addListener('blur', handleUnsetBird);
+  }, []);
 
   const dispatch = useDispatch();
 

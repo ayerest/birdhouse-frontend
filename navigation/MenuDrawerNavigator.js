@@ -10,8 +10,9 @@ import PicturesNavigator from './PicturesStackNavigator';
 import FieldEntriesNavigator from './FieldEntriesNavigator';
 import BirdsNavigator from './BirdsStackNavigator';
 import AccountNavigator from './AccountStackNavigator';
-import MainNavigator from './MainStackNavigator';
+// import MainNavigator from './MainStackNavigator';
 import BirdHouseLogo from '../assets/images/birdhouse_logo_drawn.png';
+import HomeScreenNavigator from './HomeScreenNavigator';
 
 // TODO: menu nav stacks should always reset to the top of the stack on press
 
@@ -65,7 +66,7 @@ const MenuNavigator = () => {
     >
       <MenuDrawerNavigator.Screen
         name="Home"
-        component={MainNavigator}
+        component={HomeScreenNavigator}
         options={{
           drawerIcon: () => (
             <Image style={{ height: 50, width: 50 }} source={BirdHouseLogo} />

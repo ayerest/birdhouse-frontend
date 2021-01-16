@@ -11,7 +11,7 @@ import defaultNavOptions from './DefaultNavOptions';
 
 const HomeScreenStackNavigator = createStackNavigator();
 
-// TODO: fix double header bug
+// TODO: did I need the map views in this nav stack?
 
 const HomeScreenNavigator = () => (
   <HomeScreenStackNavigator.Navigator screenOptions={defaultNavOptions}>
@@ -20,8 +20,8 @@ const HomeScreenNavigator = () => (
       component={MainViewScreen}
       options={screenOptions}
     />
-    <HomeScreenStackNavigator.Screen name="Live Map" component={GeoMap} />
-    <HomeScreenStackNavigator.Screen name="Map View" component={StaticMap} />
+    {/* <HomeScreenStackNavigator.Screen name="Live Map" component={GeoMap} />
+    <HomeScreenStackNavigator.Screen name="Map View" component={StaticMap} /> */}
     <HomeScreenStackNavigator.Screen
       name="Field Sighting Details"
       component={FieldEntryDetailsScreen}
