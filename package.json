@@ -24,7 +24,7 @@
     "@react-navigation/native": "^5.9.0",
     "@react-navigation/stack": "^5.13.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
-    "braces": "^3.0.2",
+    "braces": "^3.0.3",
     "expo": "^39.0.0",
     "expo-asset": "~8.2.0",
     "expo-av": "~8.6.0",
